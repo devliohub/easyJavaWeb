@@ -17,29 +17,22 @@ export default [
         meta: { title: '限量免单' }
       },
       {
-        path: '/bearBuy',
-        name: 'bearBuy',
-        component: () => import('@/views/pages/classify'),
-        meta: { title: '熊抢购' }
+        path: '/list',
+        name: 'list',
+        component: () => import('@/views/pages/index/list'),
+        meta: { title: '列表' }
       },
       {
-        path: '/task',
-        name: 'task',
-        component: () => import('@/views/pages/task'),
-        meta: { title: '任务中心' }
+        path: '/search',
+        name: 'search',
+        component: () => import('@/views/pages/index/search'),
+        meta: { title: '搜索' }
       },
       {
         path: '/mine',
         name: 'mine',
         component: () => import('@/views/pages/mine'),
         meta: { title: '我的淘大熊' }
-      },
-      // 亲友团
-      {
-        path: '/friendShip',
-        name: 'friendShip',
-        component: () => import('@/views/pages/classify'),
-        meta: { title: '淘大熊' }
       },
     ]
   },
@@ -49,20 +42,6 @@ export default [
     name: 'questions',
     component: () => import('@/views/pages/mine/questions'),
     meta: { title: '' }
-  },
-  // 马上抢
-  {
-    path: '/getSoon',
-    name: 'getSoon',
-    component: () => import('@/views/pages/index/getSoon'),
-    meta: { title: ' ' }
-  },
-  // 开始任务
-  {
-    path: '/getStart',
-    name: 'getStart',
-    component: () => import('@/views/pages/index/getStart'),
-    meta: { title: ' ' }
   },
   // 抢购
   {
@@ -127,7 +106,7 @@ export default [
     component: () => import('@/views/pages/task/gonglue/shgl'),
     meta: { title: '' }
   },
-  
+
   // 新手攻略
   {
     path: '/xsgl',

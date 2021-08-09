@@ -1,6 +1,6 @@
-@import './default.scss';
-@import './transition.scss';
-@import './vant.scss';
+@import "./default.scss";
+@import "./transition.scss";
+@import "./vant.scss";
 
 body {
   background: #f6f6f6;
@@ -9,7 +9,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  font-family: "Microsoft YaHei","微软雅黑";
+  font-family: "Microsoft YaHei", "微软雅黑";
 }
 
 html {
@@ -17,7 +17,7 @@ html {
   box-sizing: border-box;
 }
 
-#app{
+#app {
   // background: #f6f6f6;
   color: #333;
   margin: auto;
@@ -38,9 +38,9 @@ a:hover {
   text-decoration: none;
 }
 
-div:focus{
+div:focus {
   outline: none;
- }
+}
 
 a:focus,
 a:active {
@@ -68,9 +68,24 @@ a:hover {
 
 .let_fixed {
   width: 100%;
-  position:fixed;
-  z-index:9999;
-  transition: .2s ease-in-out;
+  position: fixed;
+  z-index: 9999;
+  transition: 0.2s ease-in-out;
+  height: 50px;
+  line-height: 50px;
+  background: #fff;
+  padding: 0 15px;
+  display: flex;
+  align-items: center;
+  .van-icon {
+    font-size: 22px;
+    width: 50px;
+  }
+  div {
+    flex: 1;
+    text-align: center;
+    font-size: 14px;
+  }
 }
 
 .empty {

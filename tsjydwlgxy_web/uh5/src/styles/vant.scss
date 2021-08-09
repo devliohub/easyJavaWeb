@@ -1,21 +1,24 @@
-.van-tabbar-item--active, .van-tab--active {
+.van-tabbar-item--active,
+.van-tab--active {
   color: #ff5500;
 }
 
-.home, .classify, .friendShip {
+.home,
+.classify,
+.friendShip {
   .van-tab {
     flex-basis: 15% !important;
     padding: 0;
   }
 }
 
-.home, .classify {
+.home,
+.classify {
   .van-search {
     padding-right: 30px;
     padding-left: 50px;
   }
 }
-
 
 .task {
   .van-tab {
@@ -46,7 +49,8 @@
   color: #ff5500;
 }
 
-.van-loading, .van-loading--spinner {
+.van-loading,
+.van-loading--spinner {
   text-align: center !important;
 }
 
@@ -60,4 +64,14 @@
 }
 .van-stepper__input {
   background-color: #fff;
+}
+
+.van-collapse-item__title--disabled,
+.van-collapse-item__title--disabled .van-cell__right-icon {
+  color: #444;
+}
+.van-collapse-item__content {
+  color: #444;
+  background: #f8f8f8;
+  padding-left: 30px;
 }
