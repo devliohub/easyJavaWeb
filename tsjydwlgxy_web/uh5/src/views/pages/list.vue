@@ -1,29 +1,34 @@
 <template>
   <div class="list">
-    <header>
-      <div style="color: #888">当前位置：</div>
-      <div style="color: #444">通识中心</div>
-    </header>
+    <breadcrumb />
+
     <div v-if="isloading" class="center_loading">
       <van-loading type="spinner" />
     </div>
-    <ul v-else>
+    <ul v-else-if="paList.length > 0">
       <li
         v-for="(item, x) in paList"
         :key="x"
         :class="{ signle_class: x % 2 == 0 }"
+        @click="
+          () => {
+            $router.push('/desc')
+          }
+        "
       >
         <div class="title">{{ item.title }}</div>
         <div class="time">发布时间：2010-02-04</div>
       </li>
     </ul>
+
+    <van-empty v-else description="暂无数据" />
   </div>
 </template> 
 <script>
-  import itemCardLarge from '@/components/item_card_large'
+  import breadcrumb from '@/components/breadcrumb'
   export default {
     name: 'list',
-    components: { itemCardLarge },
+    components: { breadcrumb },
     data() {
       return {
         isloading: false,
@@ -62,13 +67,7 @@
 .list {
   position: relative;
   width: 100%;
-  header {
-    background: #fff;
-    margin-top: 50px;
-    padding: 15px;
-    font-size: 14px;
-    display: flex;
-  }
+  margin-top: 50px;
   & > ul {
     display: flex;
     flex-direction: column;

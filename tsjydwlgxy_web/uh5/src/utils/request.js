@@ -12,9 +12,6 @@ service.baseURL = process.env.NODE_ENV == 'production' ? "http://106.54.237.151"
 // request拦截器
 service.interceptors.request.use(
     config => {
-        // if (store.getters.token) {
-        //     config.headers.Authorization = `${getToken()}`;
-        // }
         return config
     }, error => {
         return Promise.reject(error)

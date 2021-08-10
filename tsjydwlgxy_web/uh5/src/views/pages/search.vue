@@ -7,35 +7,51 @@
       @search="onSearch"
       @cancel="onCancel"
     />
+
+    <breadcrumb />
+
     <section>
       <van-dropdown-menu>
-        <van-dropdown-item v-model="value1" :options="option1" />
+        <van-dropdown-item v-model="value1" :options="dropOptions" />
       </van-dropdown-menu>
     </section>
-    <div class="ul_wrapper">
-      <ul>
-        <li v-for="(item, index) in dataList" :key="index">
-          <item-card-small :entity="item" />
-        </li>
-      </ul>
 
-      <div class="pagin">
-        <span>上一页</span>
-        <span class="num">{{ queryData.page_no }}/{{ totalPage }}</span>
-        <span>下一页</span>
+    <div class="ul_wrapper">
+      <div v-if="isloading" class="center_loading">
+        <van-loading type="spinner" />
       </div>
+
+      <div v-else-if="dataList.length > 0">
+        <ul class="ul">
+          <li v-for="(item, index) in dataList" :key="index">
+            <item-card-small :entity="item" />
+          </li>
+        </ul>
+
+        <div class="pagin">
+          <span>上一页</span>
+          <span class="num">{{ queryData.page_no }}/{{ totalPage }}</span>
+          <span>下一页</span>
+        </div>
+
+        <!-- <van-pagination v-model="currentPage" :page-count="12" mode="simple" /> -->
+      </div>
+
+      <van-empty v-else description="暂无数据" />
     </div>
   </div>
 </template>
 <script>
+  import breadcrumb from '@/components/breadcrumb'
   import itemCardSmall from '@/components/item_card_small'
   import { indexSearch } from '@/api'
 
   export default {
     name: 'search',
-    components: { itemCardSmall },
+    components: { itemCardSmall, breadcrumb },
     data() {
       return {
+        isloading: false,
         search_value: '',
         dataList: [],
         queryData: {
@@ -48,8 +64,8 @@
         totalPage: 0,
 
         value1: 0,
-        option1: [
-          { text: '全部(10)', value: 0 },
+        dropOptions: [
+          { text: '全部', value: 0 },
           { text: '公共必修课', value: 1 },
           { text: '公共选修课', value: 2 },
           { text: '核心限选课', value: 3 },
@@ -65,6 +81,7 @@
         let res = await indexSearch(this.queryData)
         if (res && res.error.errno == 200) {
           this.dataList = res.data
+          this.$set(this.dropOptions[0], 'text', '全部(' + res.data.length + ')')
           this.totalPage = parseInt(res.data.length / 10)
         }
         this.isloading = false
@@ -82,10 +99,10 @@
 .search {
   position: relative;
   margin-top: 50px;
+
   section {
     width: 100%;
     display: block;
-    background: #fff;
     font-size: 12px;
     .van-dropdown-menu__bar {
       box-shadow: none;
@@ -101,7 +118,7 @@
     text-align: center;
     padding: 0 15px;
     background: #fff;
-    & > ul {
+    .ul {
       display: flex;
       flex-wrap: wrap;
       li {
@@ -119,6 +136,7 @@
     .num {
       background: #c00900;
       color: #fff;
+      border: 1px solid #c00900;
     }
     & > span {
       padding: 8px 30px;

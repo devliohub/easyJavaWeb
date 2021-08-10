@@ -34,7 +34,6 @@ Vue.use(VueClipboard)
 Vue.use(VueRouter)
 Vue.use(Vant);
 import { cateTitle } from "@/api"
-import { Toast } from 'vant';
 
 const router = new VueRouter({
   routes
@@ -50,13 +49,6 @@ if (!JSON.parse(window.sessionStorage.getItem('tpyeArr'))) {
 router.beforeEach((to, from, next) => {
   /* 路由发生变化修改页面title, 回到顶部 */
   document.title = to.meta.title || ' ';
-  if (to.name == 'bearBuy' || to.name == 'limitFree') {
-    Toast.loading({
-      message: '加载中...',
-      duration: 500
-    });
-  }
-
   window.scrollTo(0, 0);
   next()
 });

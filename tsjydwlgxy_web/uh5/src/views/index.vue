@@ -64,6 +64,7 @@
   width: 100%;
   overflow: auto;
   min-height: 100vh;
+  background: #fff;
   .home_poper_ul {
     font-size: 16px;
     color: #444;
