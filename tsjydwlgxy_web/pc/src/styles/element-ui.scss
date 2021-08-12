@@ -1,0 +1,78 @@
+ //to reset element-ui default css
+.el-upload {
+  input[type="file"] {
+    display: none !important;
+  }
+}
+
+.el-upload__input {
+  display: none;
+}
+
+//暂时性解决diolag 问题 https://github.com/ElemeFE/element/issues/2461
+.el-dialog {
+  transform: none;
+  left: 0;
+  position: relative;
+  margin: 0 auto;
+}
+
+.el-pagination {
+  text-align: right;
+}
+
+//element ui upload
+.upload-container {
+  .el-upload {
+    width: 100%;
+    .el-upload-dragger {
+      width: 100%;
+      height: 200px;
+    }
+  }
+}
+
+.el-dialog__body {
+  padding: 10px 20px;
+}
+
+// 轮播图箭头
+.el-carousel__arrow {
+  z-index: 999;
+  background-color: rgba(31,45,61,.2);
+  &:hover {
+    background-color: rgba(31,45,61,.4);
+  }
+}
+
+.el-carousel__arrow--left {
+  left: calc(50vw - 440px)
+}
+
+.el-carousel__arrow--right {
+  right: calc(50vw - 385px + 9px)
+}
+
+.el-date-editor .el-range-separator {
+  padding: 0;
+}
+
+.el-form-item,
+.el-form-item--mini .el-form-item,
+.el-form-item--small .el-form-item {
+  margin-bottom: 5px; 
+}
+
+.el-table tr .cell {
+  padding: 0;
+  text-align: center;
+}
+.el-table .cell, .el-table th div, .el-table--border td:first-child .cell, .el-table--border th:first-child .cell {
+  padding: 0 
+}
+
+.el-table__body-wrapper {
+  overflow-y: overlay !important;
+  overflow-x: auto !important;
+  position: relative;
+}
