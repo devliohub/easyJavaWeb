@@ -58,133 +58,6 @@ export default [
               meta: { title: '商品详情' }
             }]
           }, {
-            path: 'user',
-            name: 'user',
-            redirect: '/user/personal',
-            component: (resolve) => require(['@/views/pages/user/index'], resolve),
-            meta: { title: '用户中心' },
-            children: [
-              {
-                path: '/user',
-                redirect: '/user/personal',
-                meta: { title: '用户中心', icon: 'iconguanlizhongxin' },
-                component: (resolve) => require(['@/views/pages/home/index'], resolve),
-                children: [
-                  {
-                    path: 'personal',
-                    name: 'personal',
-                    component: (resolve) => require(['@/views/pages/user/personal'], resolve),
-                    meta: { title: '个人中心', icon: 'el-icon-user', roles: 'fans' },
-                  },
-                  {
-                    path: 'basicInfo',
-                    name: 'basicInfo',
-                    component: (resolve) => require(['@/views/pages/user/basicInfo'], resolve),
-                    meta: { title: '基本信息', icon: 'el-icon-postcard', roles: 'fans' }
-                  }
-                ]
-              }, {
-                path: '/user',
-                meta: { title: '活动管理', icon: "iconhuodongguanli" },
-                component: (resolve) => require(['@/views/pages/home/index'], resolve),
-                children: [
-                  {
-                    path: 'actionsList',
-                    name: 'actionsList',
-                    component: (resolve) => require(['@/views/pages/user/actionsList'], resolve),
-                    meta: { title: '活动列表', icon: 'el-icon-tickets', roles: 'fans' },
-                  },
-                  {
-                    path: 'assessTask',
-                    name: 'assessTask',
-                    component: (resolve) => require(['@/views/pages/user/assessTask'], resolve),
-                    meta: { title: '评价任务', icon: 'el-icon-document-checked', roles: 'fans' }
-                  },
-                  {
-                    path: 'shoppingMall',
-                    name: 'shoppingMall',
-                    component: (resolve) => require(['@/views/pages/user/shoppingMall'], resolve),
-                    meta: { title: '商品大厅', icon: 'el-icon-shopping-cart-1', roles: 'fans' }
-                  }
-                ]
-              }, {
-                path: '/user',
-                meta: { title: '我的账户', icon: 'iconwodezhanghu' },
-                component: (resolve) => require(['@/views/pages/home/index'], resolve),
-                children: [
-                  {
-                    path: 'bindCard',
-                    name: 'bindCard',
-                    component: (resolve) => require(['@/views/pages/user/bindCard'], resolve),
-                    meta: { title: '绑定银行卡', icon: 'el-icon-bank-card', roles: 'fans' },
-                  },
-                  {
-                    path: 'safety',
-                    name: 'safety',
-                    component: (resolve) => require(['@/views/pages/user/safety'], resolve),
-                    meta: { title: '账号安全', icon: 'el-icon-lock', roles: 'fans' }
-                  },
-                  {
-                    path: 'transDetail',
-                    name: 'transDetail',
-                    component: (resolve) => require(['@/views/pages/user/transDetail'], resolve),
-                    meta: { title: '交易明细', icon: 'el-icon-money', roles: 'fans' },
-                  },
-                  {
-                    path: 'withDraw',
-                    name: 'withDraw',
-                    component: (resolve) => require(['@/views/pages/user/withDraw'], resolve),
-                    meta: { title: '账户提现', icon: 'el-icon-coin', roles: 'fans' }
-                  },
-                  // {
-                  //   path: 'scoreDetail',
-                  //   name: 'scoreDetail',
-                  //   component: (resolve) => require(['@/views/pages/user/scoreDetail'], resolve),
-                  //   meta: { title: '积分明细', icon: 'el-icon-c-scale-to-original', roles: 'fans' }
-                  // }
-                ]
-              }, {
-                hidden: true,
-                path: '/user',
-                redirect: '/user/personal',
-                component: (resolve) => require(['@/views/pages/home/index'], resolve),
-                children: [
-                  {
-                    path: 'msg',
-                    name: 'userMsg',
-                    component: (resolve) => require(['@/views/pages/saler/msg'], resolve),
-                    meta: { title: '消息通知', roles: 'user' },
-                  }
-                ]
-              }, {
-                hidden: true,
-                path: '/user',
-                redirect: '/user/personal',
-                component: (resolve) => require(['@/views/pages/home/index'], resolve),
-                children: [
-                  {
-                    path: 'verify',
-                    name: 'verify',
-                    component: (resolve) => require(['@/views/pages/user/verify'], resolve),
-                    meta: { title: '实名认证', roles: 'user' },
-                  }
-                ]
-              }, {
-                hidden: true,
-                path: '/user',
-                redirect: '/user/personal',
-                component: (resolve) => require(['@/views/pages/home/index'], resolve),
-                children: [
-                  {
-                    path: 'kefuInfo',
-                    name: 'kefuInfo',
-                    component: (resolve) => require(['@/views/pages/user/kefuInfo'], resolve),
-                    meta: { title: '客服信息', roles: 'user' },
-                  }
-                ]
-              }
-            ]
-          }, {
             path: 'saler',
             name: 'saler',
             redirect: '/saler/personal',
@@ -287,54 +160,11 @@ export default [
                   }
                 ]
               },
-              // {
-              //   path: '/saler',
-              //   meta: { title: '熊抢购', icon: "el-icon-goods" },
-              //   component: (resolve) => require(['@/views/pages/home/index'], resolve),
-              //   children: [
-              //     {
-              //       path: 'bearBuyApply',
-              //       name: 'bearBuyApply',
-              //       component: (resolve) => require(['@/views/pages/saler/bearBuyApply'], resolve),
-              //       meta: { title: '熊抢购活动申请', roles: 'saler' },
-              //     },
-              //     {
-              //       path: 'bearBuyList',
-              //       name: 'bearBuyList',
-              //       component: (resolve) => require(['@/views/pages/saler/bearBuyList'], resolve),
-              //       meta: { title: '熊抢购活动列表', roles: 'saler' },
-              //     },
-              //     {
-              //       path: 'bearBuyTaskList',
-              //       name: 'bearBuyTaskList',
-              //       component: (resolve) => require(['@/views/pages/saler/bearBuyTaskList'], resolve),
-              //       meta: { title: '熊抢购任务列表', roles: 'saler' },
-              //     },
-              //     {
-              //       path: 'bearBuyTaskAfterList',
-              //       name: 'bearBuyTaskAfterList',
-              //       component: (resolve) => require(['@/views/pages/saler/bearBuyTaskAfterList'], resolve),
-              //       meta: { title: '熊抢购任务售后列表', roles: 'saler' },
-              //     },
-              //   ]
-              // }, 
               {
                 path: '/saler',
                 meta: { title: '我的账户', icon: 'iconwodezhanghu' },
                 component: (resolve) => require(['@/views/pages/home/index'], resolve),
                 children: [
-                  {
-                    path: 'bindCard',
-                    name: 'salerBindCard',
-                    component: (resolve) => require(['@/views/pages/user/bindCard'], resolve),
-                    meta: { title: '提现绑定', roles: 'saler' },
-                  },
-                  {
-                    path: 'withDraw',
-                    name: 'salerWithDraw',
-                    component: (resolve) => require(['@/views/pages/user/withDraw'], resolve),
-                    meta: { title: '账户提现', roles: 'saler' }
-                  },
                   {
                     path: 'accountDesc',
                     name: 'accountDesc',

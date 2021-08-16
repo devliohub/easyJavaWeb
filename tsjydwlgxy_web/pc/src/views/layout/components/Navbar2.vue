@@ -103,7 +103,7 @@
       a {
         height: 50px;
         line-height: 50px;
-        padding: 0 24px;
+        // padding: 0 24px;
         color: #fff;
         &:hover {
           background: #fff;

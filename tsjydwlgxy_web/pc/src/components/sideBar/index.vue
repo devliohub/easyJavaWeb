@@ -33,12 +33,12 @@
       ...mapGetters(['sidebar']),
       routes() {
         return this.isUser
-          ? this.$router.options.routes[0].children[0].children[6].children
-          : this.$router.options.routes[0].children[0].children[7].children
+          ? this.$router.options.routes[0].children[0].children[5].children
+          : this.$router.options.routes[0].children[0].children[6].children
       },
     },
     mounted() {
-      console.log(this.$route.path)
+      console.log(this.$router)
     },
     methods: {},
   }

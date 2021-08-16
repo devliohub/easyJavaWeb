@@ -1,4 +1,4 @@
- //to reset element-ui default css
+//to reset element-ui default css
 .el-upload {
   input[type="file"] {
     display: none !important;
@@ -18,7 +18,7 @@
 }
 
 .el-pagination {
-  text-align: right;
+  text-align: center;
 }
 
 //element ui upload
@@ -39,18 +39,18 @@
 // 轮播图箭头
 .el-carousel__arrow {
   z-index: 999;
-  background-color: rgba(31,45,61,.2);
+  background-color: rgba(31, 45, 61, 0.2);
   &:hover {
-    background-color: rgba(31,45,61,.4);
+    background-color: rgba(31, 45, 61, 0.4);
   }
 }
 
 .el-carousel__arrow--left {
-  left: calc(50vw - 440px)
+  left: calc(50vw - 440px);
 }
 
 .el-carousel__arrow--right {
-  right: calc(50vw - 385px + 9px)
+  right: calc(50vw - 385px + 9px);
 }
 
 .el-date-editor .el-range-separator {
@@ -60,15 +60,18 @@
 .el-form-item,
 .el-form-item--mini .el-form-item,
 .el-form-item--small .el-form-item {
-  margin-bottom: 5px; 
+  margin-bottom: 5px;
 }
 
 .el-table tr .cell {
   padding: 0;
   text-align: center;
 }
-.el-table .cell, .el-table th div, .el-table--border td:first-child .cell, .el-table--border th:first-child .cell {
-  padding: 0 
+.el-table .cell,
+.el-table th div,
+.el-table--border td:first-child .cell,
+.el-table--border th:first-child .cell {
+  padding: 0;
 }
 
 .el-table__body-wrapper {

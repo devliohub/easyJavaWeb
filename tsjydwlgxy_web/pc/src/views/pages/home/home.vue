@@ -20,7 +20,7 @@
         <li
           v-for="(item, index) in 8"
           :key="index"
-          :class="{ margin_left_0: index % 4 == 3 }"
+          :class="{ margin_right_0: index % 4 == 3 }"
         >
           {{ item }}
         </li>
@@ -32,7 +32,7 @@
         <div
           v-for="(item, index) in 4"
           :key="index"
-          :class="{ margin_left_0: index % 2 == 1 }"
+          :class="{ margin_right_0: index % 2 == 1 }"
         >
           <header>
             <span>通识新闻</span>
@@ -176,10 +176,6 @@
 <style lang="scss" scoped>
 .index {
   width: 100%;
-
-  .margin_left_0 {
-    margin-right: 0 !important;
-  }
 
   .index_banner {
     // position: relative;

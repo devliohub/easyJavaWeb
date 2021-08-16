@@ -1,19 +1,23 @@
-@import './default.scss';
-@import './variables.scss';
-@import './transition.scss';
-@import './element-ui.scss';
-@import './sidebar.scss';
+@import "./default.scss";
+@import "./variables.scss";
+@import "./transition.scss";
+@import "./element-ui.scss";
+@import "./sidebar.scss";
 
 body {
   height: 100%;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  font-family: "Microsoft YaHei","微软雅黑";
+  font-family: "Microsoft YaHei", "微软雅黑";
   font-size: 14px;
 }
 
-h1, h2, h3, h4, h5 {
+h1,
+h2,
+h3,
+h4,
+h5 {
   font-weight: normal;
   font-size: 14px;
 }
@@ -22,7 +26,7 @@ html {
   box-sizing: border-box;
 }
 
-#app{
+#app {
   height: 100%;
 }
 
@@ -41,9 +45,9 @@ a:hover {
   text-decoration: none;
 }
 
-div:focus{
+div:focus {
   outline: none;
- }
+}
 
 a:focus,
 a:active {
@@ -70,7 +74,7 @@ a:hover {
 }
 
 //main-container全局样式
-.app-main-wrapper{
+.app-main-wrapper {
   height: 100%;
 }
 
@@ -84,15 +88,17 @@ a:hover {
 }
 
 .btn_export {
-  background:#409EFF;
-  background-color:#409EFF;
-  border: 1px solid #409EFF;
-  color:#fff;
-  &:hover, &:active, &:focus {
-    background:#66b1ff;
-    background-color:#66b1ff;
-    color:#fff;
-    border: 1px solid #409EFF;
+  background: #409eff;
+  background-color: #409eff;
+  border: 1px solid #409eff;
+  color: #fff;
+  &:hover,
+  &:active,
+  &:focus {
+    background: #66b1ff;
+    background-color: #66b1ff;
+    color: #fff;
+    border: 1px solid #409eff;
   }
 }
 
@@ -102,7 +108,7 @@ a:hover {
   & > div {
     padding: 30px 0;
     font-size: 12px;
-    color:#909399;
+    color: #909399;
   }
   & > span {
     font-size: 16px;
@@ -117,4 +123,8 @@ a:hover {
   & > img {
     height: 316px;
   }
+}
+
+.margin_right_0 {
+  margin-right: 0 !important;
 }
