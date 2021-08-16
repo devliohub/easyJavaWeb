@@ -2,7 +2,6 @@
   <div class="user">
     <main>
       <breadcrumb />
-
       <section>
         <!-- 左侧路由 -->
         <div class="left_menu">
@@ -19,14 +18,14 @@
   </div>
 </template>
 <script>
-import breadcrumb from "@/components/breadCrumb.vue";
-import sideBar from "@/components/sideBar";
+  import breadcrumb from '@/components/breadCrumb.vue'
+  import sideBar from '@/components/sideBar'
 
-export default {
-  name: "user",
-  components: { breadcrumb, sideBar },
-  methods: {}
-};
+  export default {
+    name: 'user',
+    components: { breadcrumb, sideBar },
+    methods: {},
+  }
 </script>
 <style lang="scss" scope>
 .user {

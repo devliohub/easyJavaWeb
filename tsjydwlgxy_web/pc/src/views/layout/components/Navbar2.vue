@@ -1,62 +1,83 @@
 <template>
   <div class="navbar2">
-      <main>
-        <router-link to="/index">
-          <div class="navbar2_left">
-            <img class="navbar2_left_img" src="@/assets/indexLOGO.png" />
-          </div>
+    <main>
+      <div class="navbar2_right">
+        <!-- <el-input placeholder="关键词搜索" v-model="search_word">
+          <i
+            class="el-icon-search el-input__icon"
+            slot="suffix"
+            @click="handleIconClick"
+          >
+          </i>
+        </el-input> -->
+      </div>
+    </main>
+
+    <!-- tab栏目 -->
+    <div class="index_items">
+      <ul>
+        <router-link
+          v-for="(item, index) in cateTitleList"
+          :key="index"
+          :to="'/allGoods/' + item.id"
+        >
+          <li>
+            <span :class="item.icon"></span>
+            {{ item.long_name }}
+          </li>
         </router-link>
-        <div class="navbar2_right">
-          <i class="el-icon-search"></i>
-          <input type="text" v-model.trim="search_word" @keyup.enter="globalSearch" placeholder="搜索商品" />
-          <div @click="globalSearch">搜索</div>
-        </div>
-      </main>
+      </ul>
+    </div>
   </div>
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      timer: null,
-      search_word: ""
-    }
-  },
-  watch: {
-    '$route': function(v) {
-      // console.log(v)
-      if(v.name != 'allGoods') this.search_word = ""
-    }
-  },
-  methods: {
-    globalSearch() {
-      clearTimeout(this.timer);
-      this.timer = setTimeout(() => {
+  export default {
+    data() {
+      return {
+        search_word: '',
+        cateTitleList: [], // 轮播左侧类型
+      }
+    },
+    watch: {
+      $route: function (v) {
+        // console.log(v)
+        if (v.name != 'allGoods') this.search_word = ''
+      },
+    },
+    async mounted() {
+      // 处理第一次进入session为空情况
+      if (!JSON.parse(window.sessionStorage.getItem('tpyeArr'))) {
+        let res = await cateTitle()
+        this.cateTitleList = res.data
+        window.sessionStorage.setItem('tpyeArr', JSON.stringify(res.data))
+      } else {
+        this.cateTitleList = JSON.parse(window.sessionStorage.getItem('tpyeArr'))
+      }
+    },
+    methods: {
+      handleIconClick() {
         this.$emit('handleSearch', this.search_word)
-      }, 300);
-    }
-  },
-};
+      },
+    },
+  }
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
+<style rel="stylesheet/scss" lang="scss">
 .navbar2 {
-  border-bottom: 2px solid #ff5500; 
+  background: url('../../../assets/home/top_bg.png');
   main {
-    width: 1200px; 
+    width: 1200px;
     margin: 0 auto;
     height: 120px;
-    // line-height: 120px;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     .navbar2_left {
       display: flex;
+      margin-right: 100px;
       &_img {
-        width: 100%;
-        // height: 75px;
-        // margin-right: 10px; 
+        border: 1px solid red;
       }
     }
 
@@ -66,35 +87,28 @@ export default {
       line-height: 36px;
       margin-right: 150px;
       position: relative;
-      i {
-        position: absolute;
-        left: 10px;
-        top: 9px;
-        font-size: 18px;
+      .el-input__inner {
+        border-radius: 20px !important;
       }
-      input {
-        width: 370px;
-        border: 1px solid #ff5500;
-        padding: 10px 0 10px 30px;
-        outline: none;
-        font-size: 14px;
-        color: #929292;
-        border-top-left-radius: 5px;
-        border-bottom-left-radius: 5px;
-      }
-      div {
-        &:hover {
-          opacity: .9;
-        }
-        transition: .2 ease-in-out;
-        cursor: pointer;
-        font-size: 16px;
-        text-align: center;
-        background: #ff5500;
+    }
+  }
+  .index_items {
+    width: 100%;
+    background: #660000;
+    ul {
+      display: flex;
+      justify-content: space-between;
+      width: 1200px;
+      margin: 0 auto;
+      a {
+        height: 50px;
+        line-height: 50px;
+        padding: 0 24px;
         color: #fff;
-        width: 80px;
-        border-top-right-radius: 5px;
-        border-bottom-right-radius: 5px;
+        &:hover {
+          background: #fff;
+          color: #660000;
+        }
       }
     }
   }

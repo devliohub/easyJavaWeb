@@ -10,8 +10,8 @@ import { getToken } from '@/utils/auth' // 验权
 import "element-ui/lib/theme-chalk/index.css"; // 主题样式
 import 'nprogress/nprogress.css'// Progress 进度条样式
 import "normalize.css/normalize.css";
-import '@/styles/index.scss'
 import "@/assets/iconfont/iconfont.css"
+import '@/styles/index.scss'
 
 import { cateTitle } from "@/api/common/common.js"
 

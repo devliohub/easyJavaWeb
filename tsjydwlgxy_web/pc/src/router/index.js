@@ -1,6 +1,5 @@
 import Layout from '../views/layout/Layout'
 
-// 粉丝
 export default [
   {
     path: '/',
@@ -287,7 +286,7 @@ export default [
                     meta: { title: '免单任务售后列表', roles: 'saler' },
                   }
                 ]
-              }, 
+              },
               // {
               //   path: '/saler',
               //   meta: { title: '熊抢购', icon: "el-icon-goods" },
@@ -378,12 +377,6 @@ export default [
         component: (resolve) => require(['@/views/pages/login/findPwd'], resolve),
         meta: { title: '忘记密码', islogin: false }
       },
-      {
-        path: '/agreement',
-        name: 'agreement',
-        component: (resolve) => require(['@/views/pages/register/agreement'], resolve),
-        meta: { title: '服务协议', islogin: false }
-      }
     ]
   },
   {

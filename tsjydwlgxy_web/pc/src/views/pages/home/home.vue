@@ -1,134 +1,95 @@
 <template>
   <!-- 首页 -->
   <div class="index">
-    <!-- 广告banner -->
+    <!-- 轮播图 -->
     <div class="index_banner">
-      <div class="index_banner_main">
-        <ul class="index_banner_main_left">
-          <router-link
-            v-for="(item, index) in cateTitleList"
-            :key="index"
-            :to="'/allGoods/' + item.id"
-          >
-            <li>
-              <span :class="item.icon"></span>
-              {{ item.long_name }}
-            </li>
-          </router-link>
-        </ul>
-
-        <ul class="index_banner_main_right">
-          <li class="index_banner_main_right_top">
-            <router-link
-              :to="name ? (name.platform == '2c' ? '/user/personal' : '/saler/personal') : ''"
-            >
-              <img
-                v-if="name && name.avatar"
-                :src="name.avatar"
-                @error="name.avatar=require('../../../assets/datouxiang.png')"
-              />
-              <img v-else src="@/assets/datouxiang.png" />
-            </router-link>
-            <div
-              v-if="isLogin"
-              class="index_banner_main_right_top_tips"
-            >{{ name.account || name.mobile }}</div>
-          </li>
-          <li class="index_banner_main_right_mid" v-if="!isLogin">
-            <router-link to="/login">
-              <el-button size="small" type="success">登录</el-button>
-            </router-link>
-            <router-link to="/registerDesc?type=user">
-              <el-button size="small" type="success">注册</el-button>
-            </router-link>
-          </li>
-          <li class="index_banner_main_right_bottom">
-            <div class="gonggao">公告</div>
-            <ul v-if="name && name.platform == '2b'">
-              <li>
-                <router-link to="/saler/tips?id=1">节假日放假通知</router-link>
-              </li>
-              <li>
-                <router-link to="/saler/tips?id=2">商家售后教程</router-link>
-              </li>
-              <li>
-                <router-link to="/saler/tips?id=3">商家须知及售后制度</router-link>
-              </li>
-              <li>
-                <router-link to="/saler/tips?id=4">粉丝拉黑制度</router-link>
-              </li>
-            </ul>
-            <ul v-else>
-              <li>
-                <router-link to="">节假日放假通知</router-link>
-              </li>
-              <li>
-                <router-link to="">商家售后教程</router-link>
-              </li>
-              <li>
-                <router-link to="">商家须知及售后制度</router-link>
-              </li>
-              <li>
-                <router-link to="">粉丝拉黑制度</router-link>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </div>
       <!-- 背景轮播 -->
-      <el-carousel :interval="6000" trigger="click" height="432px" arrow="always">
+      <el-carousel :interval="6000" trigger="click" arrow="always">
         <el-carousel-item>
           <div class="bannerimg1"></div>
         </el-carousel-item>
-        <el-carousel-item>
+        <!-- <el-carousel-item>
           <div class="bannerimg2"></div>
-        </el-carousel-item>
+        </el-carousel-item> -->
       </el-carousel>
     </div>
-    <!-- 两块广告 -->
-    <!-- <div class="index_2_parts">
+    <!-- 七大能力模块 -->
+    <div class="index_modules">
+      <img src="../../../assets/home/ability_bg.png" alt="" />
+      <!-- <ul>
+        <li
+          v-for="(item, index) in 8"
+          :key="index"
+          :class="{ margin_left_0: index % 4 == 3 }"
+        >
+          {{ item }}
+        </li>
+      </ul> -->
+    </div>
+    <!-- 通识sections -->
+    <div class="index_tongshi">
       <main>
-        <router-link class="active_li" to="/index/limitFree">
-          <img src="@/assets/2parts_xlmd.png" alt />
-        </router-link>
-        <router-link class="active_li" to="/index/bearBuy">
-          <img style="margin-left:20px" src="@/assets/2parts_xqg.png" alt />
-        </router-link>
-      </main>
-    </div> -->
-    <!-- 推荐好货 最新上线 新品预告 -->
-    <div class="index_3_parts">
-      <el-tabs @tab-click="tabClick" v-loading="isloading">
-        <el-tab-pane v-for="(label, index) in homeTabs" :key="index" :label="label">
-          <ul v-if="tabList.length > 0">
-            <li v-for="(item, index) in tabList" :key="index">
-              <itemCard :entity="item" />
+        <div
+          v-for="(item, index) in 4"
+          :key="index"
+          :class="{ margin_left_0: index % 2 == 1 }"
+        >
+          <header>
+            <span>通识新闻</span>
+            <span>查看更多<i class="el-icon-d-arrow-right"></i></span>
+          </header>
+          <ul>
+            <li v-for="(_item, _index) in test_entity" :key="_index">
+              <div class="title">
+                <div class="dotter"></div>
+                <span>{{ _item.desc }}</span>
+              </div>
+              <div class="time">{{ _item.time }}</div>
             </li>
           </ul>
-          <div v-else class="no_data_div">
-            <span>新品上架中 敬请期待吧</span>
-            <img src="@/assets/404_images/no_data.png" alt />
-          </div>
-        </el-tab-pane>
-      </el-tabs>
+        </div>
+      </main>
     </div>
-    <!-- 主卖场 -->
-    <div class="index_main_sections">
-      <main v-for="(item, index) in cateDescList" :key="index">
-        <img
-          class="index_main_sections_left"
-          :src="item.images"
-          alt
-          @click="handleClickImgtypes(item.id)"
-        />
-        <div class="index_main_sections_right">
-          <ul>
-            <li
-              v-for="(_item, _index) in item.activity_list"
-              :key="_index"
-              :class="{'borderTopNone': _index > 4}"
-            >
-              <itemCard :entity="_item" />
+    <!-- 学生风采 -->
+    <div class="index_xuesheng">
+      <main>
+        <header>
+          <span>学生风采</span>
+          <span>查看更多<i class="el-icon-d-arrow-right"></i></span>
+        </header>
+        <ul>
+          <li v-for="(_item, _index) in test_entity" :key="_index">
+            <img src="../../../assets/2parts_xqg.png" alt="" />
+            <div class="title">
+              {{ _item.desc }}
+            </div>
+            <div class="time">{{ _item.time }}</div>
+          </li>
+        </ul>
+      </main>
+    </div>
+    <!-- 课程成果 -->
+    <div class="index_kecheng">
+      <main>
+        <header>
+          <span>课程成果展示</span>
+          <span>查看更多<i class="el-icon-d-arrow-right"></i></span>
+        </header>
+        <div>
+          <div class="index_kecheng_left">
+            <img src="../../../assets/2parts_xqg.png" alt="" />
+            <div class="title">dsdasdadsa1231231</div>
+            <div class="time">2021-09-01</div>
+          </div>
+          <ul class="index_kecheng_right">
+            <li v-for="(_item, _index) in test_entity" :key="_index">
+              <img src="../../../assets/2parts_xqg.png" alt="" />
+              <div>
+                <div class="title">
+                  {{ _item.desc }}
+                </div>
+                <div class="time">{{ _item.time }}</div>
+              </div>
             </li>
           </ul>
         </div>
@@ -138,184 +99,236 @@
 </template>
 
 <script>
-import { cateTitle, cateDesc, indexSearch } from "@/api/common/common.js";
-import itemCard from "@/components/itemCard.vue";
-import { mapGetters } from "vuex";
+  import { cateTitle, cateDesc, indexSearch } from '@/api/common/common.js'
+  import itemCard from '@/components/itemCard.vue'
+  import { mapGetters } from 'vuex'
 
-export default {
-  components: { itemCard },
-  computed: {
-    ...mapGetters(["name"]),
-    isLogin() {
-      return this.$store.state.user.token;
-    }
-  },
-  data() {
-    return {
-      isloading: false,
-      cateDescList: [], // 下方主活动
-      cateTitleList: [], // 轮播左侧类型
-      tabList: [], // tab公用栏
-      homeTabs: ["推荐好货", "最新上线", "新品预告"]
-    };
-  },
-  mounted() {
-    if (
-      window.localStorage.getItem("invite_code") &&
-      window.localStorage.getItem("isfirst_come") == 1
-    ) {
-      window.localStorage.setItem("isfirst_come", 0);
-      this.$router.push("/registerDesc?type=user");
-    }
-    this.initData();
-  },
-  methods: {
-    async initData() {
-      this.getThreeTabs(1);
-      // 处理第一次进入session为空情况
-      if (!JSON.parse(window.sessionStorage.getItem("tpyeArr"))) {
-        let res = await cateTitle();
-        this.cateTitleList = res.data;
-        window.sessionStorage.setItem("tpyeArr", JSON.stringify(res.data));
-      } else {
-        this.cateTitleList = JSON.parse(
-          window.sessionStorage.getItem("tpyeArr")
-        );
-      }
+  export default {
+    components: { itemCard },
+    computed: {
+      ...mapGetters(['name']),
+      isLogin() {
+        return this.$store.state.user.token
+      },
+    },
+    data() {
+      return {
+        isloading: false,
+        cateDescList: [], // 下方主活动
 
-      let res1 = await cateDesc();
-      if (res1 && res1.error.errno == 200) {
-        this.cateDescList = res1.data;
+        tabList: [], // tab公用栏
+        test_entity: [
+          {
+            desc: '活动预告 | 内容标题内容标题内容标题内容标题内容标题内容标题',
+            time: '2021-07-01',
+          },
+          {
+            desc: '文章内容标题内题文章标题内容标题文章内容标题内容标题',
+            time: '2021-07-12',
+          },
+          {
+            desc: '活动预告 | 内容标题内容标题内容标题内容标题内容标题内容标题',
+            time: '2021-07-21',
+          },
+          {
+            desc: '文章内容标题内容标题文章内容标内题内容标题文章内容标题内容标题',
+            time: '2021-07-01',
+          },
+        ],
       }
     },
-    async getThreeTabs(num) {
-      this.isloading = true;
-      let res3 = await indexSearch({
-        type: 1,
-        w_type: num,
-        module_type: 1,
-        page_no: 1,
-        page_size: 6
-      });
-      if (res3 && res3.error.errno == 200) {
-        this.tabList = res3.data;
-      }
-      this.isloading = false;
+    mounted() {
+      this.initData()
     },
-    tabClick(val, event) {
-      let num = parseInt(val.index) + 1;
-      this.getThreeTabs(num);
+    methods: {
+      async initData() {
+        this.getThreeTabs(1)
+
+        let res1 = await cateDesc()
+        if (res1 && res1.error.errno == 200) {
+          this.cateDescList = res1.data
+        }
+      },
+      async getThreeTabs(num) {
+        this.isloading = true
+        let res3 = await indexSearch({
+          type: 1,
+          w_type: num,
+          module_type: 1,
+          page_no: 1,
+          page_size: 6,
+        })
+        if (res3 && res3.error.errno == 200) {
+          this.tabList = res3.data
+        }
+        this.isloading = false
+      },
+      tabClick(val, event) {
+        let num = parseInt(val.index) + 1
+        this.getThreeTabs(num)
+      },
+      handleClickImgtypes(i) {
+        this.$router.push('/allGoods/' + parseInt(i))
+      },
     },
-    handleClickImgtypes(i) {
-      this.$router.push("/allGoods/" + parseInt(i));
-    }
   }
-};
 </script>
 <style lang="scss" scoped>
 .index {
   width: 100%;
 
+  .margin_left_0 {
+    margin-right: 0 !important;
+  }
+
   .index_banner {
-    position: relative;
+    // position: relative;
 
     .el-carousel--horizontal {
       overflow: hidden;
     }
     .bannerimg1 {
-      width: 100%;
-      height: 432px;
-      background: url("https://taodaxiong-1259123353.cos.ap-shanghai.myqcloud.com/tdxWeb/sy-Banner.png") no-repeat center;
+      width: 1920px;
+      height: 360px;
+      background: url('../../../assets/home/banner1.png') no-repeat 100% 100%;
     }
-    .bannerimg2 {
+  }
+
+  .index_modules {
+    width: 100%;
+    margin-bottom: 50px;
+    & > img {
       width: 100%;
-      height: 432px;
-      background: url("https://taodaxiong-1259123353.cos.ap-shanghai.myqcloud.com/tdxWeb/Banner2.png") no-repeat center;
     }
-    &_main {
+    ul {
       width: 1200px;
       margin: 0 auto;
-      height: 432px;
-      left: calc((100% - 1200px) / 2);
-      position: absolute;
-      z-index: 999;
+      position: relative;
       display: flex;
-      justify-content: space-between;
-      &_left {
-        display: flex;
-        flex-direction: column;
-        width: 150px;
-        background: #fff;
-        font-size: 14px;
-        a {
-          transition: 0.2s ease-in-out;
-          cursor: pointer;
-          flex: 1;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          border-bottom: 1px dotted #e5e5e5;
-          .iconfont {
-            margin-right: 10px;
-            color: #ff5500;
-            background: #fff;
-            font-size: 16px;
-            transition: 0.2s ease-in-out;
-          }
-          &:hover {
-            background: #ff5500;
-            color: #fff;
-            .iconfont {
-              color: #fff;
-              background: #ff5500;
+      flex-wrap: wrap;
+      li {
+        background: rgb(238, 218, 216);
+        margin-right: 20px;
+        margin-bottom: 30px;
+        border: 1px solid #660000;
+        color: #660000;
+        flex: calc(25% - 15px);
+        height: 65px;
+        line-height: 65px;
+        text-align: center;
+      }
+    }
+  }
+
+  .index_tongshi {
+    width: 100%;
+    main {
+      width: 1200px;
+      margin: 0 auto;
+      overflow: hidden;
+      & > div {
+        width: 580px;
+        float: left;
+        margin: 0 40px 40px 0;
+        ul {
+          li {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            .title {
+              font-weight: bold;
+              color: #444;
+              display: flex;
+              align-items: center;
+              .dotter {
+                margin-right: 8px;
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background: #d9ae73;
+              }
+            }
+            .time {
+              color: #969696;
             }
           }
         }
       }
+    }
+  }
 
-      &_right {
-        width: 215px;
-        background: #fff;
-        display: flex;
-        flex-direction: column;
-        & > li {
-          text-align: center;
-          border-bottom: 1px dotted #e5e5e5;
-        }
-        &_top {
-          height: 140px;
+  .index_xuesheng {
+    width: 100%;
+    main {
+      width: 1200px;
+      margin: 0 auto;
+      & > ul {
+        overflow: hidden;
+        li {
+          float: left;
+          width: 22%;
+          margin-right: 3%;
           img {
-            margin: 20px 0 10px 0;
-            width: 80px;
-            height: 80px;
+            width: 100%;
           }
-          &_tips {
-            color: #666;
+          .title {
+            padding: 10px 0;
+            color: #444;
+            font-weight: bold;
           }
-        }
-        &_mid {
-          line-height: 76px;
-          height: 76px;
-          & > a {
-            margin: 0 5px;
+          .time {
+            color: #969696;
           }
         }
-        &_bottom {
-          padding: 0 35px;
-          flex: 1;
-          .gonggao {
-            margin: 20px 0;
+      }
+    }
+  }
+
+  .index_kecheng {
+    width: 100%;
+    main {
+      width: 1200px;
+      margin: 0 auto;
+      & > div {
+        display: flex;
+        padding: 30px 20px;
+        .index_kecheng_left {
+          flex: 3;
+          margin-right: 50px;
+          img {
+            width: 100%;
+          }
+          .title {
+            padding: 20px 0;
             font-size: 18px;
+            font-weight: bold;
           }
+          .time {
+            text-align: right;
+            color: #969696;
+          }
+        }
+        .index_kecheng_right {
+          flex: 2;
+          overflow: hidden;
+          // padding: 20px;
           li {
-            padding: 8px 0;
-            font-size: 14px;
-            a {
-              font-size: 14px;
-              font-weight: normal;
-              color: #333;
-              &:hover {
-                color: #ff5500;
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            & > img {
+              width: 180px;
+              margin-right: 24px;
+            }
+            & > div {
+              flex: 1;
+              .title {
+                padding: 10px 0;
+                color: #444;
+                font-weight: bold;
+              }
+              .time {
+                color: #969696;
               }
             }
           }
@@ -324,64 +337,24 @@ export default {
     }
   }
 
-  .index_2_parts {
-    margin: 20px 0;
-    position: relative;
-    main {
-      width: 1200px;
-      margin: 0 auto;
-      img {
-        cursor: pointer;
-        transition: 0.3s;
-        &:hover {
-          box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.2);
-        }
+  main header {
+    display: flex;
+    align-items: center;
+    color: #c00900;
+    margin-bottom: 20px;
+    span {
+      padding: 10px 0;
+      &:first-child {
+        font-size: 18px;
+        font-weight: bold;
+        border-bottom: 3px solid #c00900;
       }
-    }
-  }
-
-  .index_3_parts {
-    & > .el-tabs {
-      width: 1200px;
-      margin: 0 auto;
-    }
-    ul {
-      display: flex;
-      li {
-        width: 200px;
-        border: 1px solid #ccc;
-        border-left: 0;
-        &:first-child {
-          border-left: 1px solid #ccc;
-        }
-      }
-    }
-  }
-
-  .index_main_sections {
-    position: relative;
-    & > main {
-      width: 1200px;
-      margin: 0 auto;
-      margin-bottom: 30px;
-      display: flex;
-      .index_main_sections_left {
-        cursor: pointer;
-        width: 200px;
-      }
-      .index_main_sections_right {
-        ul {
-          display: flex;
-          flex-wrap: wrap;
-          li {
-            width: 200px;
-            border: 1px solid #ccc;
-            border-left: 0;
-          }
-          .borderTopNone {
-            border-top: 0;
-          }
-        }
+      &:last-child {
+        margin-left: 5px;
+        flex: 1;
+        text-align: right;
+        font-size: 12px;
+        border-bottom: 1px solid #c00900;
       }
     }
   }
