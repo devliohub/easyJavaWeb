@@ -8,10 +8,10 @@
       ref="swiper"
     >
       <van-swipe-item>
-        <img src="@/assets/banner1.png" alt />
+        <img src="@/assets/banner1.png" alt @click="$router.push('/search')" />
       </van-swipe-item>
       <van-swipe-item>
-        <img src="@/assets/banner2.png" alt />
+        <img src="@/assets/banner2.png" alt @click="$router.push('/search')" />
       </van-swipe-item>
     </van-swipe>
 
@@ -41,10 +41,7 @@
     <!-- 种类推荐 -->
     <section v-for="(cate, x) in cateList" :key="x">
       <div class="sy_banner">
-        <img
-          :src="cate.images_h5"
-          @click="$router.push('/limitFree?cid=' + cate.id)"
-        />
+        <img :src="cate.images_h5" @click="$router.push('/list')" />
       </div>
       <div class="ul_wrapper">
         <ul v-if="cate.activity_list.length > 0">

@@ -3,7 +3,6 @@ import VueRouter from 'vue-router'
 import App from "./App.vue";
 import routes from "./router/index";
 import store from "./store";
-// import ElementUI from "element-ui";
 import NProgress from 'nprogress' // Progress 进度条
 import { getToken } from '@/utils/auth' // 验权
 
@@ -162,23 +161,12 @@ router.beforeEach((to, from, next) => {
     if (to.meta.islogin == false) { // 登录状态禁止的页面
       next('/404')
     } else { // 登录状态 粉丝2c, 商家2b
-      if (to.meta.roles && store.getters.name) {
-        if (to.meta.roles == 'fans' && store.getters.name.platform != '2c') {
-          next('/404')
-        } else if (to.meta.roles == 'saler' && store.getters.name.platform != '2b') {
-          next('/404')
-        } else {
-          next()
-        }
-      } else { // 特殊处理商品类型下情况
-        next()
-      }
+      next()
     }
-    NProgress.done()
   } else { // 未登录状态
     to.meta.roles ? next('/login') : next()
-    NProgress.done()
   }
+  NProgress.done()
 })
 
 router.afterEach(() => {

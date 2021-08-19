@@ -26,7 +26,9 @@
       },
     },
     methods: {
-      handleClick() {},
+      handleClick() {
+        this.$router.push('./desc')
+      },
     },
   }
 </script>
