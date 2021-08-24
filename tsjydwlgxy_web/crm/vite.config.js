@@ -3,11 +3,6 @@ import vue from '@vitejs/plugin-vue'
 import vitePluginImport from 'vite-plugin-babel-import';
 import path from 'path'
 
-const baseUrl = {
-  development: './',
-  release: './'
-}
-
 // https://vitejs.dev/config/
 export default ({ mode }) => defineConfig({
   plugins: [
@@ -22,7 +17,6 @@ export default ({ mode }) => defineConfig({
       }
     ])
   ],
-  base: baseUrl[mode],
   resolve: {
     alias: {
       '~': path.resolve(__dirname, './'),
@@ -34,12 +28,12 @@ export default ({ mode }) => defineConfig({
     port: 9000,
     https: false,
     open: false,
-    // proxy: {
-    //   '/api': {
-    //     target: 'http://121.36.22.149:2000/api/',
-    //     changeOrigin: true,
-    //     rewrite: path => path.replace(/^\/api/, '')
-    //   }
-    // }
+    proxy: {
+      '/api': {
+        target: 'http://121.36.22.149:2000',
+        // target: 'https://taodaxiong.cn',
+        changeOrigin: true,
+      }
+    }
   }
 })

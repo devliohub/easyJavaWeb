@@ -9,20 +9,19 @@
     <div class="right">
       <el-popover
         placement="bottom"
-        :width="320"
+        :width="200"
         trigger="click"
         popper-class="popper-user-box"
       >
         <template #reference>
           <div class="author">
             <i class="icon el-icon-s-custom" />
-            {{ (userInfo && userInfo.nickName) || '' }}
+            {{ (userInfo && userInfo.account) || '' }}
             <i class="el-icon-caret-bottom" />
           </div>
         </template>
         <div class="nickname">
-          <p>登录名：{{ (userInfo && userInfo.loginUserName) || '' }}</p>
-          <p>昵称：{{ (userInfo && userInfo.nickName) || '' }}</p>
+          <p>登录名：{{ (userInfo && userInfo.account) || '' }}</p>
           <el-tag size="small" effect="dark" class="logout" @click="logout"
             >退出</el-tag
           >
@@ -36,7 +35,8 @@
   import { onMounted, reactive, toRefs } from 'vue'
   import { useRouter } from 'vue-router'
   import axios from '@/utils/axios'
-  import { localRemove, pathMap } from '@/utils'
+  import { localGet, localRemove, pathMap } from '@/utils'
+
   export default {
     name: 'Header',
     setup() {
@@ -49,15 +49,11 @@
       onMounted(() => {
         const pathname = window.location.hash.split('/')[1] || ''
         if (!['login'].includes(pathname)) {
-          getUserInfo()
+          state.userInfo = localGet('token')
         }
       })
-      const getUserInfo = async () => {
-        const userInfo = await axios.get('/adminUser/profile')
-        state.userInfo = userInfo
-      }
       const logout = () => {
-        axios.delete('/logout').then(() => {
+        axios.get('/api/a/loginout').then(() => {
           localRemove('token')
           window.location.reload()
         })
@@ -65,15 +61,6 @@
       const back = () => {
         router.back()
       }
-      router.afterEach((to) => {
-        console.log('to', to)
-        const { id } = to.query
-        state.name = pathMap[to.name]
-        if (id && to.name == 'add') {
-          state.name = '编辑商品'
-        }
-        state.hasBack = ['level2', 'level3', 'order_detail'].includes(to.name)
-      })
       return {
         ...toRefs(state),
         logout,

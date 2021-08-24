@@ -1,136 +1,160 @@
 <template>
-  <div class="account">
-    <el-card class="account-container">
-      <el-form
-        :model="nameForm"
-        :rules="rules"
-        ref="nameRef"
-        label-width="80px"
-        label-position="right"
-        class="demo-ruleForm"
-      >
-        <el-form-item label="登录名：" prop="loginName">
+  <el-card class="account-container">
+    <template #header>
+      <div class="header">
+        <div>
           <el-input
-            style="width: 200px"
-            v-model="nameForm.loginName"
+            style="width: 250px; margin-right: 30px"
+            type="text"
+            clearable
+            v-model="queryObj.name"
           ></el-input>
-        </el-form-item>
-        <el-form-item label="昵称：" prop="nickName">
-          <el-input style="width: 200px" v-model="nameForm.nickName"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="danger" @click="submitName">确认修改</el-button>
-        </el-form-item>
-      </el-form>
-    </el-card>
-    <el-card class="account-container">
-      <el-form
-        :model="passForm"
-        :rules="rules"
-        ref="passRef"
-        label-width="80px"
-        label-position="right"
-        class="demo-ruleForm"
-      >
-        <el-form-item label="原密码：" prop="oldpass">
-          <el-input style="width: 200px" v-model="passForm.oldpass"></el-input>
-        </el-form-item>
-        <el-form-item label="新密码：" prop="newpass">
-          <el-input style="width: 200px" v-model="passForm.newpass"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="danger" @click="submitPass">确认修改</el-button>
-        </el-form-item>
-      </el-form>
-    </el-card>
-  </div>
+          <el-button
+            type="primary"
+            size="small"
+            icon="el-icon-search"
+            @click="getDataList()"
+            >搜 索</el-button
+          >
+        </div>
+        <div>
+          <el-button
+            type="warning"
+            size="small"
+            icon="el-icon-plus"
+            @click="handleAdd()"
+            >添加用户</el-button
+          >
+        </div>
+      </div>
+    </template>
+    <el-table
+      v-loading="loading"
+      ref="multipleTable"
+      :data="tableData"
+      tooltip-effect="dark"
+      style="width: 100%"
+    >
+      <el-table-column prop="name" label="姓名"> </el-table-column>
+      <el-table-column prop="account" label="账号"> </el-table-column>
+      <el-table-column prop="create_time" label="创建时间"> </el-table-column>
+      <el-table-column label="操作" width="100">
+        <template #default="scope">
+          <a
+            style="cursor: pointer; margin-right: 10px"
+            @click="handleEdit(scope.row.id)"
+            >修改</a
+          >
+          <el-popconfirm
+            title="确定删除吗？"
+            @confirm="handleDelete(scope.row.id)"
+          >
+            <template #reference>
+              <a style="cursor: pointer">删除</a>
+            </template>
+          </el-popconfirm>
+        </template>
+      </el-table-column>
+    </el-table>
+    <!--总数超过一页，再展示分页器-->
+    <el-pagination
+      background
+      layout="prev, pager, next"
+      :total="total"
+      :page-size="queryObj.pageSize"
+      :current-page="queryObj.currentPage"
+      @current-change="changePage"
+    />
+
+    <DialogAddUser ref="addUserRef" :reload="() => getDataList()" />
+  </el-card>
 </template>
 
 <script>
-  import { onMounted, reactive, ref, toRefs } from 'vue'
-  import axios from '@/utils/axios'
+  import DialogAddUser from '@/components/DialogAddUser.vue'
   import { ElMessage } from 'element-plus'
-  import md5 from 'js-md5'
+  import { onMounted, ref, reactive, toRefs } from 'vue'
+  import axios from '@/utils/axios'
   export default {
     name: 'Account',
+    components: {
+      DialogAddUser,
+    },
     setup() {
-      const nameRef = ref(null)
-      const passRef = ref(null)
+      const addUserRef = ref(null)
       const state = reactive({
-        user: null,
-        nameForm: {
-          loginName: '',
-          nickName: '',
-        },
-        passForm: {
-          oldpass: '',
-          newpass: '',
-        },
-        rules: {
-          loginName: [
-            { required: 'true', message: '登录名不能为空', trigger: ['change'] },
-          ],
-          nickName: [
-            { required: 'true', message: '昵称不能为空', trigger: ['change'] },
-          ],
-          oldpass: [
-            { required: 'true', message: '原密码不能为空', trigger: ['change'] },
-          ],
-          newpass: [
-            { required: 'true', message: '新密码不能为空', trigger: ['change'] },
-          ],
+        loading: false,
+        tableData: [], // 数据列表
+        total: 0, // 总条数
+
+        queryObj: {
+          name: '', // 名称
+          currentPage: 1, // 当前页
+          pageSize: 10, // 分页大小
         },
       })
       onMounted(() => {
-        axios.get('/adminUser/profile').then((res) => {
-          state.user = res
-          state.nameForm.loginName = res.loginUserName
-          state.nameForm.nickName = res.nickName
-        })
+        getDataList()
       })
-      const submitName = () => {
-        nameRef.value.validate((vaild) => {
-          if (vaild) {
-            axios
-              .put('/adminUser/name', {
-                loginUserName: state.nameForm.loginName,
-                nickName: state.nameForm.nickName,
-              })
-              .then(() => {
-                ElMessage.success('修改成功')
-                window.location.reload()
-              })
-          }
-        })
+      // 获取列表
+      const getDataList = () => {
+        state.loading = true
+        axios
+          .get('/api/a/user/list', {
+            params: state.queryObj,
+          })
+          .then((res) => {
+            state.tableData = res.list
+            state.total = res.total
+            state.loading = false
+          })
       }
-      const submitPass = () => {
-        passRef.value.validate((vaild) => {
-          if (vaild) {
-            axios
-              .put('/adminUser/password', {
-                originalPassword: md5(state.passForm.oldpass),
-                newPassword: md5(state.passForm.newpass),
-              })
-              .then(() => {
-                ElMessage.success('修改成功')
-                window.location.reload()
-              })
-          }
-        })
+      // 添加商品
+      const handleAdd = () => {
+        addUserRef.value.open()
+      }
+      // 修改商品
+      const handleEdit = (id) => {
+        addUserRef.value.open(id)
+      }
+      const handleDelete = (id) => {
+        axios
+          .get('/api/a/user/delete', {
+            params: {
+              id: id,
+            },
+          })
+          .then(() => {
+            ElMessage.success('删除成功')
+            getDataList()
+          })
+      }
+      const changePage = (val) => {
+        state.queryObj.currentPage = val
+        getDataList()
       }
       return {
         ...toRefs(state),
-        nameRef,
-        passRef,
-        submitName,
-        submitPass,
+        getDataList,
+        changePage,
+        handleAdd,
+        handleEdit,
+        addUserRef,
+        handleDelete,
       }
     },
   }
 </script>
 
-<style>
+<style scoped>
 .account-container {
-  margin-bottom: 20px;
+  min-height: 100%;
+}
+.account-container .header {
+  display: flex;
+  justify-content: space-between;
+}
+.el-card.is-always-shadow {
+  min-height: 100% !important;
 }
 </style>

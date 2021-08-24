@@ -2,13 +2,11 @@
   <div class="login-body">
     <div class="login-container">
       <div class="head">
-        <img
-          class="logo"
-          src="https://s.weituibao.com/1582958061265/mlogo.png"
-        />
         <div class="name">
-          <div class="title">新蜂商城</div>
-          <div class="tips">Vue3.0 后台管理系统</div>
+          <div class="title">
+            东莞理工学院通识教育中心 <br />
+            后台管理系统
+          </div>
         </div>
       </div>
       <el-form
@@ -33,12 +31,8 @@
           ></el-input>
         </el-form-item>
         <el-form-item>
-          <div style="color: #333">登录表示您已同意<a>《服务条款》</a></div>
           <el-button style="width: 100%" type="primary" @click="submitForm"
             >立即登录</el-button
-          >
-          <el-checkbox v-model="checked" @change="!checked"
-            >下次自动登录</el-checkbox
           >
         </el-form-item>
       </el-form>
@@ -48,9 +42,10 @@
 
 <script>
   import axios from '@/utils/axios'
-  import md5 from 'js-md5'
   import { reactive, ref, toRefs, onMounted } from 'vue'
   import { localSet } from '@/utils'
+  import { ElMessage } from 'element-plus'
+
   export default {
     name: 'Login',
     setup() {
@@ -60,7 +55,6 @@
           username: '',
           password: '',
         },
-        checked: true,
         rules: {
           username: [
             { required: 'true', message: '账户不能为空', trigger: 'blur' },
@@ -74,13 +68,14 @@
         loginForm.value.validate((valid) => {
           if (valid) {
             axios
-              .get('/a/login', {
+              .get('/api/a/login', {
                 params: {
                   account: state.ruleForm.username || '',
                   password: state.ruleForm.password,
                 },
               })
               .then((res) => {
+                ElMessage.success('登陆成功')
                 localSet('token', res)
                 window.location.href = '/'
               })
@@ -93,19 +88,7 @@
       const resetForm = () => {
         loginForm.value.resetFields()
       }
-      onMounted(() => {
-        // 获取远端图片
-        axios({
-          method: 'get',
-          url: 'http://121.36.22.149:2000/api/a/login',
-          params: {
-            account: 'admin',
-            password: '123456',
-          },
-        }).then(function (res) {
-          console.log(res)
-        })
-      })
+      onMounted(() => {})
       return {
         ...toRefs(state),
         loginForm,
@@ -123,11 +106,11 @@
   align-items: center;
   width: 100%;
   background-color: #fff;
-  /* background-image: linear-gradient(25deg, #077f7c, #3aa693, #5ecfaa, #7ffac2); */
+  background-image: linear-gradient(25deg, #077f7c, #3aa693, #5ecfaa, #7ffac2);
 }
 .login-container {
   width: 420px;
-  height: 500px;
+  height: 450px;
   background-color: #fff;
   border-radius: 4px;
   box-shadow: 0px 21px 41px 0px rgba(0, 0, 0, 0.2);
@@ -138,19 +121,11 @@
   align-items: center;
   padding: 40px 0 20px 0;
 }
-.head img {
-  width: 100px;
-  height: 100px;
-  margin-right: 20px;
-}
 .head .title {
+  text-align: center;
   font-size: 28px;
   color: #1baeae;
   font-weight: bold;
-}
-.head .tips {
-  font-size: 12px;
-  color: #999;
 }
 .login-form {
   width: 70%;

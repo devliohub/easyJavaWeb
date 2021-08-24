@@ -37,9 +37,6 @@
               <el-menu-item index="/good"
                 ><i class="el-icon-s-goods" />商品管理</el-menu-item
               >
-              <el-menu-item index="/guest"
-                ><i class="el-icon-user-solid" />会员管理</el-menu-item
-              >
               <el-menu-item index="/order"
                 ><i class="el-icon-s-order" />订单管理</el-menu-item
               >
@@ -51,7 +48,7 @@
             </template>
             <el-menu-item-group>
               <el-menu-item index="/account"
-                ><i class="el-icon-lock" />用户密码</el-menu-item
+                ><i class="el-icon-lock" />用户管理</el-menu-item
               >
             </el-menu-item-group>
           </el-submenu>

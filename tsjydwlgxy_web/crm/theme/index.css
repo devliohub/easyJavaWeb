@@ -17572,7 +17572,7 @@
     background: #303133;
     color: #FFFFFF; }
   .el-tooltip__popper.is-light {
-    background: #FFFFFF;
+    background: #303133;
     border: 1px solid #303133; }
     .el-tooltip__popper.is-light[x-placement^="top"] .popper__arrow {
       border-top-color: #303133; }
