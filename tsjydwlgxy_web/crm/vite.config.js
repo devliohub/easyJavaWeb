@@ -30,12 +30,16 @@ export default ({ mode }) => defineConfig({
     }
   },
   server: {
-    proxy: {
-      '/api': {
-        target: 'http://backend-api-02.newbee.ltd/manage-api/v1',
-        changeOrigin: true,
-        rewrite: path => path.replace(/^\/api/, '')
-      }
-    }
+    host: '0.0.0.0',
+    port: 9000,
+    https: false,
+    open: false,
+    // proxy: {
+    //   '/api': {
+    //     target: 'http://121.36.22.149:2000/api/',
+    //     changeOrigin: true,
+    //     rewrite: path => path.replace(/^\/api/, '')
+    //   }
+    // }
   }
 })

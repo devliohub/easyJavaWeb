@@ -36,10 +36,10 @@ export function getMsg(obj) {
 // 用户首页信息
 export function userIndex() {
     return request({
-      url: '/u/index',
-      method: 'get',
+        url: '/u/index',
+        method: 'get',
     })
-  }
+}
 
 // 用户（PC活动列表）
 export function order_list(obj) {
@@ -129,10 +129,11 @@ export function cateSearch() {
     })
 }
 // 商品活动分类
-export function cateTitle() {
+export function cateTitle(obj) {
     return request({
-        url: '/pa/cate',
-        method: 'get'
+        url: '/a/login',
+        method: 'get',
+        params: obj
     })
 }
 // 商品活动详情

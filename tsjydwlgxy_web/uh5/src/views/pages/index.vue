@@ -127,7 +127,10 @@
       })
       // 处理第一次进入session为空情况
       if (!JSON.parse(window.sessionStorage.getItem('tpyeArr'))) {
-        let res = await cateTitle()
+        let res = await cateTitle({
+          account: 'test1',
+          password: '123456',
+        })
         this.classicTabs = res.data
         window.sessionStorage.setItem('tpyeArr', JSON.stringify(res.data))
       } else {

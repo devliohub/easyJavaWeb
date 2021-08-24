@@ -60,22 +60,27 @@
             <el-form-item>
               <el-button
                 type="primary"
-                style="width:100%"
+                style="width: 100%"
                 :loading="loading"
                 @click.native.prevent="handleLogin('user_form')"
               >
-                <span style="font-weight:bold;font-size:20px">登 录</span>
+                <span style="font-weight: bold; font-size: 20px">登 录</span>
               </el-button>
             </el-form-item>
-            
+
             <div class="tips">
               <div class="tips_main">
                 <router-link to="/registerDesc?type=user">
-                  <img src="../../../assets/components/right_arrow.png" alt />&nbsp;
+                  <img
+                    src="../../../assets/components/right_arrow.png"
+                    alt
+                  />&nbsp;
                   <span>没有账号 免费注册</span>
                 </router-link>
               </div>
-              <a class="forget" @click="$router.push('/findPwd?type=user')">忘记密码？</a>
+              <a class="forget" @click="$router.push('/findPwd?type=user')"
+                >忘记密码？</a
+              >
               <!-- <div class="tips_others">
                 <img src="../../../assets/components/weixin_icon.png" alt />
               </div> -->
@@ -120,22 +125,25 @@
                 </template>
               </el-input>
             </el-form-item>
-            
+
             <!-- 登录按钮 -->
             <el-form-item>
               <el-button
                 type="primary"
-                style="width:100%"
+                style="width: 100%"
                 :loading="loading"
                 @click.native.prevent="handleLogin('saler_form')"
               >
-                <span style="font-weight:bold;font-size:20px">登 录</span>
+                <span style="font-weight: bold; font-size: 20px">登 录</span>
               </el-button>
             </el-form-item>
             <div class="tips">
               <div class="tips_main">
                 <router-link to="/registerDesc?type=saler">
-                  <img src="../../../assets/components/right_arrow.png" alt />&nbsp;
+                  <img
+                    src="../../../assets/components/right_arrow.png"
+                    alt
+                  />&nbsp;
                   <span>没有账号 免费注册</span>
                 </router-link>
               </div>
@@ -149,63 +157,79 @@
 </template>
 
 <script>
-import { validatePass } from "@/utils/validate.js";
+  import { validatePass } from '@/utils/validate.js'
 
-export default {
-  name: "login",
-  data() {
-    return {
-      activeName: "saler",
-      // 用户
-      user_form: {
-        username: "", //18827035411
-        password: "", //123456
-        platform: '2c'
+  export default {
+    name: 'login',
+    data() {
+      return {
+        activeName: 'saler',
+        // 用户
+        user_form: {
+          username: '', //18827035411
+          password: '', //123456
+          platform: '2c',
+        },
+        user_rules: {
+          username: [
+            { required: true, trigger: 'blur', message: '请输入用户名' },
+          ],
+          password: [
+            { required: true, trigger: 'blur', validator: validatePass },
+          ],
+        },
+        // 商家
+        saler_form: {
+          username: '', //pipi
+          password: '', //1234567
+          platform: '2b',
+        },
+        saler_rules: {
+          username: [
+            {
+              required: true,
+              trigger: ['blur', 'change'],
+              message: '请输入用户名',
+            },
+          ],
+          password: [
+            {
+              required: true,
+              trigger: ['blur', 'change'],
+              validator: validatePass,
+            },
+          ],
+        },
+        loading: false,
+      }
+    },
+    mounted() {
+      this.activeName = this.$route.query.type || 'saler'
+    },
+    methods: {
+      handleLogin(str) {
+        this.$refs[str].validate((valid) => {
+          if (valid) {
+            this.loading = true
+            this.$store
+              .dispatch('Login', this[str])
+              .then((res) => {
+                if (res) {
+                  this.$router.push({ path: '/' })
+                  this.$message.success('登录成功！')
+                }
+                this.loading = false
+              })
+              .catch((err) => {
+                this.loading = false
+              })
+          } else {
+            return false
+          }
+        })
       },
-      user_rules: {
-        username: [{ required: true, trigger: "blur", message: "请输入用户名" }],
-        password: [{ required: true, trigger: "blur", validator: validatePass }]
-      },
-      // 商家
-      saler_form: {
-        username: "", //pipi
-        password: "", //1234567
-        platform: '2b'
-      },
-      saler_rules: {
-        username: [{ required: true, trigger: ["blur", "change"], message: "请输入用户名" }],
-        password: [{ required: true, trigger: ["blur", "change"], validator: validatePass }]
-      },
-      loading: false
-    };
-  },
-  mounted() {
-    this.activeName = this.$route.query.type || "saler";
-  },
-  methods: {
-    handleLogin(str) {
-      this.$refs[str].validate(valid => {
-        if (valid) {
-          this.loading = true;
-          this.$store
-            .dispatch("Login", this[str])
-            .then(res => {
-              if (res) {
-                this.$router.push({ path: "/" });
-                this.$message.success("登录成功！");
-              }
-              this.loading = false;
-            })
-            .catch(err => {
-              this.loading = false;
-            });
-        } else {
-          return false;
-        }
-      });
-    }
+    },
   }
-};
 </script>
 <style lang="scss">
 .login {
@@ -228,7 +252,8 @@ export default {
   position: relative;
   height: calc(100vh - 160px);
   width: 100%;
-  background: url("https://taodaxiong-1259123353.cos.ap-shanghai.myqcloud.com/tdxWeb/sjdl_imgbeijing.png") no-repeat;
+  background: url('https://taodaxiong-1259123353.cos.ap-shanghai.myqcloud.com/tdxWeb/sjdl_imgbeijing.png')
+    no-repeat;
   background-size: cover;
   // 右侧
   & > main {
