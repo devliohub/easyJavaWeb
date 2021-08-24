@@ -90,7 +90,7 @@ public class UpdateServlet extends AdminBaseServlet
 	        obj.is_top =  is_top ;
 	        obj.cover =  cover ;
 	        obj.update_time = new Date().getTime() / 1000;	
-	        var ret =  ArticleService.update(obj);
+	        int ret =  ArticleService.update(obj);
 	        if(ret == 0)
 	        {
 	        	// TODO  Log

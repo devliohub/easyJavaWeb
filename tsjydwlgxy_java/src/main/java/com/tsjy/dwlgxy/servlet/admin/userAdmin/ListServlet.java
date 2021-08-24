@@ -12,6 +12,7 @@ import com.tsjy.dwlgxy.common.utils.*;
 import com.tsjy.dwlgxy.common.conf.*;
 import com.tsjy.dwlgxy.common.exception.*;
 import com.tsjy.dwlgxy.common.AdminBaseServlet;
+import com.tsjy.dwlgxy.service.ArticleService;
 import com.tsjy.dwlgxy.service.UserAdminService;
 
 
@@ -44,17 +45,33 @@ public class ListServlet extends AdminBaseServlet
 	            );
 	        	
 	        }
+			
+			
+			// #
+		    StringBuilder sb = new StringBuilder();
+		    if( StringUtil.valid(name) ) 
+		    {
+		    	sb.append("name like '%").append(name).append("%'").append(" and is_delete=0");
+		    }
+		    else
+		    {
+		    	sb.append("is_delete=0");
+		    }
+	    	String where = sb.toString();
 	        
 			
 			
 			//#
-	        var list = UserAdminService.getRows("is_delete=0", "id desc", pageNo, pageSize);
+	        List<UserAdmin> list = UserAdminService.getRows(where, "id desc", pageNo, pageSize);
+	        long total = UserAdminService.getCount(where);
 	        
 	        
 	        
-	        
-	        //#
-			return jsonReturn(list);
+			//#
+			return jsonReturn(new PageData(
+					total, 
+					list
+			));
 		  }
 		  catch (UserException ex){
 			    logger.error("exception:", ex);

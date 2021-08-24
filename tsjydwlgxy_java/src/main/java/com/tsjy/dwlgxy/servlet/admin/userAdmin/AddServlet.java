@@ -64,7 +64,7 @@ public class AddServlet extends AdminBaseServlet
 	        obj.password = password;
 	        obj.rolemenuids =  StringUtil.splitString(rolemenuids, ",") ;
 	        obj.create_time = new Date().getTime() / 1000;	
-	        var ret = UserAdminService.add(obj);
+	        long ret = UserAdminService.add(obj);
 	        if(ret == 0)
 	        {
 	        	// TODO  Log

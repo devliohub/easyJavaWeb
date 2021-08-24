@@ -34,7 +34,7 @@ public class MenusServlet extends BaseServlet
 			
 			  
 			//#
-	        var list = MenuService.getRows( String.format("pid=%s and is_delete=0 ", pid), "sortnum asc");
+	        List<Menu> list = MenuService.getRows( String.format("pid=%s and is_delete=0 ", pid), "sortnum asc");
 		        
 		        
 		    

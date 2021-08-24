@@ -42,7 +42,7 @@ public class ListServlet extends AdminBaseServlet
 			
 			
 			//#
-	        var list = BannerService.getRows("is_delete=0", "sortnum asc");
+	        List<Banner> list = BannerService.getRows("is_delete=0", "sortnum asc");
 	        
 	        
 	        

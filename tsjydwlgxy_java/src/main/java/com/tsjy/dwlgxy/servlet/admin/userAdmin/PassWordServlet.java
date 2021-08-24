@@ -74,7 +74,7 @@ public class PassWordServlet extends AdminBaseServlet
 	         
 			this.userInfo.account = newpassword;
 			this.userInfo.update_time = new Date().getTime() / 1000;	
-	        var ret = UserAdminService.updatePassWord(this.userInfo);
+	        int ret = UserAdminService.updatePassWord(this.userInfo);
 	        if(ret == 0)
 	        {
 	        	// TODO  Log

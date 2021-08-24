@@ -109,7 +109,7 @@ public class MenuService
 	
 	//
 	public static Menu extractRow(ResultSet rs) throws SQLException {
-		var obj = new Menu();
+		Menu obj = new Menu();
 		obj.id  = rs.getInt("id");
 		obj.pid  = rs.getInt("pid");
 		obj.name  = rs.getString("name");

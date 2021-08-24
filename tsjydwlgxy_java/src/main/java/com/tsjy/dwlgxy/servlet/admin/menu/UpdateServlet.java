@@ -84,7 +84,7 @@ public class UpdateServlet extends AdminBaseServlet
 			obj.layout = layout ;
 	        obj.url = url;
 	        obj.update_time = new Date().getTime() / 1000;	
-	        var ret =  MenuService.update(obj);
+	        int ret =  MenuService.update(obj);
 	        if(ret == 0)
 	        {
 	        	// TODO  Log

@@ -89,7 +89,7 @@ public class CourseService
 	
 	//
 	public static Course extractRow(ResultSet rs) throws SQLException {
-		var obj = new Course();
+		Course obj = new Course();
 		obj.id  = rs.getLong("id");
 		obj.name  = rs.getString("name");
 		obj.url  = rs.getString("url");

@@ -80,7 +80,7 @@ public class UpdateServlet extends AdminBaseServlet
 	        obj.img = img;
 			obj.url = url ;
 	        obj.update_time = new Date().getTime() / 1000;	
-	        var ret =  BannerService.update(obj);
+	        int ret =  BannerService.update(obj);
 	        if(ret == 0)
 	        {
 	        	// TODO  Log

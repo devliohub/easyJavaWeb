@@ -13,6 +13,7 @@ import com.tsjy.dwlgxy.common.conf.*;
 import com.tsjy.dwlgxy.common.exception.*;
 import com.tsjy.dwlgxy.common.AdminBaseServlet;
 import com.tsjy.dwlgxy.service.CourseService;
+import com.tsjy.dwlgxy.service.UserAdminService;
 
 
 
@@ -30,6 +31,8 @@ public class ListServlet extends AdminBaseServlet
 		  {
 			  
 			//#
+		    int module_id   = StringUtil.getInt(request.getParameter("module_id"), 0)  ;
+	        int type_id   = StringUtil.getInt(request.getParameter("type_id"), 0)  ;
 		    String name   = StringUtil.getString(request.getParameter("name"), "")  ;
 	        int  pageNo   = StringUtil.getInt(request.getParameter("pageNo"), 1);
 	        int  pageSize = StringUtil.getInt(request.getParameter("pageSize"), 10);
@@ -44,17 +47,34 @@ public class ListServlet extends AdminBaseServlet
 	            );
 	        	
 	        }
+			
+			
+			// #
+		    StringBuilder sb = new StringBuilder();
+		    sb.append("module_id=").append(module_id);
+		    sb.append(" and type_id=").append(type_id);
+		    if( StringUtil.valid(name) ) 
+		    {
+		    	sb.append(" and name like '%").append(name).append("%'");
+		    }
+	    	sb.append(" and is_delete=0");
+	    	String where = sb.toString();
+		  
 	        
 			
 			
 			//#
-	        var list = CourseService.getRows("is_delete=0", "id desc", pageNo, pageSize);
+	        List<Course> list = CourseService.getRows(where, "id desc", pageNo, pageSize);
+	        long total = CourseService.getCount(where);
 	        
 	        
 	        
 	        
 	        //#
-			return jsonReturn(list);
+			return jsonReturn(new PageData(
+					total, 
+					list
+			));
 		  }
 		  catch (UserException ex){
 			    logger.error("exception:", ex);

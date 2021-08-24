@@ -88,13 +88,14 @@ public class UserAdminService
 	
 	
 	//
-	public static long getCount() throws SQLException {
+	public static long getCount(String where) throws SQLException {
 		//
 		long count = 0;
 		
 		//TODO repalce exec 'show table status' get rows || set max const
 		try (Connection conn = DbConfig.getPool().getConnection()) { 
-			try (PreparedStatement ps = conn.prepareStatement("SELECT count(id) as count FROM user_admin")) {
+			String sql = String.format("SELECT count(id) as count FROM user_admin WHERE %s", where);
+			try (PreparedStatement ps = conn.prepareStatement(sql)) {
 				 
 				try (ResultSet rs = ps.executeQuery()) {
 					while (rs.next()) {
@@ -110,7 +111,7 @@ public class UserAdminService
 	
 	//
 	public static UserAdmin extractRow(ResultSet rs) throws SQLException {
-		var obj = new UserAdmin();
+		UserAdmin obj = new UserAdmin();
 		obj.id  = rs.getLong("id");
 		obj.name  = rs.getString("name");
 		obj.account  = rs.getString("account");

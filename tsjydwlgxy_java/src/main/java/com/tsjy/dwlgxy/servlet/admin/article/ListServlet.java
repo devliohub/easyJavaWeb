@@ -30,7 +30,9 @@ public class ListServlet extends AdminBaseServlet
 		  {
 			  
 			//#
-		    String name   = StringUtil.getString(request.getParameter("name"), "")  ;
+		    int menu_pid   = StringUtil.getInt(request.getParameter("menu_pid"), 0)  ;
+	        int menu_id    = StringUtil.getInt(request.getParameter("menu_id"), 0)  ;
+		    String title   = StringUtil.getString(request.getParameter("title"), "")  ;
 	        int  pageNo   = StringUtil.getInt(request.getParameter("pageNo"), 1);
 	        int  pageSize = StringUtil.getInt(request.getParameter("pageSize"), 10);
 	        
@@ -44,17 +46,33 @@ public class ListServlet extends AdminBaseServlet
 	            );
 	        	
 	        }
+			
+			
+			
+			// #
+		    StringBuilder sb = new StringBuilder();
+		    sb.append("menu_pid=").append(menu_pid);
+		    sb.append(" and menu_id=").append(menu_id);
+		    if( StringUtil.valid(title) ) 
+		    {
+		    	sb.append(" and title like '%").append(title).append("%'");
+		    }
+	    	sb.append(" and is_delete=0");
+	    	String where = sb.toString();
 	        
 			
 			
 			//#
-	        var list = ArticleService.getRows("is_delete=0", "id desc", pageNo, pageSize);
-	        
+	        List<Article> list = ArticleService.getRows(where, "id desc", pageNo, pageSize);
+	        long total = ArticleService.getCount(where);
 	        
 	        
 	        
 	        //#
-			return jsonReturn(list);
+			return jsonReturn(new PageData(
+					total, 
+					list
+			));
 		  }
 		  catch (UserException ex){
 			    logger.error("exception:", ex);
