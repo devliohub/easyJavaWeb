@@ -42,7 +42,7 @@ public class ListServlet extends AdminBaseServlet
 			
 			
 			//#
-	        var list = MenuService.getRows("is_delete=0", "pid asc, sortnum asc");
+	        List<Menu> list = MenuService.getRows("is_delete=0", "pid asc, sortnum asc");
 	        
 	        
 	        

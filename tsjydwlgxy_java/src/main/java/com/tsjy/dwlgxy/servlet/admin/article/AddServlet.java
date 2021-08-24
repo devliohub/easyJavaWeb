@@ -78,7 +78,7 @@ public class AddServlet extends AdminBaseServlet
 	        obj.create_uid =  this.userInfo.id ;
 	        obj.create_uname =  this.userInfo.name ;
 	        obj.create_time = new Date().getTime() / 1000;	
-	        var ret = ArticleService.add(obj);
+	        long ret = ArticleService.add(obj);
 	        if(ret == 0)
 	        {
 	        	// TODO  Log

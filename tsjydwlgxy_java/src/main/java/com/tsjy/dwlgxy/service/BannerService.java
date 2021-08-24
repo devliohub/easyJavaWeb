@@ -109,7 +109,7 @@ public class BannerService
 	
 	//
 	public static Banner extractRow(ResultSet rs) throws SQLException {
-		var obj = new Banner();
+		Banner obj = new Banner();
 		obj.id  = rs.getInt("id");
 		obj.img  = rs.getString("img");
 		obj.url  = rs.getString("url");

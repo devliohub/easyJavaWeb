@@ -61,7 +61,7 @@ public class DeleteServlet extends AdminBaseServlet
 	        
 	        
 	        //#
-	        var ret = BannerService.delete(id);
+	        int ret = BannerService.delete(id);
 	        if(ret == 0)
 	        {
 	        	// TODO  Log

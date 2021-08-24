@@ -52,7 +52,7 @@ public class ListServlet extends BaseServlet
 			//#
 	        String wname  = StringUtil.valid(name) ? String.format(" and name like '%%s%'", name) : "";
 	        String where  = String.format("module_id=%s and type_id=%s %s and is_delete=0", module_id, type_id, wname);
-	        var  list  = CourseService.getRows(
+	        List<Course>  list  = CourseService.getRows(
 	        		where, 
 	        		"create_time desc", 
 	        		pageNo, 

@@ -65,14 +65,14 @@ public class SortServlet extends AdminBaseServlet
 	        if( sorttype.equals("prev") )
         	// prev
 	        {
-	        	var objPrevList = MenuService.getLimitRows( String.format("pid=%s and sortnum < %s and is_delete=0 ", obj.pid, obj.sortnum), "pid asc, sortnum asc", 1);
+	        	List<Menu> objPrevList = MenuService.getLimitRows( String.format("pid=%s and sortnum < %s and is_delete=0 ", obj.pid, obj.sortnum), "pid asc, sortnum asc", 1);
 	        	if( objPrevList != null )
 	        	{
 	        		Menu objPrev = objPrevList.get(0);
 	        		//
 	    	        obj.sortnum = objPrev.sortnum - 1;
 	    	        obj.update_time = new Date().getTime() / 1000;	
-	    	        var ret =  MenuService.updateSortNum(obj);
+	    	        int ret =  MenuService.updateSortNum(obj);
 	    	        if(ret == 0)
 	    	        {
 	    	        	// TODO  Log
@@ -87,14 +87,14 @@ public class SortServlet extends AdminBaseServlet
         	// next
 	        {
 	        	
-	        	var objNextList = MenuService.getLimitRows( String.format("pid=%s and sortnum > %s and is_delete=0 ", obj.pid, obj.sortnum), "pid asc, sortnum asc", 1);
+	        	List<Menu> objNextList = MenuService.getLimitRows( String.format("pid=%s and sortnum > %s and is_delete=0 ", obj.pid, obj.sortnum), "pid asc, sortnum asc", 1);
 	        	if( objNextList != null )
 	        	{
 	        		Menu objNext = objNextList.get(0);
 	        		//
 	    	        obj.sortnum = objNext.sortnum + 1;
 	    	        obj.update_time = new Date().getTime() / 1000;	
-	    	        var ret =  MenuService.updateSortNum(obj);
+	    	        int ret =  MenuService.updateSortNum(obj);
 	    	        if(ret == 0)
 	    	        {
 	    	        	// TODO  Log

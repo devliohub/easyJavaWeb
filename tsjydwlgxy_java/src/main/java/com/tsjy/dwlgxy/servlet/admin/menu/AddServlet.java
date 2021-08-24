@@ -71,7 +71,7 @@ public class AddServlet extends AdminBaseServlet
 	        obj.url = url;
 	        obj.sortnum =  new Date().getTime() / 1000;	
 	        obj.create_time = new Date().getTime() / 1000;	
-	        var ret = MenuService.add(obj);
+	        long ret = MenuService.add(obj);
 	        if(ret == 0)
 	        {
 	        	// TODO  Log

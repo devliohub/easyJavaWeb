@@ -52,7 +52,7 @@ public class ListServlet extends BaseServlet
 			//#
 	        String wtitle  = StringUtil.valid(title) ? String.format(" and title like '%%s%'", title) : "";
 	        String where   = String.format("menu_pid=%s and menu_id=%s %s and is_delete=0", menu_pid, menu_id, wtitle);
-	        var  list  = ArticleService.getRows(
+	        List<Article>  list  = ArticleService.getRows(
 	        		where, 
 	        		"is_top desc, create_time desc", 
 	        		pageNo, 

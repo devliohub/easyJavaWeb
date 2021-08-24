@@ -77,7 +77,7 @@ public class UpdateServlet extends AdminBaseServlet
 	        obj.password = password;
 	        obj.rolemenuids =  StringUtil.splitString(rolemenuids, ",") ;
 	        obj.update_time = new Date().getTime() / 1000;	
-	        var ret = UserAdminService.update(obj);
+	        int ret = UserAdminService.update(obj);
 	        if(ret == 0)
 	        {
 	        	// TODO  Log

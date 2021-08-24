@@ -62,7 +62,7 @@ public class DeleteServlet extends AdminBaseServlet
 	        
 	        
 	        //#
-	        var ret = ArticleService.delete(id);
+	        int ret = ArticleService.delete(id);
 	        if(ret == 0)
 	        {
 	        	// TODO  Log

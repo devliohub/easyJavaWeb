@@ -86,7 +86,7 @@ public class UpdateServlet extends AdminBaseServlet
 	        obj.type_id =  type_id ;
 	        obj.cover =  cover ;
 	        obj.update_time = new Date().getTime() / 1000;	
-	        var ret =  CourseService.update(obj);
+	        int ret =  CourseService.update(obj);
 	        if(ret == 0)
 	        {
 	        	// TODO  Log

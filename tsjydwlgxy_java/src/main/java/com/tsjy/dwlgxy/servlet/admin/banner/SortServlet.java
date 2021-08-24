@@ -15,7 +15,7 @@ import com.tsjy.dwlgxy.service.*;
 
 
 
-@WebServlet(urlPatterns = "/a/banner/info")
+@WebServlet(urlPatterns = "/a/banner/sort")
 public class SortServlet extends AdminBaseServlet 
 {
 	
@@ -65,14 +65,14 @@ public class SortServlet extends AdminBaseServlet
 	        if( sorttype.equals("prev") )
         	// prev
 	        {
-	        	var objPrevList = BannerService.getLimitRows( String.format("is_delete=0  and sortnum < %s", obj.sortnum), "sortnum asc", 1);
+	        	List<Banner> objPrevList = BannerService.getLimitRows( String.format("is_delete=0  and sortnum < %s", obj.sortnum), "sortnum asc", 1);
 	        	if( objPrevList != null )
 	        	{
 	        		Banner objPrev = objPrevList.get(0);
 	        		//
 	    	        obj.sortnum = objPrev.sortnum - 1;
 	    	        obj.update_time = new Date().getTime() / 1000;	
-	    	        var ret =  BannerService.updateSortNum(obj);
+	    	        int ret =  BannerService.updateSortNum(obj);
 	    	        if(ret == 0)
 	    	        {
 	    	        	// TODO  Log
@@ -87,14 +87,14 @@ public class SortServlet extends AdminBaseServlet
         	// next
 	        {
 	        	
-	        	var objNextList = BannerService.getLimitRows( String.format("is_delete=0  and sortnum > %s", obj.sortnum), "sortnum asc", 1);
+	        	List<Banner> objNextList = BannerService.getLimitRows( String.format("is_delete=0  and sortnum > %s", obj.sortnum), "sortnum asc", 1);
 	        	if( objNextList != null )
 	        	{
 	        		Banner objNext = objNextList.get(0);
 	        		//
 	    	        obj.sortnum = objNext.sortnum + 1;
 	    	        obj.update_time = new Date().getTime() / 1000;	
-	    	        var ret =  BannerService.updateSortNum(obj);
+	    	        int ret =  BannerService.updateSortNum(obj);
 	    	        if(ret == 0)
 	    	        {
 	    	        	// TODO  Log

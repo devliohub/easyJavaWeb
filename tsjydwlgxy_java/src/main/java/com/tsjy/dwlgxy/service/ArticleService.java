@@ -89,7 +89,7 @@ public class ArticleService
 	
 	//
 	public static Article extractRow(ResultSet rs) throws SQLException {
-		var obj = new Article();
+		Article obj = new Article();
 		obj.id  = rs.getLong("id");
 		obj.title  = rs.getString("title");
 		obj.content  = rs.getString("content");
