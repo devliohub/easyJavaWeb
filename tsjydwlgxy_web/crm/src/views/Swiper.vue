@@ -71,7 +71,7 @@
       layout="prev, pager, next"
       :total="total"
       :page-size="pageSize"
-      :current-page="currentPage"
+      :current-page="pageNo"
       @current-change="changePage"
     />
 
@@ -97,7 +97,7 @@
         tableData: [], // 数据列表
         multipleSelection: [], // 选中项
         total: 0, // 总条数
-        currentPage: 1, // 当前页
+        pageNo: 1, // 当前页
         pageSize: 10, // 分页大小
         type: 'add', // 操作类型
       })
@@ -110,14 +110,14 @@
         axios
           .get('/carousels', {
             params: {
-              pageNumber: state.currentPage,
+              pageNumber: state.pageNo,
               pageSize: state.pageSize,
             },
           })
           .then((res) => {
             state.tableData = res.list
             state.total = res.totalCount
-            state.currentPage = res.currPage
+            state.pageNo = res.currPage
             state.loading = false
           })
       }
@@ -166,7 +166,7 @@
           })
       }
       const changePage = (val) => {
-        state.currentPage = val
+        state.pageNo = val
         getCarousels()
       }
       return {

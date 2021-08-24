@@ -33,21 +33,9 @@ const router = createRouter({
       component: () => import(/* webpackChunkName: "recommend" */ '../views/IndexConfig.vue')
     },
     {
-      path: '/category',
-      name: 'category',
-      component: () => import(/* webpackChunkName: "category" */ '../views/Category.vue'),
-      children: [
-        {
-          path: '/category/level2',
-          name: 'level2',
-          component: () => import(/* webpackChunkName: "level2" */ '../views/Category.vue'),
-        },
-        {
-          path: '/category/level3',
-          name: 'level3',
-          component: () => import(/* webpackChunkName: "level3" */ '../views/Category.vue'),
-        }
-      ]
+      path: '/kecheng',
+      name: 'kecheng',
+      component: () => import(/* webpackChunkName: "kecheng" */ '../views/kecheng.vue'),
     },
     {
       path: '/good',

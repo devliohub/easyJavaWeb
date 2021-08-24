@@ -34,7 +34,7 @@
           <span>下一页</span>
         </div>
 
-        <!-- <van-pagination v-model="currentPage" :page-count="12" mode="simple" /> -->
+        <!-- <van-pagination v-model="pageNo" :page-count="12" mode="simple" /> -->
       </div>
 
       <van-empty v-else description="暂无数据" />

@@ -32,7 +32,7 @@ export const pathMap = {
   swiper: '轮播图配置',
   hot: '热销商品配置',
   new: '新品上线配置',
-  category: '分类管理',
+  kecheng: '课程管理',
   level2: '分类二级管理',
   level3: '分类三级管理',
   good: '商品管理',

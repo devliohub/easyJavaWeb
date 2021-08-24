@@ -1,9 +1,38 @@
 <template>
-  <el-card class="account-container">
+  <el-card class="kecheng-container">
     <template #header>
       <div class="header">
         <div>
+          <el-select
+            size="small"
+            v-model="queryObj.module_id"
+            placeholder="请选择课程模块"
+            clearable
+          >
+            <el-option
+              v-for="item in moduleOptions"
+              :key="item.code"
+              :label="item.name"
+              :value="item.code"
+            >
+            </el-option>
+          </el-select>
+          <el-select
+            size="small"
+            v-model="queryObj.type_id"
+            placeholder="请选择课程类型"
+            clearable
+          >
+            <el-option
+              v-for="item in typeOptions"
+              :key="item.code"
+              :label="item.name"
+              :value="item.code"
+            >
+            </el-option>
+          </el-select>
           <el-input
+            size="small"
             style="width: 250px; margin-right: 30px"
             type="text"
             clearable
@@ -35,9 +64,20 @@
       tooltip-effect="dark"
       style="width: 100%"
     >
-      <el-table-column prop="name" label="姓名"> </el-table-column>
-      <el-table-column prop="account" label="账号"> </el-table-column>
+      <el-table-column prop="name" label="课程名称"> </el-table-column>
+      <el-table-column prop="module_id" label="模块">
+        <template #default="scope">
+          <span>{{ moduleOptions[scope.row.module_id - 1].name }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="type_id" label="类型">
+        <template #default="scope">
+          <span>{{ typeOptions[scope.row.type_id - 1].name }}</span>
+        </template>
+      </el-table-column>
       <el-table-column prop="create_time" label="创建时间"> </el-table-column>
+      <el-table-column prop="create_uname" label="创建人姓名">
+      </el-table-column>
       <el-table-column label="操作" width="100">
         <template #default="scope">
           <a
@@ -66,28 +106,34 @@
       @current-change="changePage"
     />
 
-    <DialogAddUser ref="addUserRef" :reload="() => getDataList()" />
+    <DialogKecheng ref="addKechengRef" :reload="() => getDataList()" />
   </el-card>
 </template>
 
 <script>
-  import DialogAddUser from '@/components/DialogAddUser.vue'
+  import DialogKecheng from '@/components/DialogAddKecheng.vue'
   import { ElMessage } from 'element-plus'
   import { onMounted, ref, reactive, toRefs } from 'vue'
   import axios from '@/utils/axios'
+  import { localSet } from '@/utils'
+
   export default {
-    name: 'Account',
+    name: 'kecheng',
     components: {
-      DialogAddUser,
+      DialogKecheng,
     },
     setup() {
-      const addUserRef = ref(null)
+      const addKechengRef = ref(null)
       const state = reactive({
         loading: false,
         tableData: [], // 数据列表
         total: 0, // 总条数
+        moduleOptions: [],
+        typeOptions: [],
 
         queryObj: {
+          module_id: '',
+          type_id: '',
           name: '', // 名称
           pageNo: 1, // 当前页
           pageSize: 10, // 分页大小
@@ -95,12 +141,25 @@
       })
       onMounted(() => {
         getDataList()
+        getOptions()
       })
+      // 获取下拉框
+      const getOptions = () => {
+        axios.get('/api/sys/coursemodules').then((res) => {
+          state.moduleOptions = res
+          localSet('loModules', res)
+        })
+
+        axios.get('/api/sys/coursetypes').then((res) => {
+          state.typeOptions = res
+          localSet('loTypes', res)
+        })
+      }
       // 获取列表
       const getDataList = () => {
         state.loading = true
         axios
-          .get('/api/a/user/list', {
+          .get('/api/a/course/list', {
             params: state.queryObj,
           })
           .then((res) => {
@@ -111,15 +170,15 @@
       }
       // 添加商品
       const handleAdd = () => {
-        addUserRef.value.open()
+        addKechengRef.value.open()
       }
       // 修改商品
       const handleEdit = (id) => {
-        addUserRef.value.open(id)
+        addKechengRef.value.open(id)
       }
       const handleDelete = (id) => {
         axios
-          .get('/api/a/user/delete', {
+          .get('/api/a/course/delete', {
             params: {
               id: id,
             },
@@ -139,7 +198,7 @@
         changePage,
         handleAdd,
         handleEdit,
-        addUserRef,
+        addKechengRef,
         handleDelete,
       }
     },
@@ -147,10 +206,10 @@
 </script>
 
 <style scoped>
-.account-container {
+.kecheng-container {
   min-height: 100%;
 }
-.account-container .header {
+.kecheng-container .header {
   display: flex;
   justify-content: space-between;
 }

@@ -65,7 +65,7 @@
       layout="prev, pager, next"
       :total="total"
       :page-size="pageSize"
-      :current-page="currentPage"
+      :current-page="pageNo"
       @current-change="changePage"
     />
 
@@ -105,7 +105,7 @@
         tableData: [], // 数据列表
         multipleSelection: [], // 选中项
         total: 0, // 总条数
-        currentPage: 1, // 当前页
+        pageNo: 1, // 当前页
         pageSize: 10, // 分页大小
         type: 'add', // 操作类型
         configType: 3, // 3-(首页)热销商品 4-(首页)新品上线 5-(首页)为你推荐
@@ -114,7 +114,7 @@
       const unwatch = router.beforeEach((to) => {
         if (['hot', 'new', 'recommend'].includes(to.name)) {
           state.configType = configTypeMap[to.name]
-          state.currentPage = 1
+          state.pageNo = 1
           getIndexConfig()
         }
       })
@@ -132,7 +132,7 @@
         axios
           .get('/indexConfigs', {
             params: {
-              pageNumber: state.currentPage,
+              pageNumber: state.pageNo,
               pageSize: state.pageSize,
               configType: state.configType,
             },
@@ -140,7 +140,7 @@
           .then((res) => {
             state.tableData = res.list
             state.total = res.totalCount
-            state.currentPage = res.currPage
+            state.pageNo = res.currPage
             state.loading = false
           })
       }
@@ -185,7 +185,7 @@
           })
       }
       const changePage = (val) => {
-        state.currentPage = val
+        state.pageNo = val
         getIndexConfig()
       }
       return {
