@@ -3,6 +3,7 @@ package com.tsjy.dwlgxy.common.utils;
 import java.io.*;
 import java.util.*;
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -46,12 +47,20 @@ public class FileUtil {
 						// item.getName()返回上传文件在客户端的完整路径名称
 						System.out.println("上传文件的名称:" + item.getName());
 
-						File tempFile = new File(item.getName());
-						fileUrl       = AppConfig.STATIC_URL_PREFIX + tempFile.getName();
+						//File tempFile = new File(item.getName());
+						//fileUrl       = AppConfig.STATIC_URL_PREFIX + tempFile.getName();
+						
+						String fileName = item.getName();
+						String[] fileNameArr = fileName.split("\\.");
+						SimpleDateFormat fmdate = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+						String newFileName = fmdate.format(new Date()) + "." + fileNameArr[1];
+						fileUrl  = AppConfig.STATIC_URL_PREFIX + newFileName;
+						
 
 						// 上传文件的保存路径
 						//String realPath = this.getServletContext().getRealPath("/upload");// /WEB-INF/files
-						File file = new File(realPath, tempFile.getName());
+						//File file = new File(realPath, tempFile.getName());
+						File file = new File(realPath, newFileName);
 						item.write(file);
 						System.out.println("上传文件成功！");
 					} else {

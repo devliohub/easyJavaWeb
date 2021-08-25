@@ -30,12 +30,19 @@ public class CourseTypesServlet extends BaseServlet
 		  {
 			  
 			//#
-			return jsonReturn(new HashMap<Integer, String>() {
-			   {
-					put(1, "公共必修课");
-					put(2, "公共选修课");
-					put(3, "核心限选课");
-			   }
+//			return jsonReturn(new HashMap<Integer, String>() {
+//			   {
+//					put(1, "公共必修课");
+//					put(2, "公共选修课");
+//					put(3, "核心限选课");
+//			   }
+//			});
+			
+			
+			return jsonReturn(new DictData[] {
+				    new DictData(1, "公共必修课"),
+					new DictData(2, "公共选修课"),
+					new DictData(3, "核心限选课")
 			});
 
 		  }

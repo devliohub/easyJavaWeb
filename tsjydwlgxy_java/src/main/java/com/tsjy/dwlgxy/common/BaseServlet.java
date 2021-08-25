@@ -48,6 +48,12 @@ public class BaseServlet extends HttpServlet
 		
 		response.setCharacterEncoding("UTF-8");  
 		response.setContentType("application/json");
+		//String origin = request.getHeader("Origin");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Headers", "*");
+		response.setHeader("Access-Control-Allow-Methods", "*");
+		response.setHeader("Access-Control-Allow-Credentials", "true");
+		response.setHeader("P3P", "CP=\"CURa ADMa DEVa PSAo PSDo OUR BUS UNI PUR INT DEM STA PRE COM NAV OTC NOI DSP COR\"");
 		PrintWriter pw = response.getWriter();
 		
 		

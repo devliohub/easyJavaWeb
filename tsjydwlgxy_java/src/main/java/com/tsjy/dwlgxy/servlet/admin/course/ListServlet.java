@@ -51,8 +51,9 @@ public class ListServlet extends AdminBaseServlet
 			
 			// #
 		    StringBuilder sb = new StringBuilder();
-		    sb.append("module_id=").append(module_id);
-		    sb.append(" and type_id=").append(type_id);
+		    sb.append("1=1");
+		    if( module_id != 0 ) sb.append(" and module_id=").append(module_id);
+		    if( module_id != 0 ) sb.append(" and type_id=").append(type_id);
 		    if( StringUtil.valid(name) ) 
 		    {
 		    	sb.append(" and name like '%").append(name).append("%'");
@@ -66,7 +67,7 @@ public class ListServlet extends AdminBaseServlet
 			//#
 	        List<Course> list = CourseService.getRows(where, "id desc", pageNo, pageSize);
 	        long total = CourseService.getCount(where);
-	        
+	        System.out.print(list);
 	        
 	        
 	        

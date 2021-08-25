@@ -95,6 +95,7 @@ public class CourseService
 		obj.url  = rs.getString("url");
 		obj.module_id  = rs.getInt("module_id");
 		obj.type_id  = rs.getInt("type_id") ;
+		obj.cover  = rs.getString("cover");
 		obj.is_delete  = rs.getInt("is_delete");
 		obj.create_uid  = rs.getLong("create_uid");
 		obj.create_uname  = rs.getString("create_uname");
