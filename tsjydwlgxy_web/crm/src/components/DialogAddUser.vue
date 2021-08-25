@@ -20,9 +20,17 @@
       <el-form-item label="密码" prop="password">
         <el-input type="text" v-model="ruleForm.password"></el-input>
       </el-form-item>
-      <!-- <el-form-item label="排序值" prop="rolemenuids">
-        <el-input type="number" v-model="ruleForm.rolemenuids"></el-input>
-      </el-form-item> -->
+      <el-form-item label="用户权限">
+        <el-checkbox-group v-model="ruleForm.checkList">
+          <el-checkbox
+            v-for="item in roleArr"
+            :label="item.code"
+            :value="item.code"
+            :key="item.code"
+            >{{ item.name }}</el-checkbox
+          >
+        </el-checkbox-group>
+      </el-form-item>
     </el-form>
     <template #footer>
       <span class="dialog-footer">
@@ -38,6 +46,8 @@
   import axios from '@/utils/axios'
   import { hasEmoji } from '@/utils/index'
   import { ElMessage } from 'element-plus'
+  import { localGet } from '@/utils'
+
   export default {
     name: 'DialogAddUser',
     props: {
@@ -45,6 +55,7 @@
     },
     setup(props) {
       const formRef = ref(null)
+      const roleArr = localGet('loRoles')
       const state = reactive({
         type: 'add',
         visible: false,
@@ -53,6 +64,7 @@
           account: '',
           password: '',
           rolemenuids: '1,2,3,4,5',
+          checkList: [],
         },
         rules: {
           name: [
@@ -71,6 +83,7 @@
       const getDetail = (id) => {
         axios.get('/api/a/user/info?id=' + `${id}`).then((res) => {
           state.ruleForm = res
+          state.ruleForm.checkList = res.rolemenuids.map((el) => el * 1)
         })
       }
       // 开启弹窗
@@ -84,9 +97,10 @@
           state.type = 'add'
           state.ruleForm = {
             name: '',
-            password: '',
             account: '',
+            password: '',
             rolemenuids: '1,2,3,4,5',
+            checkList: [],
           }
         }
       }
@@ -95,6 +109,7 @@
         state.visible = false
       }
       const submitForm = () => {
+        console.log(state.ruleForm)
         formRef.value.validate((valid) => {
           if (valid) {
             if (
@@ -103,6 +118,12 @@
             ) {
               return ElMessage.error('禁止输入非法字符')
             }
+            if (state.ruleForm.checkList.length == 0) {
+              return ElMessage.error('请输入用户权限')
+            }
+
+            state.ruleForm.rolemenuids = state.ruleForm.checkList.join(',')
+
             if (state.type == 'add') {
               axios
                 .get('/api/a/user/add', {
@@ -139,6 +160,7 @@
         close,
         formRef,
         submitForm,
+        roleArr,
       }
     },
   }

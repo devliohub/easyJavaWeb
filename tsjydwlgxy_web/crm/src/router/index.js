@@ -5,7 +5,7 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      redirect: '/hot'
+      redirect: '/account'
     },
     {
       path: '/login',
@@ -23,14 +23,9 @@ const router = createRouter({
       component: () => import(/* webpackChunkName: "swiper" */ '../views/Swiper.vue')
     },
     {
-      path: '/hot',
-      name: 'hot',
-      component: () => import(/* webpackChunkName: "hot" */ '../views/IndexConfig.vue')
-    },
-    {
-      path: '/recommend',
-      name: 'recommend',
-      component: () => import(/* webpackChunkName: "recommend" */ '../views/IndexConfig.vue')
+      path: '/article',
+      name: 'article',
+      component: () => import(/* webpackChunkName: "article" */ '../views/Article.vue')
     },
     {
       path: '/kecheng',

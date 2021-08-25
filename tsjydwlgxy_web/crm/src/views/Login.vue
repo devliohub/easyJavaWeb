@@ -45,10 +45,12 @@
   import { reactive, ref, toRefs, onMounted } from 'vue'
   import { localSet } from '@/utils'
   import { ElMessage } from 'element-plus'
+  import { useRouter } from 'vue-router'
 
   export default {
     name: 'Login',
     setup() {
+      const router = useRouter()
       const loginForm = ref(null)
       const state = reactive({
         ruleForm: {
@@ -77,7 +79,7 @@
               .then((res) => {
                 ElMessage.success('登陆成功')
                 localSet('token', res)
-                window.location.href = '/'
+                router.push('/account')
               })
           } else {
             console.log('error submit!!')

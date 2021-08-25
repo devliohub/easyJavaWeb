@@ -15,8 +15,8 @@
               <span>网站管理</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item index="/hot"
-                ><i class="el-icon-star-on" />热销商品配置</el-menu-item
+              <el-menu-item index="/article"
+                ><i class="el-icon-star-on" />文章管理</el-menu-item
               >
               <el-menu-item index="/swiper"
                 ><i class="el-icon-picture" />轮播图管理</el-menu-item
@@ -52,7 +52,6 @@
         <div class="main">
           <router-view />
         </div>
-        <Footer />
       </el-container>
     </el-container>
     <el-container v-else class="container">
@@ -64,14 +63,14 @@
 <script>
   import { onUnmounted, reactive } from 'vue'
   import Header from '@/components/Header.vue'
-  import Footer from '@/components/Footer.vue'
   import { useRouter } from 'vue-router'
-  import { pathMap, localGet } from '@/utils'
+  import { pathMap, localGet, localSet } from '@/utils'
+  import axios from '@/utils/axios'
+
   export default {
     name: 'App',
     components: {
       Header,
-      Footer,
     },
     setup() {
       const noMenu = ['/login']
@@ -84,6 +83,28 @@
           number: 1,
         },
       })
+      // 字典字段缓存
+      if (!localGet('loRoles')) {
+        axios.get('/api/sys/rolemenus').then((res) => {
+          localSet('loRoles', res)
+        })
+      }
+      if (!localGet('loModules')) {
+        axios.get('/api/sys/coursemodules').then((res) => {
+          localSet('loModules', res)
+        })
+      }
+      if (!localGet('loTypes')) {
+        axios.get('/api/sys/coursetypes').then((res) => {
+          localSet('loTypes', res)
+        })
+      }
+      if (!localGet('loMenus')) {
+        axios.get('/api/sys/menus').then((res) => {
+          localSet('loMenus', res)
+        })
+      }
+
       // 监听浏览器原生回退事件
       if (window.history && window.history.pushState) {
         history.pushState(null, null, document.URL)
@@ -177,7 +198,7 @@
 .content {
   display: flex;
   flex-direction: column;
-  max-height: 100vh;
+  /* max-height: 100vh; */
   overflow: hidden;
 }
 .main {

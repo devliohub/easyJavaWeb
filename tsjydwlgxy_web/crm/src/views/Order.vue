@@ -288,6 +288,6 @@
   min-height: 100%;
 }
 .el-card.is-always-shadow {
-  min-height: 100% !important;
+  min-height: 99% !important;
 }
 </style>

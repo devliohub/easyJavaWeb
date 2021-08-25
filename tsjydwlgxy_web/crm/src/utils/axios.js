@@ -16,8 +16,8 @@ axios.defaults.headers.post['Content-Type'] = 'application/json'
 // 请求拦截
 axios.interceptors.response.use(res => {
   if (res.data.errno != 200) {
-    if (res.data.usermsg) ElMessage.error(res.data.usermsg)
-    if (res.data.errno == 419) {
+    if (res.data.usermsg && res.data.errno != 431) ElMessage.error(res.data.usermsg)
+    if (res.data.errno == 431) {
       router.push({ path: '/login' })
     }
     return Promise.reject(res.data)

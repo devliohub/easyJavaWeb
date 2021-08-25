@@ -33,7 +33,7 @@
           </el-select>
           <el-input
             size="small"
-            style="width: 250px; margin-right: 30px"
+            style="width: 250px; margin: 0 30px"
             type="text"
             clearable
             v-model="queryObj.name"
@@ -75,7 +75,16 @@
           <span>{{ typeOptions[scope.row.type_id - 1].name }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="create_time" label="创建时间"> </el-table-column>
+      <el-table-column prop="create_time" label="创建时间">
+        <template #default="scope">
+          <span>{{
+            $filters.dateFormater(
+              scope.row.create_time * 1000,
+              'YYYY-MM-DD HH:mm'
+            )
+          }}</span>
+        </template>
+      </el-table-column>
       <el-table-column prop="create_uname" label="创建人姓名">
       </el-table-column>
       <el-table-column label="操作" width="100">
@@ -115,7 +124,7 @@
   import { ElMessage } from 'element-plus'
   import { onMounted, ref, reactive, toRefs } from 'vue'
   import axios from '@/utils/axios'
-  import { localSet } from '@/utils'
+  import { localGet } from '@/utils'
 
   export default {
     name: 'kecheng',
@@ -124,12 +133,12 @@
     },
     setup() {
       const addKechengRef = ref(null)
+      const moduleOptions = localGet('loModules')
+      const typeOptions = localGet('loTypes')
       const state = reactive({
         loading: false,
         tableData: [], // 数据列表
         total: 0, // 总条数
-        moduleOptions: [],
-        typeOptions: [],
 
         queryObj: {
           module_id: '',
@@ -141,20 +150,7 @@
       })
       onMounted(() => {
         getDataList()
-        getOptions()
       })
-      // 获取下拉框
-      const getOptions = () => {
-        axios.get('/api/sys/coursemodules').then((res) => {
-          state.moduleOptions = res
-          localSet('loModules', res)
-        })
-
-        axios.get('/api/sys/coursetypes').then((res) => {
-          state.typeOptions = res
-          localSet('loTypes', res)
-        })
-      }
       // 获取列表
       const getDataList = () => {
         state.loading = true
@@ -200,6 +196,8 @@
         handleEdit,
         addKechengRef,
         handleDelete,
+        moduleOptions,
+        typeOptions,
       }
     },
   }
@@ -214,6 +212,6 @@
   justify-content: space-between;
 }
 .el-card.is-always-shadow {
-  min-height: 100% !important;
+  min-height: 99% !important;
 }
 </style>

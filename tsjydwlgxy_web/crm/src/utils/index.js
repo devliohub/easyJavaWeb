@@ -21,6 +21,7 @@ export function hasEmoji(str = '') {
   return str.match(reg) && str.match(reg).length
 }
 
+
 // 单张图片上传
 export const uploadImgServer = 'http://backend-api-02.newbee.ltd/manage-api/v1/upload/file'
 // 多张图片上传
@@ -30,7 +31,7 @@ export const pathMap = {
   login: '登录',
   add: '添加商品',
   swiper: '轮播图配置',
-  hot: '热销商品配置',
+  article: '文章管理',
   new: '新品上线配置',
   kecheng: '课程管理',
   level2: '分类二级管理',

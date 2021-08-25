@@ -1,8 +1,7 @@
 import { createApp } from 'vue'
-import { ElButton, ElContainer, ElAside, ElHeader, ElMain, ElFooter, ElMenu, ElSubmenu, ElMenuItemGroup, ElMenuItem, ElForm, ElFormItem, ElInput, ElPopover, ElTag, ElCard, ElTable, ElTableColumn, ElPagination, ElDialog, ElPopconfirm, ElUpload, ElLoading, ElSelect, ElOption, ElRadioGroup, ElRadio, ElCascader, ElCheckbox, ElInputNumber } from 'element-plus'
+import { ElRow, ElCol, ElButton, ElContainer, ElAside, ElHeader, ElMain, ElFooter, ElMenu, ElSubmenu, ElMenuItemGroup, ElMenuItem, ElForm, ElFormItem, ElInput, ElPopover, ElTag, ElCard, ElTable, ElTableColumn, ElPagination, ElDialog, ElPopconfirm, ElUpload, ElLoading, ElSelect, ElOption, ElRadioGroup, ElRadio, ElCascader, ElCheckbox, ElCheckboxGroup, ElInputNumber } from 'element-plus'
 import App from './App.vue'
 import router from './router/index'
-
 // import 'element-plus/lib/theme-chalk/index.css'
 
 // 修改后的主题样式必须放在最后面
@@ -24,6 +23,26 @@ const app = createApp(App)
 app.config.globalProperties.$filters = {
   orderMap(status) {
     return orderStatus[status] || '未知状态'
+  },
+  dateFormater(t, formater) {
+    if (t) {
+      let date = new Date(t),
+        Y = date.getFullYear() + '',
+        M = date.getMonth() + 1,
+        D = date.getDate(),
+        H = date.getHours(),
+        m = date.getMinutes(),
+        s = date.getSeconds();
+      return formater.replace(/YYYY|yyyy/g, Y)
+        .replace(/YY|yy/g, Y.substr(2, 2))
+        .replace(/MM/g, (M < 10 ? '0' : '') + M)
+        .replace(/DD/g, (D < 10 ? '0' : '') + D)
+        .replace(/HH|hh/g, (H < 10 ? '0' : '') + H)
+        .replace(/mm/g, (m < 10 ? '0' : '') + m)
+        .replace(/ss/g, (s < 10 ? '0' : '') + s)
+    } else {
+      return ''
+    }
   },
   prefix(url) {
     if (url && url.startsWith('http')) {
@@ -50,7 +69,9 @@ app.config.globalProperties.$filters = {
 
 app.use(router)
 
-app.use(ElButton)
+app.use(ElRow)
+  .use(ElCol)
+  .use(ElButton)
   .use(ElContainer)
   .use(ElAside)
   .use(ElHeader)
@@ -79,6 +100,7 @@ app.use(ElButton)
   .use(ElRadio)
   .use(ElCascader)
   .use(ElCheckbox)
+  .use(ElCheckboxGroup)
   .use(ElInputNumber)
 
 app.mount('#app')

@@ -37,7 +37,16 @@
     >
       <el-table-column prop="name" label="姓名"> </el-table-column>
       <el-table-column prop="account" label="账号"> </el-table-column>
-      <el-table-column prop="create_time" label="创建时间"> </el-table-column>
+      <el-table-column prop="create_time" label="创建时间">
+        <template #default="scope">
+          <span>{{
+            $filters.dateFormater(
+              scope.row.create_time * 1000,
+              'YYYY-MM-DD HH:mm'
+            )
+          }}</span>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" width="100">
         <template #default="scope">
           <a
@@ -148,13 +157,13 @@
 
 <style scoped>
 .account-container {
-  min-height: 100%;
+  min-height: 99%;
 }
 .account-container .header {
   display: flex;
   justify-content: space-between;
 }
 .el-card.is-always-shadow {
-  min-height: 100% !important;
+  min-height: 99% !important;
 }
 </style>
