@@ -6,7 +6,9 @@ import path from 'path'
 // https://vitejs.dev/config/
 export default ({ mode }) => defineConfig({
   base: './',
-  outDir: 'crm',
+  build: {
+    outDir: 'crm',
+  },
   plugins: [
     vue(),
     vitePluginImport([

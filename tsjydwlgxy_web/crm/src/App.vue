@@ -21,8 +21,8 @@
               <el-menu-item index="/swiper"
                 ><i class="el-icon-picture" />轮播图管理</el-menu-item
               >
-              <el-menu-item index="/add"
-                ><i class="el-icon-plus" />添加商品</el-menu-item
+              <el-menu-item index="/caidan"
+                ><i class="el-icon-menu" />菜单管理</el-menu-item
               >
             </el-menu-item-group>
           </el-submenu>
@@ -32,7 +32,7 @@
             </template>
             <el-menu-item-group>
               <el-menu-item index="/kecheng"
-                ><i class="el-icon-menu" />课程管理</el-menu-item
+                ><i class="el-icon-edit" />课程管理</el-menu-item
               >
             </el-menu-item-group>
           </el-submenu>
@@ -42,7 +42,7 @@
             </template>
             <el-menu-item-group>
               <el-menu-item index="/account"
-                ><i class="el-icon-lock" />用户管理</el-menu-item
+                ><i class="el-icon-user" />用户管理</el-menu-item
               >
             </el-menu-item-group>
           </el-submenu>
@@ -105,19 +105,6 @@
         })
       }
 
-      // 监听浏览器原生回退事件
-      if (window.history && window.history.pushState) {
-        history.pushState(null, null, document.URL)
-        window.addEventListener(
-          'popstate',
-          () => {
-            if (!localGet('token')) {
-              state.showMenu = false
-            }
-          },
-          false
-        )
-      }
       const unwatch = router.beforeEach((to, from, next) => {
         if (to.path == '/login') {
           // 如果路径是 /login 则正常执行
