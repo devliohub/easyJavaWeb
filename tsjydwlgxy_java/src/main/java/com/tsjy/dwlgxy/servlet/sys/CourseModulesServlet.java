@@ -30,16 +30,27 @@ public class CourseModulesServlet extends BaseServlet
 		  {
 			  
 			//#
-			return jsonReturn(new HashMap<Integer, String>() {
-			   {
-					put(1, "道德规范力");
-					put(2, "协助领导力");
-					put(3, "认识理解力");
-					put(4, "应用行动力");
-					put(5, "高阶创新力");
-					put(6, "沟通表达力");
-					put(7, "审美鉴赏力");
-			   }
+//			return jsonReturn(new HashMap<Integer, String>() {
+//			   {
+//					put(1, "道德规范力");
+//				    put(2, "协助领导力");
+//					put(3, "认识理解力");
+//					put(4, "应用行动力");
+//					put(5, "高阶创新力");
+//					put(6, "沟通表达力");
+//					put(7, "审美鉴赏力");
+//					
+//			   }
+//			});
+			  
+			return jsonReturn(new DictData[] {
+					new DictData(1, "道德规范力"),
+					new DictData(2, "协助领导力"),
+					new DictData(3, "认识理解力"),
+					new DictData(4, "应用行动力"),
+					new DictData(5, "高阶创新力"),
+					new DictData(6, "沟通表达力"),
+					new DictData(7, "审美鉴赏力")
 			});
 
 		  }

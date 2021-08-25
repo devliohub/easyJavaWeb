@@ -18,7 +18,7 @@ C:\Users\87537\eclipse-workspace\z-tsjy-dwlgxy\src\main\java\com\tsjy\dwlgxy\ser
 C:\Users\87537\eclipse-workspace\z-tsjy-dwlgxy\src\main\java\com\tsjy\dwlgxy\servlet\admin\article\AddServlet.java
 C:\Users\87537\eclipse-workspace\z-tsjy-dwlgxy\src\main\java\com\tsjy\dwlgxy\servlet\admin\banner\ListServlet.java
 C:\Users\87537\eclipse-workspace\z-tsjy-dwlgxy\src\main\java\com\tsjy\dwlgxy\servlet\demo\UserServlet.java
-C:\Users\87537\eclipse-workspace\z-tsjy-dwlgxy\src\main\java\com\tsjy\dwlgxy\servlet\information\InfoServlet.java
+C:\Users\87537\eclipse-workspace\z-tsjy-dwlgxy\src\main\java\com\tsjy\dwlgxy\servlet\article\ListServlet.java
 C:\Users\87537\eclipse-workspace\z-tsjy-dwlgxy\src\main\java\com\tsjy\dwlgxy\servlet\admin\LoginServlet.java
 C:\Users\87537\eclipse-workspace\z-tsjy-dwlgxy\src\main\java\com\tsjy\dwlgxy\servlet\admin\article\UpdateServlet.java
 C:\Users\87537\eclipse-workspace\z-tsjy-dwlgxy\src\main\java\com\tsjy\dwlgxy\servlet\admin\course\AddServlet.java
@@ -29,6 +29,7 @@ C:\Users\87537\eclipse-workspace\z-tsjy-dwlgxy\src\main\java\com\tsjy\dwlgxy\ser
 C:\Users\87537\eclipse-workspace\z-tsjy-dwlgxy\src\main\java\com\tsjy\dwlgxy\servlet\admin\menu\UpdateServlet.java
 C:\Users\87537\eclipse-workspace\z-tsjy-dwlgxy\src\main\java\com\tsjy\dwlgxy\servlet\demo\IndexServlet.java
 C:\Users\87537\eclipse-workspace\z-tsjy-dwlgxy\src\main\java\com\tsjy\dwlgxy\servlet\admin\menu\AddServlet.java
+C:\Users\87537\eclipse-workspace\z-tsjy-dwlgxy\src\main\java\com\tsjy\dwlgxy\servlet\article\InfoServlet.java
 C:\Users\87537\eclipse-workspace\z-tsjy-dwlgxy\src\main\java\com\tsjy\dwlgxy\bean\Article.java
 C:\Users\87537\eclipse-workspace\z-tsjy-dwlgxy\src\main\java\com\tsjy\dwlgxy\common\utils\StringUtil.java
 C:\Users\87537\eclipse-workspace\z-tsjy-dwlgxy\src\main\java\com\tsjy\dwlgxy\bean\PageData.java
@@ -39,7 +40,7 @@ C:\Users\87537\eclipse-workspace\z-tsjy-dwlgxy\src\main\java\com\tsjy\dwlgxy\ser
 C:\Users\87537\eclipse-workspace\z-tsjy-dwlgxy\src\main\java\com\tsjy\dwlgxy\servlet\admin\banner\UpdateServlet.java
 C:\Users\87537\eclipse-workspace\z-tsjy-dwlgxy\src\main\java\com\tsjy\dwlgxy\servlet\course\ListServlet.java
 C:\Users\87537\eclipse-workspace\z-tsjy-dwlgxy\src\main\java\com\tsjy\dwlgxy\servlet\sys\UploadServlet.java
-C:\Users\87537\eclipse-workspace\z-tsjy-dwlgxy\src\main\java\com\tsjy\dwlgxy\servlet\information\ListServlet.java
+C:\Users\87537\eclipse-workspace\z-tsjy-dwlgxy\src\main\java\com\tsjy\dwlgxy\bean\DictData.java
 C:\Users\87537\eclipse-workspace\z-tsjy-dwlgxy\src\main\java\com\tsjy\dwlgxy\servlet\admin\userAdmin\ListServlet.java
 C:\Users\87537\eclipse-workspace\z-tsjy-dwlgxy\src\main\java\com\tsjy\dwlgxy\bean\Banner.java
 C:\Users\87537\eclipse-workspace\z-tsjy-dwlgxy\src\main\java\com\tsjy\dwlgxy\common\exception\UserException.java
