@@ -21,6 +21,7 @@
             type="text"
             v-model.trim="ruleForm.username"
             autocomplete="off"
+            prefix-icon="el-icon-user"
           ></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="password">
@@ -28,6 +29,7 @@
             type="password"
             v-model.trim="ruleForm.password"
             autocomplete="off"
+            prefix-icon="el-icon-lock"
           ></el-input>
         </el-form-item>
         <el-form-item>
@@ -107,8 +109,7 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  background-color: #fff;
-  background-image: linear-gradient(25deg, #077f7c, #3aa693, #5ecfaa, #7ffac2);
+  background-color: #2d3a4b;
 }
 .login-container {
   width: 420px;

@@ -35,7 +35,6 @@ export default ({ mode }) => defineConfig({
     proxy: {
       '/api': {
         target: 'http://121.36.22.149:2000',
-        // target: 'https://taodaxiong.cn',
         changeOrigin: true,
       }
     }

@@ -1,6 +1,6 @@
 <template>
   <div class="layout">
-    <Header />
+    <Header v-if="$route.name != `login`" />
     <el-container v-if="state.showMenu" class="container">
       <el-aside class="aside">
         <el-menu
@@ -63,7 +63,7 @@
 <script>
   import { onUnmounted, reactive } from 'vue'
   import Header from '@/components/Header.vue'
-  import { useRouter } from 'vue-router'
+  import { useRoute, useRouter } from 'vue-router'
   import { pathMap, localGet, localSet } from '@/utils'
   import axios from '@/utils/axios'
 
@@ -75,10 +75,12 @@
     setup() {
       const noMenu = ['/login']
       const router = useRouter()
+      const route = useRoute()
+
       const state = reactive({
         defaultOpen: ['1', '2', '3', '4'],
         showMenu: true,
-        currentPath: '/dashboard',
+        currentPath: '/account',
         count: {
           number: 1,
         },

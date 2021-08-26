@@ -1,7 +1,6 @@
 <template>
   <div class="header">
     <div class="left">
-      <i v-if="hasBack" class="el-icon-back" @click="back"></i>
       <span @click="$router.push('/')" style="font-size: 20px; cursor: pointer"
         >东莞理工学院通识教育中心后台管理系统
       </span>
@@ -35,7 +34,7 @@
   import { onMounted, reactive, toRefs } from 'vue'
   import { useRouter } from 'vue-router'
   import axios from '@/utils/axios'
-  import { localGet, localRemove, pathMap } from '@/utils'
+  import { localGet, localRemove } from '@/utils'
 
   export default {
     name: 'Header',
@@ -44,7 +43,6 @@
       const state = reactive({
         name: 'swiper',
         userInfo: null,
-        hasBack: false,
       })
       onMounted(() => {
         const pathname = window.location.hash.split('/')[1] || ''

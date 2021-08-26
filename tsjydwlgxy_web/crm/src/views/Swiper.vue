@@ -1,81 +1,60 @@
 <template>
   <el-card class="swiper-container">
-    <template #header>
-      <div class="header">
-        <el-button
-          type="primary"
-          size="small"
-          icon="el-icon-plus"
-          @click="handleAdd"
-          >增加</el-button
-        >
-        <el-popconfirm title="确定删除吗？" @confirm="handleDelete">
-          <template #reference>
-            <el-button type="danger" size="small" icon="el-icon-delete"
-              >批量删除</el-button
-            >
-          </template>
-        </el-popconfirm>
-      </div>
-    </template>
-    <el-table
-      v-loading="loading"
-      ref="multipleTable"
-      :data="tableData"
-      tooltip-effect="dark"
-      style="width: 100%"
-      @selection-change="handleSelectionChange"
+    <el-upload
+      ref="imgsRef"
+      action="#"
+      :http-request="myUpload"
+      accept="image/jpeg, image/jpg, image/png"
+      :file-list="fileList"
+      :show-file-list="false"
     >
-      <el-table-column type="selection" width="55"> </el-table-column>
-      <el-table-column label="轮播图" width="200">
-        <template #default="scope">
-          <img
-            style="width: 150px; height: 150px"
-            :src="scope.row.carouselUrl"
-            alt="轮播图"
-          />
-        </template>
-      </el-table-column>
-      <el-table-column label="跳转链接">
-        <template #default="scope">
-          <a target="_blank" :href="scope.row.redirectUrl">{{
-            scope.row.redirectUrl
-          }}</a>
-        </template>
-      </el-table-column>
-      <el-table-column prop="carouselRank" label="排序值" width="120">
-      </el-table-column>
-      <el-table-column prop="createTime" label="添加时间" width="200">
-      </el-table-column>
-      <el-table-column label="操作" width="100">
-        <template #default="scope">
-          <a
-            style="cursor: pointer; margin-right: 10px"
-            @click="handleEdit(scope.row.carouselId)"
-            >修改</a
-          >
-          <el-popconfirm
-            title="确定删除吗？"
-            @confirm="handleDeleteOne(scope.row.carouselId)"
-          >
-            <template #reference>
-              <a style="cursor: pointer">删除</a>
-            </template>
-          </el-popconfirm>
-        </template>
-      </el-table-column>
-    </el-table>
-    <!--总数超过一页，再展示分页器-->
-    <el-pagination
-      background
-      layout="prev, pager, next"
-      :total="total"
-      :page-size="pageSize"
-      :current-page="pageNo"
-      @current-change="changePage"
-    />
+      <el-button size="small" type="primary">点击上传</el-button>
+      <span style="font-size: 14px; margin-left: 20px; color: #929292"
+        >支持jpg、jpeg、png格式，建议尺寸xxxx*xxx，大小不超过2M；最多添加10张图片</span
+      >
+    </el-upload>
 
-    <DialogAddSwiper ref="addGood" :reload="getCarousels" :type="type" />
+    <ul>
+      <li v-for="(item, index) in fileList" :key="index">
+        <img :src="item.url" alt="" />
+        <div>
+          <span style="font-size: 14px"
+            >上传时间：{{
+              $filters.dateFormater(item.create_time * 1000, 'YYYY-MM-DD HH:mm')
+            }}</span
+          >
+          <span>
+            <el-button plain type="success" @click="handleEdit(item)"
+              >编 辑</el-button
+            >
+            <el-popconfirm
+              title="确定删除吗？"
+              @confirm="handleDelete(item.id)"
+            >
+              <template #reference>
+                <el-button plain type="danger">删 除</el-button>
+              </template>
+            </el-popconfirm>
+
+            <el-button
+              plain
+              type="primary"
+              @click="handleMove(item.id, 'prev')"
+              :disabled="index == 0"
+              >上 移</el-button
+            >
+            <el-button
+              plain
+              type="primary"
+              @click="handleMove(item.id, 'next')"
+              :disabled="index == fileList.length - 1"
+              >下 移</el-button
+            >
+          </span>
+        </div>
+      </li>
+    </ul>
+    <DialogAddSwiper ref="addSwiper" :reload="() => getCarousels()" />
   </el-card>
 </template>
 
@@ -90,16 +69,10 @@
       DialogAddSwiper,
     },
     setup() {
-      const multipleTable = ref(null)
-      const addGood = ref(null)
+      const addSwiper = ref(null)
       const state = reactive({
         loading: false,
-        tableData: [], // 数据列表
-        multipleSelection: [], // 选中项
-        total: 0, // 总条数
-        pageNo: 1, // 当前页
-        pageSize: 10, // 分页大小
-        type: 'add', // 操作类型
+        fileList: [],
       })
       onMounted(() => {
         getCarousels()
@@ -107,79 +80,72 @@
       // 获取轮播图列表
       const getCarousels = () => {
         state.loading = true
-        axios
-          .get('/carousels', {
-            params: {
-              pageNumber: state.pageNo,
-              pageSize: state.pageSize,
-            },
-          })
-          .then((res) => {
-            state.tableData = res.list
-            state.total = res.totalCount
-            state.pageNo = res.currPage
-            state.loading = false
-          })
+        axios.get('/api/a/banner/list').then((res) => {
+          state.fileList = res
+          state.loading = false
+        })
       }
-      // 添加轮播项
-      const handleAdd = () => {
-        state.type = 'add'
-        addGood.value.open()
+      const myUpload = async (content) => {
+        let form = new FormData()
+        const sufix = content.file.name.split('.')[1] || ''
+        if (!['jpg', 'jpeg', 'png'].includes(sufix)) {
+          ElMessage.error('请上传 jpg、jpeg、png 格式的图片')
+          return false
+        }
+        form.append('img', content.file)
+        axios.post('/api/sys/upload', form).then((res) => {
+          console.log(res)
+          state.fileList.push({
+            url: res,
+            uid: content.file.uid,
+            name: content.file.name,
+          })
+          axios
+            .get('/api/a/banner/add', {
+              params: {
+                img: res,
+                url: res,
+              },
+            })
+            .then((res2) => {
+              console.log(state.fileList)
+              ElMessage.success('上传成功')
+            })
+        })
       }
       // 修改轮播图
-      const handleEdit = (id) => {
-        state.type = 'edit'
-        addGood.value.open(id)
-      }
-      // 选择项
-      const handleSelectionChange = (val) => {
-        state.multipleSelection = val
-      }
-      // 批量删除
-      const handleDelete = () => {
-        if (!state.multipleSelection.length) {
-          ElMessage.error('请选择项')
-          return
-        }
-        axios
-          .delete('/carousels', {
-            data: {
-              ids: state.multipleSelection.map((i) => i.carouselId),
-            },
-          })
-          .then(() => {
-            ElMessage.success('删除成功')
-            getCarousels()
-          })
+      const handleEdit = (item) => {
+        addSwiper.value.open(item)
       }
       // 单个删除
-      const handleDeleteOne = (id) => {
+      const handleDelete = (id) => {
+        axios.get('/api/a/banner/delete?id=' + id).then(() => {
+          ElMessage.success('删除成功')
+          getCarousels()
+        })
+      }
+      const handleMove = (id, str) => {
         axios
-          .delete('/carousels', {
-            data: {
-              ids: [id],
+          .get('/api/a/banner/sort', {
+            params: {
+              id: id,
+              sorttype: str,
             },
           })
           .then(() => {
-            ElMessage.success('删除成功')
+            ElMessage.success('操作成功')
             getCarousels()
           })
       }
-      const changePage = (val) => {
-        state.pageNo = val
-        getCarousels()
-      }
+
       return {
         ...toRefs(state),
-        multipleTable,
-        handleSelectionChange,
-        addGood,
-        handleAdd,
+        addSwiper,
         handleEdit,
         handleDelete,
-        handleDeleteOne,
         getCarousels,
-        changePage,
+        myUpload,
+        handleMove,
       }
     },
   }
@@ -191,5 +157,28 @@
 }
 .el-card.is-always-shadow {
   min-height: 99% !important;
+}
+.swiper-container ul {
+  padding: 0;
+  margin: 50px 0;
+}
+.swiper-container ul li {
+  list-style: none;
+  background: #eee;
+  border-radius: 15px;
+  padding: 20px;
+  display: flex;
+  margin-bottom: 50px;
+}
+.swiper-container ul li img {
+  width: 250px;
+  margin-right: 100px;
+}
+.swiper-container ul li div {
+  text-align: right;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 </style>

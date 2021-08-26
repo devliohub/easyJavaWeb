@@ -7,23 +7,9 @@ import router from './router/index'
 // 修改后的主题样式必须放在最后面
 import '../theme/index.css'
 
-const orderStatus = {
-  0: '待支付',
-  1: '已支付',
-  2: '配货完成',
-  3: '出库成功',
-  4: '交易成功',
-  '-1': '手动关闭',
-  '-2': '超时关闭',
-  '-3': '商家关闭'
-}
-
 const app = createApp(App)
 // 全局过滤器
 app.config.globalProperties.$filters = {
-  orderMap(status) {
-    return orderStatus[status] || '未知状态'
-  },
   dateFormater(t, formater) {
     if (t) {
       let date = new Date(t),
