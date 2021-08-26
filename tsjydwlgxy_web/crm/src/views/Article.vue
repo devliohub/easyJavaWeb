@@ -51,7 +51,7 @@
             size="small"
             icon="el-icon-plus"
             @click="handleAdd()"
-            >添加用户</el-button
+            >添加文章</el-button
           >
         </div>
       </div>

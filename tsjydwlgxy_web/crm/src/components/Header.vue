@@ -45,10 +45,7 @@
         userInfo: null,
       })
       onMounted(() => {
-        const pathname = window.location.hash.split('/')[1] || ''
-        if (!['login'].includes(pathname)) {
-          state.userInfo = localGet('token')
-        }
+        state.userInfo = localGet('token')
       })
       const logout = () => {
         axios.get('/api/a/loginout').then(() => {

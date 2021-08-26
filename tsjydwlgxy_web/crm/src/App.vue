@@ -1,6 +1,6 @@
 <template>
   <div class="layout">
-    <Header v-if="$route.name != `login`" />
+    <Header v-if="state.showMenu" />
     <el-container v-if="state.showMenu" class="container">
       <el-aside class="aside">
         <el-menu
@@ -54,7 +54,7 @@
         </div>
       </el-container>
     </el-container>
-    <el-container v-else class="container">
+    <el-container v-else class="container2">
       <router-view />
     </el-container>
   </div>
@@ -63,7 +63,7 @@
 <script>
   import { onUnmounted, reactive } from 'vue'
   import Header from '@/components/Header.vue'
-  import { useRoute, useRouter } from 'vue-router'
+  import { useRouter } from 'vue-router'
   import { pathMap, localGet, localSet } from '@/utils'
   import axios from '@/utils/axios'
 
@@ -75,15 +75,11 @@
     setup() {
       const noMenu = ['/login']
       const router = useRouter()
-      const route = useRoute()
 
       const state = reactive({
         defaultOpen: ['1', '2', '3', '4'],
         showMenu: true,
         currentPath: '/account',
-        count: {
-          number: 1,
-        },
       })
       // 字典字段缓存
       if (!localGet('loRoles')) {
@@ -109,7 +105,6 @@
 
       const unwatch = router.beforeEach((to, from, next) => {
         if (to.path == '/login') {
-          // 如果路径是 /login 则正常执行
           next()
         } else {
           // 如果不是 /login，判断是否有 token
@@ -117,7 +112,6 @@
             // 如果没有，则跳至登录页面
             next({ path: '/login' })
           } else {
-            // 否则继续执行
             next()
           }
         }
@@ -151,6 +145,9 @@
 }
 .container {
   height: calc(100vh - 51px);
+}
+.container2 {
+  height: 100vh;
 }
 .aside {
   width: 200px !important;

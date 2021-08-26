@@ -44,7 +44,7 @@
 
 <script>
   import axios from '@/utils/axios'
-  import { reactive, ref, toRefs, onMounted } from 'vue'
+  import { reactive, ref, toRefs, onMounted, onUnmounted } from 'vue'
   import { localSet } from '@/utils'
   import { ElMessage } from 'element-plus'
   import { useRouter } from 'vue-router'
@@ -92,7 +92,17 @@
       const resetForm = () => {
         loginForm.value.resetFields()
       }
-      onMounted(() => {})
+      const keyDown = (e) => {
+        if (e.keyCode == 13 || e.keyCode == 13) {
+          submitForm()
+        }
+      }
+      onMounted(() => {
+        window.addEventListener('keydown', keyDown)
+      })
+      onUnmounted(() => {
+        window.removeEventListener('keydown', keyDown, false)
+      })
       return {
         ...toRefs(state),
         loginForm,
@@ -113,7 +123,7 @@
 }
 .login-container {
   width: 420px;
-  height: 450px;
+  height: 440px;
   background-color: #fff;
   border-radius: 4px;
   box-shadow: 0px 21px 41px 0px rgba(0, 0, 0, 0.2);

@@ -30,27 +30,6 @@ app.config.globalProperties.$filters = {
       return ''
     }
   },
-  prefix(url) {
-    if (url && url.startsWith('http')) {
-      return url
-    } else {
-      url = `http://backend-api-02.newbee.ltd${url}`
-      return url
-    }
-  },
-  resetImgUrl(imgObj, imgSrc, maxErrorNum) {
-    if (maxErrorNum > 0) {
-      imgObj.onerror = function () {
-        resetImgUrl(imgObj, imgSrc, maxErrorNum - 1)
-      }
-      setTimeout(function () {
-        imgObj.src = imgSrc
-      }, 500)
-    } else {
-      imgObj.onerror = null
-      imgObj.src = imgSrc
-    }
-  }
 }
 
 app.use(router)

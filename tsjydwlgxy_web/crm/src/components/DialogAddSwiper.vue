@@ -11,11 +11,11 @@
       label-width="100px"
       class="good-form"
     >
-      <el-form-item label="图片" prop="url">
-        <img style="width: 600px" :src="ruleForm.url" alt="" />
+      <el-form-item label="图片" prop="img">
+        <img style="width: 600px" :src="ruleForm.img" alt="" />
       </el-form-item>
-      <el-form-item label="链接地址" prop="link">
-        <el-input type="text" v-model="ruleForm.link"></el-input>
+      <el-form-item label="链接地址" prop="url">
+        <el-input type="text" v-model="ruleForm.url"></el-input>
       </el-form-item>
     </el-form>
     <template #footer>
@@ -45,7 +45,7 @@
         visible: false,
         ruleForm: {},
         rules: {
-          link: [
+          url: [
             { required: 'true', message: '链接不能为空', trigger: ['change'] },
           ],
         },

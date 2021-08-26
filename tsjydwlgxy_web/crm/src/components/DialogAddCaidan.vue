@@ -11,14 +11,19 @@
       label-width="80px"
       class="good-form"
     >
-      <el-form-item label="姓名" prop="name">
+      <el-form-item label="名称" prop="name">
         <el-input type="text" v-model="ruleForm.name"></el-input>
       </el-form-item>
-      <el-form-item label="账号" prop="account">
-        <el-input type="text" v-model="ruleForm.account"></el-input>
+      <el-form-item label="类型" prop="type">
+        <el-radio v-model="ruleForm.type" :label="1">文章栏目</el-radio>
+        <el-radio v-model="ruleForm.type" :label="2">外部链接</el-radio>
       </el-form-item>
-      <el-form-item label="密码" prop="password">
-        <el-input type="text" v-model="ruleForm.password"></el-input>
+      <el-form-item label="样式" prop="layout" v-if="ruleForm.type == 1">
+        <el-radio v-model="ruleForm.layout" :label="1">标题式</el-radio>
+        <el-radio v-model="ruleForm.layout" :label="2">卡片式</el-radio>
+      </el-form-item>
+      <el-form-item label="链接" prop="url" v-if="ruleForm.type == 2">
+        <el-input type="text" v-model="ruleForm.url"></el-input>
       </el-form-item>
     </el-form>
     <template #footer>
@@ -46,45 +51,30 @@
       const state = reactive({
         type: 'add',
         visible: false,
-        ruleForm: {
-          name: '',
-          account: '',
-          password: '',
-          checkList: [],
-        },
+        ruleForm: {},
         rules: {
           name: [
             { required: 'true', message: '名称不能为空', trigger: ['change'] },
           ],
-          password: [
-            { required: 'true', message: '编号不能为空', trigger: ['change'] },
-          ],
-          account: [
-            { required: 'true', message: '排序不能为空', trigger: ['change'] },
+          type: [{ required: 'true', message: '不能为空', trigger: ['change'] }],
+          url: [{ required: 'true', message: '不能为空', trigger: ['change'] }],
+          layout: [
+            { required: 'true', message: '不能为空', trigger: ['change'] },
           ],
         },
         id: '',
       })
-      // 获取详情
-      const getDetail = (id) => {
-        axios.get('/api/a/menu/info?id=' + `${id}`).then((res) => {
-          state.ruleForm = res
-        })
-      }
       // 开启弹窗
-      const open = (id) => {
+      const open = (obj, str) => {
         state.visible = true
-        if (id) {
-          state.type = 'edit'
-          state.id = id
-          getDetail(id)
-        } else {
-          state.type = 'add'
+        state.type = str
+        if (str == 'add') {
           state.ruleForm = {
-            name: '',
-            account: '',
-            password: '',
+            pid: obj,
           }
+        } else {
+          state.ruleForm = JSON.parse(JSON.stringify(obj))
+          console.log(obj)
         }
       }
       // 关闭弹窗
@@ -114,13 +104,7 @@
             } else {
               axios
                 .get('/api/a/menu/update', {
-                  params: {
-                    id: state.ruleForm.id,
-                    name: state.ruleForm.name,
-                    password: state.ruleForm.name,
-                    rolemenuids: '1,2,3,4,5',
-                    account: state.ruleForm.account,
-                  },
+                  params: state.ruleForm,
                 })
                 .then(() => {
                   ElMessage.success('添加成功')

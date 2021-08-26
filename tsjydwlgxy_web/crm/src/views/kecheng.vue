@@ -52,7 +52,7 @@
             size="small"
             icon="el-icon-plus"
             @click="handleAdd()"
-            >添加用户</el-button
+            >添加课程</el-button
           >
         </div>
       </div>

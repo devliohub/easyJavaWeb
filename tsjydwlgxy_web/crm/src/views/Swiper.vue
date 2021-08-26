@@ -1,5 +1,5 @@
 <template>
-  <el-card class="swiper-container">
+  <el-card class="swiper-container" v-loading="loading">
     <el-upload
       ref="imgsRef"
       action="#"
@@ -16,7 +16,7 @@
 
     <ul>
       <li v-for="(item, index) in fileList" :key="index">
-        <img :src="item.url" alt="" />
+        <img :src="item.img" alt="" />
         <div>
           <span style="font-size: 14px"
             >上传时间：{{
@@ -104,11 +104,10 @@
             .get('/api/a/banner/add', {
               params: {
                 img: res,
-                url: res,
               },
             })
             .then((res2) => {
-              console.log(state.fileList)
+              getCarousels()
               ElMessage.success('上传成功')
             })
         })
@@ -171,7 +170,7 @@
   margin-bottom: 50px;
 }
 .swiper-container ul li img {
-  width: 250px;
+  width: 200px;
   margin-right: 100px;
 }
 .swiper-container ul li div {
