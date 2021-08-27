@@ -1,10 +1,11 @@
 <template>
   <div class="search">
     <van-search
-      v-model="search_value"
+      v-model="queryData.name"
       show-action
       placeholder="请输入搜索关键词"
-      @search="onSearch"
+      @search="() => getData()"
+      @clear="() => getData()"
       @cancel="onCancel"
     />
 
@@ -12,7 +13,11 @@
 
     <section>
       <van-dropdown-menu>
-        <van-dropdown-item v-model="value1" :options="dropOptions" />
+        <van-dropdown-item
+          v-model="queryData.type_id"
+          :options="dropOptions"
+          @change="() => getData()"
+        />
       </van-dropdown-menu>
     </section>
 
@@ -30,7 +35,7 @@
 
         <div class="pagin">
           <span>上一页</span>
-          <span class="num">{{ queryData.page_no }}/{{ totalPage }}</span>
+          <span class="num">{{ queryData.pageNo }}/{{ totalPage }}</span>
           <span>下一页</span>
         </div>
 
@@ -44,7 +49,7 @@
 <script>
   import breadcrumb from '@/components/breadcrumb'
   import itemCardSmall from '@/components/item_card_small'
-  import { indexSearch } from '@/api'
+  import { getKecheng, getCoursetypes } from '@/api'
 
   export default {
     name: 'search',
@@ -52,42 +57,50 @@
     data() {
       return {
         isloading: false,
-        search_value: '',
         dataList: [],
         queryData: {
-          type: 1,
-          w_type: 1,
-          module_type: 1,
-          page_no: 1,
-          page_size: 50,
+          type_id: 0,
+          module_id: '',
+          name: '',
+          pageNo: 1,
+          pageSize: 50,
         },
         totalPage: 0,
 
         value1: 0,
-        dropOptions: [
-          { text: '全部', value: 0 },
-          { text: '公共必修课', value: 1 },
-          { text: '公共选修课', value: 2 },
-          { text: '核心限选课', value: 3 },
-        ],
+        dropOptions: [{ text: '全部', value: 0 }],
       }
     },
-    mounted() {
-      this.getData()
+    async mounted() {
+      await this.getData(true)
+      this.getOptions()
     },
     methods: {
-      async getData() {
+      async getOptions() {
+        let res = await getCoursetypes()
+        if (res && res.errno == 200) {
+          res.result.map((el) => {
+            this.dropOptions.push({
+              text: el.name,
+              value: el.code,
+            })
+          })
+        }
+      },
+      async getData(flag) {
         this.isloading = true
-        let res = await indexSearch(this.queryData)
-        if (res && res.error.errno == 200) {
-          this.dataList = res.data
-          this.$set(this.dropOptions[0], 'text', '全部(' + res.data.length + ')')
-          this.totalPage = parseInt(res.data.length / 10)
+        let res = await getKecheng(this.queryData)
+        if (res && res.errno == 200) {
+          this.dataList = res.result.list
+          this.totalPage = res.result.total
+          if (flag)
+            this.$set(
+              this.dropOptions[0],
+              'text',
+              '全部(' + res.result.total + ')'
+            )
         }
         this.isloading = false
-      },
-      onSearch(val) {
-        console.log(val)
       },
       onCancel() {
         this.$router.go(-1)

@@ -19,27 +19,21 @@
       :style="{ height: '100%', width: '70%' }"
     >
       <div class="home_poper_ul">
-        <van-collapse v-model="activeName" accordion>
-          <van-collapse-item title="标题1" name="1">
-            <div
-              @click="
-                () => {
-                  $router.push('/search')
-                  showPop = false
-                }
-              "
-            >
-              内容内容通识教育
-            </div>
-          </van-collapse-item>
+        <van-collapse
+          v-model="activeName"
+          accordion
+          v-for="(item, index) in menuList"
+          :key="index"
+        >
           <van-collapse-item
-            title="标题2"
-            name="2"
-            :is-link="false"
-            :disabled="true"
-            >内容</van-collapse-item
+            :is-link="item.sub_menus"
+            :disabled="!item.sub_menus"
+            :title="item.name"
+            :name="item.id"
+            :title-class="{ is_active: $route.meta.title == item.name }"
+            @click.native="handleMenuClick(item)"
           >
-          <van-collapse-item title="标题3" name="3">内容</van-collapse-item>
+          </van-collapse-item>
         </van-collapse>
       </div>
     </van-popup>
@@ -47,13 +41,32 @@
 </template>
 
 <script>
+  import { getMenus } from '@/api'
   export default {
     name: 'index',
     data() {
       return {
         showPop: false,
         activeName: null,
+        menuList: [],
       }
+    },
+    async mounted() {
+      let res = await getMenus()
+      if (res && res.errno == 200) {
+        this.menuList = res.result
+      }
+    },
+    methods: {
+      handleMenuClick(v) {
+        if (v && v.id != 1) {
+          this.$router.push('/list?id=' + v.id + '&pid=' + v.pid)
+        } else {
+          this.$router.push('/index')
+        }
+        this.$route.meta.title = v.name
+        this.showPop = false
+      },
     },
   }
 </script>
@@ -70,6 +83,10 @@
     color: #444;
     margin-top: 50px;
     padding: 0;
+
+    .is_active {
+      color: #c00900;
+    }
   }
 
   .bottom_tabs {

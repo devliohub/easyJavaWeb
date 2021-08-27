@@ -19,33 +19,32 @@ const user = {
   actions: {
     // 登录
     async Login({ commit }, userInfo) {
-      let response = await login(userInfo)
-      // console.log(response)
-      if (response && response.error.errno == 200) {
-        const data = response.data;
-        setName(JSON.stringify(data))
-        commit('SET_NAME', data)
-        setToken('faketoken')
-        commit('SET_TOKEN', 'faketoken')
-        return true
-      } else {
-        return false
-      }
+      // let response = await login(userInfo)
+      // if (response && response.error.errno == 200) {
+      //   const data = response.data;
+      //   setName(JSON.stringify(data))
+      //   commit('SET_NAME', data)
+      //   setToken('faketoken')
+      //   commit('SET_TOKEN', 'faketoken')
+      //   return true
+      // } else {
+      //   return false
+      // }
     },
 
     // 登出
     async LogOut({ commit }) {
-      let res = await logout()
-      if (res && res.error.errno == 200) {
-        commit('SET_TOKEN', '')
-        commit('SET_NAME', '')
-        removeName()
-        removeToken()
-        sessionStorage.removeItem('t_id')
-        return true
-      } else {
-        return false
-      }
+      // let res = await logout()
+      // if (res && res.error.errno == 200) {
+      //   commit('SET_TOKEN', '')
+      //   commit('SET_NAME', '')
+      //   removeName()
+      //   removeToken()
+      //   sessionStorage.removeItem('t_id')
+      //   return true
+      // } else {
+      //   return false
+      // }
     },
   }
 }

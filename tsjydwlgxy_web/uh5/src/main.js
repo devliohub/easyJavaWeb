@@ -40,11 +40,31 @@ const router = new VueRouter({
 })
 
 // 全局获取分类
-if (!JSON.parse(window.sessionStorage.getItem('tpyeArr'))) {
-  cateTitle().then(res => {
-    window.sessionStorage.setItem('tpyeArr', JSON.stringify(res.data))
-  })
-}
+// if (!JSON.parse(window.sessionStorage.getItem('tpyeArr'))) {
+//   cateTitle().then(res => {
+//     window.sessionStorage.setItem('tpyeArr', JSON.stringify(res.data))
+//   })
+// }
+Vue.prototype.dateFormater = function (t, formater) {
+  if (t) {
+    let date = new Date(t),
+      Y = date.getFullYear() + '',
+      M = date.getMonth() + 1,
+      D = date.getDate(),
+      H = date.getHours(),
+      m = date.getMinutes(),
+      s = date.getSeconds();
+    return formater.replace(/YYYY|yyyy/g, Y)
+      .replace(/YY|yy/g, Y.substr(2, 2))
+      .replace(/MM/g, (M < 10 ? '0' : '') + M)
+      .replace(/DD/g, (D < 10 ? '0' : '') + D)
+      .replace(/HH|hh/g, (H < 10 ? '0' : '') + H)
+      .replace(/mm/g, (m < 10 ? '0' : '') + m)
+      .replace(/ss/g, (s < 10 ? '0' : '') + s)
+  } else {
+    return ''
+  }
+};
 
 router.beforeEach((to, from, next) => {
   /* 路由发生变化修改页面title, 回到顶部 */

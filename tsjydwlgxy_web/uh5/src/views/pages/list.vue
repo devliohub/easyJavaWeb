@@ -10,14 +10,14 @@
         v-for="(item, x) in paList"
         :key="x"
         :class="{ signle_class: x % 2 == 0 }"
-        @click="
-          () => {
-            $router.push('/desc')
-          }
-        "
+        @click="handlegoDesc(item)"
       >
         <div class="title">{{ item.title }}</div>
-        <div class="time">发布时间：2010-02-04</div>
+        <div class="time">
+          发布时间：{{
+            dateFormater(item.create_time * 1000, 'YYYY-MM-DD HH:mm')
+          }}
+        </div>
       </li>
     </ul>
 
@@ -25,40 +25,47 @@
   </div>
 </template> 
 <script>
+  import { getArticle } from '@/api'
   import breadcrumb from '@/components/breadcrumb'
   export default {
-    name: 'list',
+    name: 'listPage',
     components: { breadcrumb },
     data() {
       return {
         isloading: false,
-        paList: [
-          {
-            title: '这是大标题最多显示两行超出省略这是大标题最多显示两行超出省略',
-          },
-          {
-            title: '23234dedegded',
-          },
-          {
-            title:
-              '这是大标题最多显示两行超出省232略这是大标题最多显示两行超出省略',
-          },
-          {
-            title:
-              '这是大标题最多显示两行超出省略这是大标题最多显示两行超出省44略',
-          },
-        ],
+        queryObj: {
+          menu_pid: this.$route.query.pid,
+          menu_id: this.$route.query.id,
+          title: '', //（搜索文章关键词）
+          pageNo: 1,
+          pageSize: 10,
+        },
+        paList: [],
       }
     },
     mounted() {
       this.getData()
     },
+    watch: {
+      '$route.fullPath': function (newv, oldv) {
+        if (newv != oldv) {
+          this.getData()
+          this.queryObj.menu_pid = this.$route.query.pid
+          this.queryObj.menu_id = this.$route.query.id
+        }
+      },
+    },
     methods: {
       async getData() {
         this.isloading = true
-        setTimeout(() => {
-          this.isloading = false
-        }, 1000)
+        let res = await getArticle(this.queryObj)
+        if (res) {
+          this.paList = res.result.list
+        }
+        this.isloading = false
+      },
+      handlegoDesc(item) {
+        this.$router.push('/desc?id=' + item.id)
       },
     },
   }

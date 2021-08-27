@@ -1,17 +1,18 @@
 <template>
   <div class="desc">
     <breadcrumb />
+    <div v-if="isloading" class="center_loading">
+      <van-loading type="spinner" />
+    </div>
 
-    <section>
+    <section v-else>
       <header>
-        <div class="title">这场“十四五”问计会 总书记要求处理好五大关系</div>
-        <div class="time">2020/10/28</div>
+        <div class="title">{{ entity.title }}</div>
+        <div class="time">
+          {{ dateFormater(entity.create_time * 1000, 'YYYY/MM/DD HH:mm') }}
+        </div>
       </header>
-      <article>
-        这是很长的内容这是很长的内容这是很长的内容这是很长的内容这是很长的内容这是很长的内容。
-        这是很长的内容这是很长的内容这是很长的内容这是很长的内容这是很长的内容这是很长的内容。
-        这是很长的内容这是很长的内容这是很长的内容这是很长的内容这是很长的内容这是很长的内容。
-      </article>
+      <article v-html="entity.content"></article>
       <div class="fujianList">
         <header>
           <span>附件</span>
@@ -22,9 +23,9 @@
 </template>
 <script>
   import breadcrumb from '@/components/breadcrumb'
-
+  import { getArticleDesc } from '@/api'
   export default {
-    name: 'desc',
+    name: 'listDesc',
     components: { breadcrumb },
     data() {
       return {
@@ -39,6 +40,10 @@
     methods: {
       async getData() {
         this.isloading = true
+        let res = await getArticleDesc(this.$route.query.id)
+        if (res && res.errno == 200) {
+          this.entity = res.result
+        }
         this.isloading = false
       },
     },

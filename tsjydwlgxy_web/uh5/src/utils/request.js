@@ -25,11 +25,8 @@ service.interceptors.response.use(
         if (response.config.responseType == 'blob') {
             return res
         }
-        if (res.error.errno == 431) {
-            Toast.fail('请重新登录');
-            location.href = '/#/login'
-        } else if (res.error.errno != 200) {
-            Toast.fail(res.error.usermsg);
+        if (res.errno != 200) {
+            Toast.fail(res.usermsg);
         }
         return res
     },

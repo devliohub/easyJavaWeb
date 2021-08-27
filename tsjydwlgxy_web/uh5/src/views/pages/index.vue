@@ -8,18 +8,29 @@
       ref="swiper"
     >
       <van-swipe-item>
-        <img src="@/assets/banner1.png" alt @click="$router.push('/search')" />
-      </van-swipe-item>
-      <van-swipe-item>
-        <img src="@/assets/banner2.png" alt @click="$router.push('/search')" />
+        <img src="@/assets/bannerH5.png" alt @click="$router.push('/search')" />
       </van-swipe-item>
     </van-swipe>
 
     <!-- 7大模块 -->
     <section>
-      <div class="ul_module">
+      <div v-if="isloading" class="center_loading">
+        <van-loading type="spinner" />
+      </div>
+
+      <div v-else class="ul_module">
+        <div class="ul_module_text">
+          <span>{{ moduleList.length - 1 }}</span>
+          大能力模块，构建通识教育课程体系
+        </div>
         <ul>
-          <li v-for="(item, index) in 8" :key="index"></li>
+          <li v-for="(item, index) in moduleList" :key="index">
+            <div><van-icon :name="iconArr[index]" /></div>
+            <div>
+              <span style="font-weight: bold"> {{ item.name }}</span>
+              <span> 80门</span>
+            </div>
+          </li>
         </ul>
       </div>
     </section>
@@ -67,24 +78,33 @@
       </div>
     </section>
 
-    <indexfooter />
+    <indexFooter />
   </div>
 </template>
 <script>
   import itemCardTiny from '@/components/item_card_tiny'
   import itemCardSmall from '@/components/item_card_small'
   import itemCardMid from '@/components/item_card_mid'
-  import indexfooter from './footer.vue'
-  import { indexSearch, cateSearch, cateTitle } from '@/api'
+  import indexFooter from './footer.vue'
+  import { getCoursemodules } from '@/api'
 
   export default {
     name: 'home',
-    components: { itemCardTiny, itemCardSmall, itemCardMid, indexfooter },
+    components: { itemCardTiny, itemCardSmall, itemCardMid, indexFooter },
     data() {
       return {
         isloading: false,
 
-        classicTabs: [],
+        iconArr: [
+          'location-o',
+          'like-o',
+          'star-o',
+          'phone-o',
+          'setting-o',
+          'fire-o',
+          'coupon-o',
+          'cart-o',
+        ], // 模块icon
         queryData: {
           type: 1,
           w_type: 1,
@@ -92,6 +112,7 @@
           page_no: 1,
           page_size: 6,
         },
+        moduleList: [], //7大模块
         topList: [], //3个大块
         cateList: [], //分类列表
         tinyList: [
@@ -104,40 +125,22 @@
     methods: {
       async getData() {
         this.isloading = true
-        let res = await indexSearch(this.queryData)
-        if (res && res.error.errno == 200) this.topList = res.data
-        this.isloading = false
-      },
-      async getCateData() {
-        let res = await cateSearch()
-        if (res && res.error.errno == 200) {
-          this.cateList = res.data
+        let res = await getCoursemodules(this.queryData)
+        if (res && res.errno == 200) {
+          this.moduleList = res.result
+          this.moduleList.push({
+            code: 0,
+            name: '全部课程',
+          })
         }
-      },
-      handleTabClick(index, name) {
-        let _target = this.classicTabs.find((el) => el.short_name == name)
-        setTimeout(() => {
-          this.$router.push('/limitFree?cid=' + _target.id)
-        }, 300)
+        this.isloading = false
       },
     },
     async mounted() {
       this.$nextTick(() => {
         window.addEventListener('scroll', this.handleScroll)
       })
-      // 处理第一次进入session为空情况
-      if (!JSON.parse(window.sessionStorage.getItem('tpyeArr'))) {
-        let res = await cateTitle({
-          account: 'test1',
-          password: '123456',
-        })
-        this.classicTabs = res.data
-        window.sessionStorage.setItem('tpyeArr', JSON.stringify(res.data))
-      } else {
-        this.classicTabs = JSON.parse(window.sessionStorage.getItem('tpyeArr'))
-      }
       this.getData()
-      this.getCateData()
     },
   }
 </script>
@@ -149,15 +152,11 @@
   // 轮播
   .banner {
     background: #fff;
-    border: 1px solid red;
-    margin-left: 15px;
-    margin-top: 100px;
-    width: 345px;
+    margin-top: 50px;
+    width: 100%;
     text-align: center;
-    border-radius: 5px;
     img {
       width: 100%;
-      height: 142px;
     }
   }
 
@@ -229,15 +228,40 @@
     }
     .ul_module {
       width: 100%;
+      &_text {
+        padding: 25px 0;
+        font-size: 18px;
+        text-align: center;
+        color: #c00900;
+        span {
+          font-size: 24px;
+          font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        }
+      }
       & > ul {
         display: flex;
         flex-wrap: wrap;
         li {
           width: 40%;
-          padding: 30px 5px;
           margin: 10px 5%;
-          background: #c00900 10%;
+          background: rgba(192, 9, 0, 0.1);
+          text-align: center;
+          border: 1px solid #660000;
+          border-radius: 2px;
           color: #660000;
+          div {
+            padding: 10px;
+            &:first-child {
+              padding-bottom: 0;
+              font-size: 20px;
+              text-align: left;
+            }
+            &:last-child {
+              font-size: 14px;
+              display: flex;
+              justify-content: space-between;
+            }
+          }
         }
       }
     }

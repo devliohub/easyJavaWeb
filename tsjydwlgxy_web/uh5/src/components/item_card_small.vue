@@ -1,9 +1,11 @@
 <template>
   <div class="item_card_small" @click="handleClick">
-    <img :src="entity.img" alt="" />
+    <img :src="entity.cover" alt="" />
     <main>
-      <div class="title">{{ entity.title }}</div>
-      <div class="time" v-if="isIndexPage">2021-08-09</div>
+      <div class="title">{{ entity.name }}</div>
+      <div class="time" v-if="isIndexPage">
+        {{ dateFormater(entity.create_time * 1000, 'YYYY-MM-DD') }}
+      </div>
     </main>
   </div>
 </template>
@@ -22,7 +24,8 @@
     },
     computed: {
       isIndexPage() {
-        return this.$route.name == 'index'
+        return true
+        // return this.$route.name == 'index'
       },
     },
     methods: {

@@ -61,7 +61,6 @@ module.exports = {
             '/': {
                 ws: false, // proxy websockets
                 target: 'http://121.36.22.149:2000/api',
-                // target: 'https://taodaxiong.cn',
                 changeOrigin: true
             }
         }

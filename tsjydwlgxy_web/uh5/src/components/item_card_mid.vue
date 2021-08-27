@@ -1,9 +1,9 @@
 <template>
   <div class="item_card_mid" @click="handleClick">
-    <img :src="entity.img" alt />
+    <img :src="entity.cover" alt />
     <main>
       <div class="title">
-        <span>{{ entity.title }}</span>
+        <span>{{ entity.name }}</span>
       </div>
       <div class="time">发布时间：2021-08-09</div>
     </main>
