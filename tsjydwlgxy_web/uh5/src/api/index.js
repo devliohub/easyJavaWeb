@@ -2,21 +2,21 @@ import request from '@/utils/request'
 
 export function getArticle(obj) {
     return request({
-        url: '/article/list',
+        url: '/api/article/list',
         method: 'post',
         params: obj
     })
 }
 export function getArticleDesc(id) {
     return request({
-        url: '/article/info?id=' + id,
+        url: '/api/article/info?id=' + id,
         method: 'get'
     })
 }
 
 export function getKecheng(obj) {
     return request({
-        url: '/course/list',
+        url: '/api/course/list',
         method: 'post',
         params: obj
     })
@@ -24,21 +24,21 @@ export function getKecheng(obj) {
 
 export function getCoursemodules() {
     return request({
-        url: '/sys/coursemodules',
+        url: '/api/sys/coursemodules',
         method: 'get',
     })
 }
 
 export function getCoursetypes() {
     return request({
-        url: '/sys/coursetypes',
+        url: '/api/sys/coursetypes',
         method: 'get',
     })
 }
 
 export function getMenus() {
     return request({
-        url: '/sys/menus',
+        url: '/api/sys/menus',
         method: 'get',
     })
 }
