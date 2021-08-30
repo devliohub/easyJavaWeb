@@ -1,15 +1,15 @@
 <template>
   <div class="saler">
     <main>
-      <breadcrumb />
-
       <section>
         <!-- 左侧路由 -->
         <div class="left_menu">
-          <sideBar :isUser="false" />
+          <sideBar />
         </div>
         <!-- 右侧内容 -->
         <div class="right_content">
+          <breadcrumb />
+
           <transition name="fade-transform" mode="out-in">
             <router-view></router-view>
           </transition>
@@ -19,14 +19,14 @@
   </div>
 </template>
 <script>
-import breadcrumb from "@/components/breadCrumb.vue";
-import sideBar from "@/components/sideBar";
+  import breadcrumb from '@/components/breadCrumb.vue'
+  import sideBar from '@/components/sideBar'
 
-export default {
-  name: "saler",
-  components: { breadcrumb, sideBar },
-  methods: {}
-};
+  export default {
+    name: 'saler',
+    components: { breadcrumb, sideBar },
+    methods: {},
+  }
 </script>
 <style lang="scss" scope>
 .saler {
@@ -37,6 +37,7 @@ export default {
     & > section {
       width: 100%;
       display: flex;
+      padding-top: 20px;
       .left_menu {
         width: 210px;
         margin-right: 15px;

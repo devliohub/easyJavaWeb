@@ -26,13 +26,29 @@
           :key="index"
         >
           <van-collapse-item
-            :is-link="item.sub_menus"
-            :disabled="!item.sub_menus"
-            :title="item.name"
+            :is-link="item.sub_menus.length > 0"
+            :disabled="!item.sub_menus > 0"
+            :title="item.name + (item.is_course_menu ? ' (定制)' : '')"
             :name="item.id"
             :title-class="{ is_active: $route.meta.title == item.name }"
             @click.native="handleMenuClick(item)"
           >
+            <template v-if="item.sub_menus.length > 0">
+              <van-collapse
+                accordion
+                v-for="(_item, _index) in item.sub_menus"
+                :key="_index"
+              >
+                <van-collapse-item
+                  :is-link="false"
+                  :title="_item.name"
+                  :name="_item.id"
+                  :title-class="{ is_active: $route.meta.title == _item.name }"
+                  @click.native="handleMenuClick(_item)"
+                >
+                </van-collapse-item>
+              </van-collapse>
+            </template>
           </van-collapse-item>
         </van-collapse>
       </div>
@@ -59,12 +75,13 @@
     },
     methods: {
       handleMenuClick(v) {
+        if (v.sub_menus && v.sub_menus.length > 0) return
         if (v && v.id != 1) {
           this.$router.push('/list?id=' + v.id + '&pid=' + v.pid)
         } else {
           this.$router.push('/index')
         }
-        this.$route.meta.title = v.name
+        this.$set(this.$route.meta, 'title', v.name)
         this.showPop = false
       },
     },
@@ -94,6 +111,13 @@
     .iconfont {
       font-size: 18px;
     }
+  }
+
+  .van-collapse-item__content {
+    padding: 0 !important;
+  }
+  .van-collapse-item__wrapper {
+    padding-left: 20px;
   }
 }
 </style>

@@ -3,16 +3,12 @@ import VueRouter from 'vue-router'
 import App from "./App.vue";
 import routes from "./router/index";
 import store from "./store";
-import NProgress from 'nprogress' // Progress 进度条
-import { getToken } from '@/utils/auth' // 验权
 
 import "element-ui/lib/theme-chalk/index.css"; // 主题样式
 import 'nprogress/nprogress.css'// Progress 进度条样式
 import "normalize.css/normalize.css";
 import "@/assets/iconfont/iconfont.css"
 import '@/styles/index.scss'
-
-import { cateTitle } from "@/api/common/common.js"
 
 Vue.use(VueRouter)
 import {
@@ -141,34 +137,8 @@ const router = new VueRouter({
   routes
 })
 
-// 全局获取分类
-if (!JSON.parse(window.sessionStorage.getItem('tpyeArr'))) {
-  cateTitle().then(res => {
-    window.sessionStorage.setItem('tpyeArr', JSON.stringify(res.data))
-  })
-}
-
 new Vue({
   router,
   store,
   render: h => h(App)
 }).$mount("#app");
-
-
-router.beforeEach((to, from, next) => {
-  NProgress.start()
-  if (getToken()) { // 登录状态
-    if (to.meta.islogin == false) { // 登录状态禁止的页面
-      next('/404')
-    } else { // 登录状态 粉丝2c, 商家2b
-      next()
-    }
-  } else { // 未登录状态
-    to.meta.roles ? next('/login') : next()
-  }
-  NProgress.done()
-})
-
-router.afterEach(() => {
-  NProgress.done() // 结束Progress
-})

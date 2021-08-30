@@ -33,18 +33,11 @@ VueClipboard.config.autoSetContainer = true // add this line
 Vue.use(VueClipboard)
 Vue.use(VueRouter)
 Vue.use(Vant);
-import { cateTitle } from "@/api"
 
 const router = new VueRouter({
   routes
 })
 
-// 全局获取分类
-// if (!JSON.parse(window.sessionStorage.getItem('tpyeArr'))) {
-//   cateTitle().then(res => {
-//     window.sessionStorage.setItem('tpyeArr', JSON.stringify(res.data))
-//   })
-// }
 Vue.prototype.dateFormater = function (t, formater) {
   if (t) {
     let date = new Date(t),

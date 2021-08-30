@@ -23,18 +23,11 @@
 
   export default {
     components: { SidebarItem },
-    props: {
-      isUser: {
-        type: Boolean,
-        default: true,
-      },
-    },
+    props: {},
     computed: {
       ...mapGetters(['sidebar']),
       routes() {
-        return this.isUser
-          ? this.$router.options.routes[0].children[0].children[5].children
-          : this.$router.options.routes[0].children[0].children[6].children
+        return this.$router.options.routes[0].children[0].children[1].children
       },
     },
     mounted() {

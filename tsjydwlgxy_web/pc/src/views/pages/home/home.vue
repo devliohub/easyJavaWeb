@@ -99,12 +99,11 @@
 </template>
 
 <script>
-  import { cateTitle, cateDesc, indexSearch } from '@/api/common/common.js'
-  import itemCard from '@/components/itemCard.vue'
+  import { cateDesc, indexSearch } from '@/api/common/common.js'
   import { mapGetters } from 'vuex'
 
   export default {
-    components: { itemCard },
+    components: {},
     computed: {
       ...mapGetters(['name']),
       isLogin() {

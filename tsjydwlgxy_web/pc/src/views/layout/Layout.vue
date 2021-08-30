@@ -1,35 +1,21 @@
 <template>
   <div class="layout-wrapper">
-    <!-- 登录弹窗 -->
-    <loginDialog
-      v-if="showLoginDialog"
-      @close="showLoginDialog = false"
-      @goFindpwd="
-        showLoginDialog = false
-        $router.push('/findPwd?type=user')
-      "
-    />
-    <navbar @showLogin="showLoginDialog = true" />
-    <navbar2 @handleSearch="handleSearch" />
+    <navbar @handleSearch="handleSearch" />
     <app-main ref="app_ref" />
-
     <homeFooter />
     <el-backtop target=".layout-wrapper"></el-backtop>
   </div>
 </template>
 
 <script>
-  import { Navbar, Navbar2, AppMain } from './components'
-  import loginDialog from '@/components/loginDialog'
+  import { Navbar, AppMain } from './components'
   import homeFooter from '../pages/home/footer'
 
   export default {
     name: 'layout',
     components: {
       Navbar,
-      Navbar2,
       AppMain,
-      loginDialog,
       homeFooter,
     },
     data() {

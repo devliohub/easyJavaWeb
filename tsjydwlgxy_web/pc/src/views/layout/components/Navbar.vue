@@ -1,199 +1,113 @@
 <template>
-  <div class="navbar">
+  <div class="navbar2">
     <main>
-      <ul class="navbar_left">
-        <li>
-          <span v-if="isLogin" class="avatar">
-            <img v-if="name.avatar" :src="name.avatar" alt="" />
-            <span>{{name.account || ''}}&nbsp;&nbsp;&nbsp;{{isFans ? '粉丝' : '商家'}}: {{ name.mobile }}</span>
-          </span>
-          <span v-else>游 客</span>
-        </li>
-        <li v-if="isLogin">
-          <a :class="{'has_msg': my_num > 0}" class="active_li" @click="handleClickMsg">
-            消息通知
-            <span v-if="my_num > 0">({{my_num}})</span>
-          </a>
-        </li>
-        <!-- <li>微信登录</li> -->
-        <li v-if="!isLogin">
-          <a class="active_li" @click="handleClickUserlogin">用户登录</a>
-        </li>
-        <li v-if="!isLogin">
-          <router-link class="active_li" to="/login">商家登录</router-link>
-        </li>
-        <li v-if="!isLogin">
-          <router-link class="active_li" to="/register">免费注册</router-link>
-        </li>
-      </ul>
-
-      <ul class="navbar_right">
-        <li>
-          <router-link class="active_li" to="/index">
-            <i class="el-icon-s-home"></i> 淘小熊首页
-          </router-link>
-        </li>
-        <li v-if="isLogin && isFans">
-          <router-link class="active_li" to="/user/personal">
-            <i class="el-icon-user-solid"></i> 用户中心
-          </router-link>
-        </li>
-        <li v-if="isLogin && !isFans">
-          <router-link class="active_li" to="/saler/personal">
-            <i class="el-icon-s-custom"></i> 商家中心
-          </router-link>
-        </li>
-        <li v-if="isLogin">
-          <a class="active_li" @click="handleLogout" style="color:#ff5500">
-            <i class="el-icon-switch-button"></i> 退出登录
-          </a>
-        </li>
-      </ul>
+      <div class="navbar2_right">
+        <!-- <el-input placeholder="关键词搜索" v-model="search_word">
+          <i
+            class="el-icon-search el-input__icon"
+            slot="suffix"
+            @click="handleIconClick"
+          >
+          </i>
+        </el-input> -->
+      </div>
     </main>
+
+    <!-- tab栏目 -->
+    <div class="index_items">
+      <ul>
+        <router-link
+          v-for="(item, index) in cateTitleList"
+          :key="index"
+          :to="'/allGoods/' + item.id"
+        >
+          <li>
+            <span :class="item.icon"></span>
+            {{ item.long_name }}
+          </li>
+        </router-link>
+      </ul>
+    </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import { messageNum } from "@/api/sys.js";
-
-export default {
-  components: {},
-  data() {
-    return {
-      my_num: 0
-    };
-  },
-  mounted() {
-    this.getMsgNum()
-  },
-  watch: {
-    '$route.path': function (newVal, oldVal) {
-      this.getMsgNum()
-    }
-  },
-  computed: {
-    ...mapGetters(["name"]),
-    isProd() {
-      return process.env.NODE_ENV == "development" ? "开发" : "生产";
-    },
-    isFans() {
-      if (this.isLogin) return this.name.platform == "2c";
-    },
-    isLogin() {
-      return this.name;
-    }
-  },
-  methods: {
-    // 2b商家 2c粉丝
-    async getMsgNum() {
-      // console.log(this.$store.state.user.name.platform)
-      console.log(this.$store.state.user.name)
-      if(this.$store.state.user.name) {
-        let res = await messageNum({
-          platform: this.$store.state.user.name.platform
-        })
-        if (res && res.error.errno == 200) {
-          if(res.un_msg_num > 0) {
-            this.my_num = res.un_msg_num
-          }
-        }
+  export default {
+    data() {
+      return {
+        search_word: '',
+        cateTitleList: [], // 轮播左侧类型
       }
-      
     },
-    handleClickUserlogin() {
-      this.$emit("showLogin");
+    watch: {
+      $route: function (v) {
+        // console.log(v)
+        if (v.name != 'allGoods') this.search_word = ''
+      },
     },
-    handleClickMsg() {
-      let url = this.isFans ? "/user/msg" : "/saler/msg";
-      this.$router.push(url);
+    async mounted() {
+      // 处理第一次进入session为空情况
+      if (!JSON.parse(window.sessionStorage.getItem('tpyeArr'))) {
+        let res = await cateTitle()
+        this.cateTitleList = res.data
+        window.sessionStorage.setItem('tpyeArr', JSON.stringify(res.data))
+      } else {
+        this.cateTitleList = JSON.parse(window.sessionStorage.getItem('tpyeArr'))
+      }
     },
-    handleLogout() {
-      this.$confirm("是否确认退出登录?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      })
-        .then(() => {
-          this.$store
-            .dispatch("LogOut")
-            .then(res => {
-              if (res) {
-                this.$router.push({ path: "/" });
-                this.$message.success("登出成功！");
-              }
-            })
-            .catch(err => {});
-        })
-        .catch(() => {});
-    }
+    methods: {
+      handleIconClick() {
+        this.$emit('handleSearch', this.search_word)
+      },
+    },
   }
-};
 </script>
 
-<style lang="scss" scoped>
-.navbar {
-  background-color: #333;
-  font-size: 12px;
-  .has_msg {
-    color: #ff5500;
-    font-weight: bold;
-  }
+<style rel="stylesheet/scss" lang="scss">
+.navbar2 {
+  background: url('../../../assets/home/top_bg.png');
   main {
     width: 1200px;
     margin: 0 auto;
-    color: #fff;
+    height: 120px;
     display: flex;
-    height: 40px;
-    justify-content: space-between;
-
-    .active_li {
-      transition: 0.2s;
-      &:hover {
-        color: #ff5500;
+    justify-content: center;
+    align-items: center;
+    .navbar2_left {
+      display: flex;
+      margin-right: 100px;
+      &_img {
+        border: 1px solid red;
       }
     }
 
-    .navbar_left {
+    .navbar2_right {
       display: flex;
-      align-items: center;
-      li {
-        &:first-child {
-          padding-left: 0;
-        }
-        height: 20px;
-        line-height: 20px;
-        padding: 0 15px;
-        border-right: 1px solid #fff;
-        &:last-child {
-          border: none;
-        }
-        .avatar {
-          display: flex;
-          align-items: center;
-          & > img {
-            margin-right: 10px;
-            width: 20px;
-            height: 20px;
-          }
-        }
+      height: 36px;
+      line-height: 36px;
+      margin-right: 150px;
+      position: relative;
+      .el-input__inner {
+        border-radius: 20px !important;
       }
     }
-
-    .navbar_right {
+  }
+  .index_items {
+    width: 100%;
+    background: #660000;
+    ul {
       display: flex;
-      align-items: center;
-      li {
-        &:last-child {
-          padding-left: 30px;
-        }
-        display: flex;
-        height: 20px;
-        line-height: 20px;
-        padding: 0 15px;
-        align-items: center;
-        i {
-          font-size: 18px;
+      justify-content: space-between;
+      width: 1200px;
+      margin: 0 auto;
+      a {
+        height: 50px;
+        line-height: 50px;
+        // padding: 0 24px;
+        color: #fff;
+        &:hover {
+          background: #fff;
+          color: #660000;
         }
       }
     }
