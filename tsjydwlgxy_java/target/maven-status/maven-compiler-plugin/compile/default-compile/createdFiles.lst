@@ -31,7 +31,6 @@ com\tsjy\dwlgxy\servlet\admin\userAdmin\ListServlet.class
 com\tsjy\dwlgxy\servlet\demo\UserServlet.class
 com\tsjy\dwlgxy\servlet\sys\RoleMenusServlet.class
 com\tsjy\dwlgxy\servlet\admin\article\InfoServlet.class
-com\tsjy\dwlgxy\servlet\sys\RoleMenusServlet$1.class
 com\tsjy\dwlgxy\service\ArticleService.class
 com\tsjy\dwlgxy\servlet\admin\course\ListServlet.class
 com\tsjy\dwlgxy\bean\Article.class

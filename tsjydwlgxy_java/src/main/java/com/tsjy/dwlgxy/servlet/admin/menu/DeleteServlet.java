@@ -49,7 +49,7 @@ public class DeleteServlet extends AdminBaseServlet
 			
 			
 	      //#
-	        Course obj = CourseService.getRow(id);
+	        Menu obj = MenuService.getRow(id);
 	        if(obj == null)
 	        {
 	        	// TODO  Log

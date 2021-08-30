@@ -1,5 +1,7 @@
 package com.tsjy.dwlgxy.bean;
 
+import java.util.List;
+
 public class Menu {
 
 	public int id;
@@ -12,4 +14,5 @@ public class Menu {
 	public int is_delete;
 	public long create_time;
 	public long update_time;
+	public List<Menu> sub_menus;
 }

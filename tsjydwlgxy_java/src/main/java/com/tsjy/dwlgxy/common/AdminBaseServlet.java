@@ -50,6 +50,7 @@ public class AdminBaseServlet extends HttpServlet
 		HttpSession session = request.getSession(true);
 		System.out.println("ID " + session.getId());
 		
+		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");  
 		response.setContentType("application/json");
 		//String origin = request.getHeader("Origin");

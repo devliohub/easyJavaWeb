@@ -7,7 +7,9 @@ public class Article {
 	public String content;
 	public String attachment;
 	public int menu_pid;
+	public String menu_pname;
 	public int menu_id;
+	public String menu_name;
 	public int is_top;
 	public String cover;
 	public int is_delete;

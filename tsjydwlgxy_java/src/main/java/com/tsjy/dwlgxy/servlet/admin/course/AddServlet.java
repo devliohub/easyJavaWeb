@@ -36,7 +36,7 @@ public class AddServlet extends AdminBaseServlet
 	        String cover   = StringUtil.getString(request.getParameter("cover"), "")  ;
 	        
 	        
-	        
+	        System.out.println(name);
 	        
 	        
 	        //#

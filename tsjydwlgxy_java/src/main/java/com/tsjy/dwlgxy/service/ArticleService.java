@@ -13,8 +13,10 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import com.tsjy.dwlgxy.bean.*;
+import com.tsjy.dwlgxy.service.*;
 import com.tsjy.dwlgxy.common.conf.DbConfig;
 import com.tsjy.dwlgxy.common.utils.StringUtil;
+
 
 public class ArticleService 
 {
@@ -60,6 +62,16 @@ public class ArticleService
 				}
 			}
 		}
+		
+		//#outList for dynamic column
+        List<Article> outList = new ArrayList<>();
+        for (Article pre : list) {
+        	Menu menuObj = MenuService.getRow(pre.menu_id);
+        	pre.menu_name =  menuObj != null ? menuObj.name : "";
+        	
+        	Menu menuPObj = MenuService.getRow(pre.menu_pid);
+        	pre.menu_pname =  menuPObj != null ? menuPObj.name : "";
+        }
 		
 		return list;
 	}

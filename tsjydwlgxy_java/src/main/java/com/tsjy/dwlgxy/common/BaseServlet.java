@@ -46,6 +46,7 @@ public class BaseServlet extends HttpServlet
 		System.out.println("2");
 		
 		
+		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");  
 		response.setContentType("application/json");
 		//String origin = request.getHeader("Origin");

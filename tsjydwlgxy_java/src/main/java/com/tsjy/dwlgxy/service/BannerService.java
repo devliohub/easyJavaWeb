@@ -156,8 +156,8 @@ public class BannerService
 			try (PreparedStatement ps = conn.prepareStatement("UPDATE banner SET img=?, url=?, update_time=? where id=?")) {
 				ps.setString(1, obj.img);
 				ps.setString(2, obj.url);
-				ps.setLong(5, obj.update_time);
-				ps.setInt(6, obj.id);
+				ps.setLong(3, obj.update_time);
+				ps.setInt(4, obj.id);
 				n = ps.executeUpdate();
 			}
 		}
