@@ -27,7 +27,8 @@ public class UploadServlet extends BaseServlet {
 		try {
 			
 			// 读取Request Body: -> 写入文件:
-			String realPath = this.getServletContext().getRealPath("/upload");// /WEB-INF/files
+			//String realPath = this.getServletContext().getRealPath("/upload");// /WEB-INF/files
+			String realPath = AppConfig.STATIC_UPLOAD_PATH;
 			String fileUrl  = FileUtil.upload(request, realPath);
 
 			// 显示上传结果:

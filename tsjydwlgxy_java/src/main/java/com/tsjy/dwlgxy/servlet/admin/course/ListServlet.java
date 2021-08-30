@@ -53,7 +53,7 @@ public class ListServlet extends AdminBaseServlet
 		    StringBuilder sb = new StringBuilder();
 		    sb.append("1=1");
 		    if( module_id != 0 ) sb.append(" and module_id=").append(module_id);
-		    if( module_id != 0 ) sb.append(" and type_id=").append(type_id);
+		    if( type_id != 0 ) sb.append(" and type_id=").append(type_id);
 		    if( StringUtil.valid(name) ) 
 		    {
 		    	sb.append(" and name like '%").append(name).append("%'");

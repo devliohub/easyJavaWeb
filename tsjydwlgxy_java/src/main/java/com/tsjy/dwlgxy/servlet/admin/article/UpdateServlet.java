@@ -44,8 +44,8 @@ public class UpdateServlet extends AdminBaseServlet
 	        
 	        
 	        
-	        //#
-	        if( id == 0 || StringUtil.invalid(title) || StringUtil.invalid(content)  || StringUtil.invalid(attachment) || menu_pid == 0 || menu_id == 0 || StringUtil.invalid(cover) ) 
+	        //# || StringUtil.invalid(attachment) || menu_id == 0 || StringUtil.invalid(cover)
+	        if( id == 0 || StringUtil.invalid(title) || StringUtil.invalid(content)   || menu_pid == 0  ) 
 	        {
 	        	// TODO  Log
 	        	return jsonReturn(

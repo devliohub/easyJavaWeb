@@ -15,7 +15,7 @@ import com.tsjy.dwlgxy.service.*;
 
 
 
-@WebServlet(urlPatterns = "/a/menu/info")
+@WebServlet(urlPatterns = "/a/menu/sort")
 public class SortServlet extends AdminBaseServlet 
 {
 	
@@ -65,13 +65,13 @@ public class SortServlet extends AdminBaseServlet
 	        if( sorttype.equals("prev") )
         	// prev
 	        {
-	        	List<Menu> objPrevList = MenuService.getLimitRows( String.format("pid=%s and sortnum < %s and is_delete=0 ", obj.pid, obj.sortnum), "pid asc, sortnum asc", 1);
+	        	List<Menu> objPrevList = MenuService.getLimitRows( String.format("pid=%s and sortnum <= %s and is_delete=0 and id <> %s", obj.pid, obj.sortnum, obj.id), "pid asc, sortnum desc", 1);
 	        	if( objPrevList != null )
 	        	{
 	        		Menu objPrev = objPrevList.get(0);
 	        		//
 	    	        obj.sortnum = objPrev.sortnum - 1;
-	    	        obj.update_time = new Date().getTime() / 1000;	
+	    	        obj.update_time = new Date().getTime() / 1000;
 	    	        int ret =  MenuService.updateSortNum(obj);
 	    	        if(ret == 0)
 	    	        {
@@ -87,7 +87,7 @@ public class SortServlet extends AdminBaseServlet
         	// next
 	        {
 	        	
-	        	List<Menu> objNextList = MenuService.getLimitRows( String.format("pid=%s and sortnum > %s and is_delete=0 ", obj.pid, obj.sortnum), "pid asc, sortnum asc", 1);
+	        	List<Menu> objNextList = MenuService.getLimitRows( String.format("pid=%s and sortnum >= %s and is_delete=0 and id <> %s", obj.pid, obj.sortnum, obj.id), "pid asc, sortnum asc", 1);
 	        	if( objNextList != null )
 	        	{
 	        		Menu objNext = objNextList.get(0);

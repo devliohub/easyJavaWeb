@@ -42,7 +42,7 @@ public class UpdateServlet extends AdminBaseServlet
 	        
 	        
 	        //#
-	        if( id == 0 || StringUtil.invalid(name)  || (type == 1 && layout == 0) || (type == 2 || StringUtil.invalid(url)) ) 
+	        if( id == 0 || StringUtil.invalid(name)  || (type == 1 && layout == 0) || (type == 2 && StringUtil.invalid(url)) ) 
 	        {
 	        	// TODO  Log
 	        	return jsonReturn(

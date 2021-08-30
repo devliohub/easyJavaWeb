@@ -65,7 +65,7 @@ public class SortServlet extends AdminBaseServlet
 	        if( sorttype.equals("prev") )
         	// prev
 	        {
-	        	List<Banner> objPrevList = BannerService.getLimitRows( String.format("is_delete=0  and sortnum < %s", obj.sortnum), "sortnum asc", 1);
+	        	List<Banner> objPrevList = BannerService.getLimitRows( String.format("is_delete=0  and sortnum <= %s and id <> %s", obj.sortnum, obj.id), "sortnum desc", 1);
 	        	if( objPrevList != null )
 	        	{
 	        		Banner objPrev = objPrevList.get(0);
@@ -87,7 +87,7 @@ public class SortServlet extends AdminBaseServlet
         	// next
 	        {
 	        	
-	        	List<Banner> objNextList = BannerService.getLimitRows( String.format("is_delete=0  and sortnum > %s", obj.sortnum), "sortnum asc", 1);
+	        	List<Banner> objNextList = BannerService.getLimitRows( String.format("is_delete=0  and sortnum > %s and id <> %s", obj.sortnum, obj.id), "sortnum asc", 1);
 	        	if( objNextList != null )
 	        	{
 	        		Banner objNext = objNextList.get(0);

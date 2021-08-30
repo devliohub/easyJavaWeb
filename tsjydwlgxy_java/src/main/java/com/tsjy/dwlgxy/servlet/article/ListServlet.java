@@ -38,20 +38,31 @@ public class ListServlet extends BaseServlet
 	        
 	        
 	        //#
-	        if( menu_pid == 0 ) 
-	        {
-	        	// TODO  Log
-	        	return jsonReturn(
-	                ErrConfig.getErr(ErrConfig.BAD_REQUEST, "")
-	            );
-	        	
-	        }
+//	        if( menu_pid == 0 ) 
+//	        {
+//	        	// TODO  Log
+//	        	return jsonReturn(
+//	                ErrConfig.getErr(ErrConfig.BAD_REQUEST, "")
+//	            );
+//	        	
+//	        }
+	        
+	        
+	        // #
+		    StringBuilder sb = new StringBuilder();
+	    	sb.append("1=1");
+		    if( menu_pid != 0 ) sb.append(" and menu_pid=").append(menu_pid);
+		    if( menu_id != 0 ) sb.append(" and menu_id=").append(menu_id);
+		    if( StringUtil.valid(title) ) 
+		    {
+		    	sb.append(" and title like '%").append(title).append("%'");
+		    }
+	    	sb.append(" and is_delete=0");
+	    	String where = sb.toString();
 	        
 			
 			
 			//#
-	        String wtitle  = StringUtil.valid(title) ? String.format(" and title like '%%s%'", title) : "";
-	        String where   = String.format("menu_pid=%s and menu_id=%s %s and is_delete=0", menu_pid, menu_id, wtitle);
 	        List<Article>  list  = ArticleService.getRows(
 	        		where, 
 	        		"is_top desc, create_time desc", 

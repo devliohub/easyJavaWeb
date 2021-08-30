@@ -51,8 +51,9 @@ public class ListServlet extends AdminBaseServlet
 			
 			// #
 		    StringBuilder sb = new StringBuilder();
-		    sb.append("menu_pid=").append(menu_pid);
-		    sb.append(" and menu_id=").append(menu_id);
+	    	sb.append("1=1");
+		    if( menu_pid != 0 ) sb.append(" and menu_pid=").append(menu_pid);
+		    if( menu_id != 0 ) sb.append(" and menu_id=").append(menu_id);
 		    if( StringUtil.valid(title) ) 
 		    {
 		    	sb.append(" and title like '%").append(title).append("%'");

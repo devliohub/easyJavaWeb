@@ -37,21 +37,21 @@ public class ListServlet extends BaseServlet
 	        int pageSize = StringUtil.getInt(request.getParameter("pageSize"), 10);
 	        
 	        
-	        //#
-//	        if(  module_id == 0 || type_id != 0  ) 
-//	        {
-//	        	// TODO  Log
-//	        	return jsonReturn(
-//	                ErrConfig.getErr(ErrConfig.BAD_REQUEST, "")
-//	            );
-//	        	
-//	        }
+	        // #
+		    StringBuilder sb = new StringBuilder();
+		    sb.append("1=1");
+		    if( module_id != 0 ) sb.append(" and module_id=").append(module_id);
+		    if( type_id != 0 ) sb.append(" and type_id=").append(type_id);
+		    if( StringUtil.valid(name) ) 
+		    {
+		    	sb.append(" and name like '%").append(name).append("%'");
+		    }
+	    	sb.append(" and is_delete=0");
+	    	String where = sb.toString();
 	       
 			
 			
 			//#
-	        String wname  = StringUtil.valid(name) ? String.format(" and name like '%%s%'", name) : "";
-	        String where  = String.format("module_id=%s and type_id=%s %s and is_delete=0", module_id, type_id, wname);
 	        List<Course>  list  = CourseService.getRows(
 	        		where, 
 	        		"create_time desc", 

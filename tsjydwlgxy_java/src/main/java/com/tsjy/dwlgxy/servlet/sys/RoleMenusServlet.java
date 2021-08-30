@@ -30,14 +30,24 @@ public class RoleMenusServlet extends BaseServlet
 		  {
 			  
 	        //#
-			return jsonReturn(new HashMap<Integer, String>() {
-			   {
-					put(1, "文章管理");
-					put(2, "轮播图管理");
-					put(3, "菜单管理");
-					put(4, "课程管理");
-					put(5, "用户管理");
-			   }
+//			return jsonReturn(new HashMap<Integer, String>() {
+//			   {
+//					put(1, "文章管理");
+//					put(2, "轮播图管理");
+//					put(3, "菜单管理");
+//					put(4, "课程管理");
+//					put(5, "用户管理");
+//			   }
+//			});
+			  
+		  return jsonReturn(new DictData[] {
+					
+				new DictData(1, "文章管理"),
+				new DictData(2, "轮播图管理"),
+				new DictData(3, "菜单管理"),
+				new DictData(4, "课程管理"),
+				new DictData(5, "用户管理"),
+			   
 			});
 		  }
 		  catch (UserException ex){

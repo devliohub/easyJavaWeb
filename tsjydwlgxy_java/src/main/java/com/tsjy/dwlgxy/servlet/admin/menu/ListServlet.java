@@ -42,7 +42,17 @@ public class ListServlet extends AdminBaseServlet
 			
 			
 			//#
-	        List<Menu> list = MenuService.getRows("is_delete=0", "pid asc, sortnum asc");
+	        List<Menu> list = MenuService.getRows( "pid=0 and is_delete=0 ", "sortnum asc");
+	        
+	        
+	        
+	        //#outList for dynamic column
+	        List<Menu> outList = new ArrayList<>();
+	        for (Menu pre : list) {
+	        	if(pre.pid == 0) {
+	        		pre.sub_menus = MenuService.getRows( String.format("pid=%s and is_delete=0 ", pre.id), "sortnum asc");
+	        	}
+	        }
 	        
 	        
 	        

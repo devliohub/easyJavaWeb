@@ -34,15 +34,15 @@ public class AddServlet extends AdminBaseServlet
 	        String attachment   = StringUtil.getString(request.getParameter("attachment"), "")  ;
 	        int menu_pid   = StringUtil.getInt(request.getParameter("menu_pid"), 0)  ;
 	        int menu_id    = StringUtil.getInt(request.getParameter("menu_id"), 0)  ;
-	        int is_top   = StringUtil.getInt(request.getParameter("is_top"), 0)  ;
+	        int is_top   =   StringUtil.getBoolean(request.getParameter("is_top")) ? 1 :0  ;
 	        String cover   = StringUtil.getString(request.getParameter("cover"), "")  ;
 	        
 	        
 	        
 	        
 	        
-	        //#
-	        if( StringUtil.invalid(title) || StringUtil.invalid(content)  || StringUtil.invalid(attachment) || menu_pid == 0 || menu_id == 0 || StringUtil.invalid(cover) ) 
+	        //# || StringUtil.invalid(attachment) || menu_id == 0 || StringUtil.invalid(cover)
+	        if( StringUtil.invalid(title) || StringUtil.invalid(content)   || menu_pid == 0  ) 
 	        {
 	        	// TODO  Log
 	        	return jsonReturn(

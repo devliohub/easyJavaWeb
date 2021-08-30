@@ -35,7 +35,7 @@ public class AddServlet extends AdminBaseServlet
 	        
 	        
 	        //#
-	        if( StringUtil.invalid(img)  ||  StringUtil.invalid(url) ) 
+	        if( StringUtil.invalid(img)  ) 
 	        {
 	        	// TODO  Log
 	        	return jsonReturn(
