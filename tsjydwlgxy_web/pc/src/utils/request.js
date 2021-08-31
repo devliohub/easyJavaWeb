@@ -1,37 +1,18 @@
 import axios from 'axios'
-import { Message } from 'element-ui'
-import store from '../store'
+import Message from 'element-ui';
 
 // 创建axios实例
 const service = axios.create({
-    timeout: 1000000, // 请求超时时间
+    timeout: 10000 // 请求超时时间
 })
 
-if (process.env.NODE_ENV != 'development') service.baseURL = "http://www.taoxiaoxiong.cn"
+service.baseURL = process.env.NODE_ENV == 'production' ? "http://106.54.237.151" : null
 
 // request拦截器
 service.interceptors.request.use(
     config => {
-        // if(config.data) {
-        //     config.data = {
-        //         ...config.data,
-        //         _sign: 123
-        //     }
-        // } else {
-        //     config.params = {
-        //         ...config.params,
-        //         _sign: 123
-        //     }
-        // }
-        // if (store.getters.token) {
-        // config.headers.Authorization = '';
-        // }
         return config
     }, error => {
-        Message({
-            message: error.msg,
-            type: 'error'
-        })
         return Promise.reject(error)
     })
 
@@ -43,19 +24,8 @@ service.interceptors.response.use(
         if (response.config.responseType == 'blob') {
             return res
         }
-        if (res.error.errno == 431) {
-            Message({
-                message: '登录异常，请重新登录',
-                type: 'error',
-            })
-            store.dispatch("LogOut").then(res => {
-                if (res) location.href = "/#/login"
-            })
-        } else if (res.error.errno != 200) {
-            Message({
-                message: res.error.usermsg,
-                type: 'error',
-            })
+        if (res.errno != 200) {
+            Message.fail(res.usermsg);
         }
         return res
     },

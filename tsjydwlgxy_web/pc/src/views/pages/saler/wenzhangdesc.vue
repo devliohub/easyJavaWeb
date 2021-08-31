@@ -1,14 +1,12 @@
 <template>
-  <div class="desc">
+  <div class="wenzhangdesc">
     <header>
-      <div class="title">这场“十四五”问计会 总书记要求处理好五大关系</div>
-      <div class="time">2020/10/28</div>
+      <div class="title">{{ entity.title }}</div>
+      <div class="time">
+        {{ dayjs(entity.create_time * 1000).format('YYYY/MM/DD HH:mm') }}
+      </div>
     </header>
-    <article>
-      这是很长的内容这是很长的内容这是很长的内容这是很长的内容这是很长的内容这是很长的内容。
-      这是很长的内容这是很长的内容这是很长的内容这是很长的内容这是很长的内容这是很长的内容。
-      这是很长的内容这是很长的内容这是很长的内容这是很长的内容这是很长的内容这是很长的内容。
-    </article>
+    <article v-html="entity.content"></article>
     <div class="fujianList">
       <header>
         <span>附件</span>
@@ -17,8 +15,9 @@
   </div>
 </template>
 <script>
+  import { getArticleDesc } from '@/api'
   export default {
-    name: 'desc',
+    name: 'wenzhangdesc',
     data() {
       return {
         isloading: false,
@@ -32,13 +31,17 @@
     methods: {
       async getData() {
         this.isloading = true
+        let res = await getArticleDesc(this.$route.query.id)
+        if (res && res.errno == 200) {
+          this.entity = res.result
+        }
         this.isloading = false
       },
     },
   }
 </script>
 <style lang="scss">
-.desc {
+.wenzhangdesc {
   position: relative;
   color: #444;
   header {

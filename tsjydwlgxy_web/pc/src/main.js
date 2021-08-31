@@ -133,6 +133,9 @@ Vue.prototype.$confirm = MessageBox.confirm;
 Vue.prototype.$message = Message;
 Vue.prototype.$notify = Notification;
 
+import dayjs from 'dayjs'
+Vue.prototype.dayjs = dayjs;
+
 const router = new VueRouter({
   routes
 })

@@ -37,36 +37,36 @@ export default [
               }, {
                 path: '/saler',
                 component: (resolve) => require(['@/views/pages/home/index'], resolve),
-                children: [
-                  {
-                    path: 'addGoods',
-                    name: 'addGoods',
-                    component: (resolve) => require(['@/views/pages/saler/addGoods'], resolve),
-                    meta: { title: '添加宝贝', roles: 'saler' },
-                  }
-                ]
+
               }, {
                 path: '/saler',
                 meta: { title: '免单活动管理', icon: 'iconhuodongguanli' },
                 component: (resolve) => require(['@/views/pages/home/index'], resolve),
                 children: [
                   {
-                    path: 'freeList',
-                    name: 'freeList',
-                    component: (resolve) => require(['@/views/pages/saler/freeList'], resolve),
-                    meta: { title: '免单活动列表', roles: 'saler' },
+                    path: 'kecheng',
+                    name: 'kecheng',
+                    component: (resolve) => require(['@/views/pages/saler/kecheng'], resolve),
+                    meta: { title: '课程列表' },
                   },
                   {
-                    path: 'freeTaskList',
-                    name: 'freeTaskList',
-                    component: (resolve) => require(['@/views/pages/saler/freeTaskList'], resolve),
-                    meta: { title: '免单任务列表', roles: 'saler' },
+                    path: 'wenzhang',
+                    name: 'wenzhang',
+                    component: (resolve) => require(['@/views/pages/saler/wenzhang'], resolve),
+                    meta: { title: '文章列表' },
                   },
                   {
-                    path: 'freeTaskAfterList',
-                    name: 'freeTaskAfterList',
-                    component: (resolve) => require(['@/views/pages/saler/freeTaskAfterList'], resolve),
-                    meta: { title: '免单任务售后列表', roles: 'saler' },
+                    hidden: true,
+                    path: 'wenzhangdesc',
+                    name: 'wenzhangdesc',
+                    component: (resolve) => require(['@/views/pages/saler/wenzhangdesc'], resolve),
+                    meta: { title: '文章详情' },
+                  },
+                  {
+                    path: 'search',
+                    name: 'search',
+                    component: (resolve) => require(['@/views/pages/saler/search'], resolve),
+                    meta: { title: '搜索结果' },
                   }
                 ]
               },

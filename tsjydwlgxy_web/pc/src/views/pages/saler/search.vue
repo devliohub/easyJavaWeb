@@ -1,5 +1,6 @@
 <template>
-  <div class="freeList" v-loading="isloading">
+  <div class="search" v-loading="isloading">
+    <nav>关键词：{{ form.key_value }}</nav>
     <!-- 表格内容 -->
     <ul v-if="tableData.length > 0">
       <li
@@ -29,10 +30,10 @@
   </div>
 </template>
 <script>
-  import { indexSearch } from '@/api/common/common.js'
+  import { getArticle } from '@/api'
 
   export default {
-    name: 'freeList',
+    name: 'search',
     data() {
       return {
         isloading: false,
@@ -40,40 +41,33 @@
         tableData: [],
         table_total: null,
         form: {
+          key_value: this.$route.query.keyVal,
           page_no: 1,
           page_size: 5,
         },
-        reset: false,
       }
     },
     mounted() {
       this.getListData()
     },
-    watch: {},
     methods: {
       async getListData() {
-        if (this.reset) {
-          this.form.page_no = 1
-          this.form.page_size = 5
-        }
         this.isloading = true
-        let res = await indexSearch({
+        let res = await getArticle({
           ...this.form,
         })
-        if (res && res.error.errno == 200) {
-          this.tableData = res.data
-          this.table_total = res.data.length
+        if (res && res.errno == 200) {
+          this.tableData = res.result.list
+          this.table_total = res.result.total
         }
         this.isloading = false
       },
       handleSizeChange(val) {
         this.form.page_no = 1
         this.form.page_size = val
-        this.reset = false
         this.getListData()
       },
       handleCurrentChange(val) {
-        this.reset = false
         this.form.page_no = val
         this.getListData()
       },
@@ -81,8 +75,13 @@
   }
 </script>
 <style lang="scss" scope>
-.freeList {
+.search {
   border: 1px solid #efeff7;
+  nav {
+    padding: 0 30px;
+    height: 50px;
+    line-height: 50px;
+  }
   ._li {
     background: #fff;
     margin-bottom: 10px;

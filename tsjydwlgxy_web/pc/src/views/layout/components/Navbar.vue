@@ -19,11 +19,11 @@
         <router-link
           v-for="(item, index) in cateTitleList"
           :key="index"
-          :to="'/allGoods/' + item.id"
+          :to="'/saler/wenzhang?id=' + item.id"
         >
           <li>
             <span :class="item.icon"></span>
-            {{ item.long_name }}
+            {{ item.name }}
           </li>
         </router-link>
       </ul>
@@ -32,11 +32,12 @@
 </template>
 
 <script>
+  import { getMunes } from '@/api'
   export default {
     data() {
       return {
         search_word: '',
-        cateTitleList: [], // 轮播左侧类型
+        cateTitleList: [],
       }
     },
     watch: {
@@ -47,12 +48,12 @@
     },
     async mounted() {
       // 处理第一次进入session为空情况
-      if (!JSON.parse(window.sessionStorage.getItem('tpyeArr'))) {
-        let res = await cateTitle()
-        this.cateTitleList = res.data
-        window.sessionStorage.setItem('tpyeArr', JSON.stringify(res.data))
+      if (!JSON.parse(window.sessionStorage.getItem('menuArr'))) {
+        let res = await getMunes()
+        this.cateTitleList = res.result
+        window.sessionStorage.setItem('menuArr', JSON.stringify(res.result))
       } else {
-        this.cateTitleList = JSON.parse(window.sessionStorage.getItem('tpyeArr'))
+        this.cateTitleList = JSON.parse(window.sessionStorage.getItem('menuArr'))
       }
     },
     methods: {
@@ -101,10 +102,12 @@
       width: 1200px;
       margin: 0 auto;
       a {
+        flex: 1;
         height: 50px;
         line-height: 50px;
-        // padding: 0 24px;
+        text-align: center;
         color: #fff;
+        font-weight: bold;
         &:hover {
           background: #fff;
           color: #660000;
