@@ -2,14 +2,14 @@
   <div class="navbar2">
     <main>
       <div class="navbar2_right">
-        <!-- <el-input placeholder="关键词搜索" v-model="search_word">
+        <el-input placeholder="关键词搜索" v-model="search_word">
           <i
             class="el-icon-search el-input__icon"
             slot="suffix"
             @click="handleIconClick"
           >
           </i>
-        </el-input> -->
+        </el-input>
       </div>
     </main>
 
@@ -17,9 +17,9 @@
     <div class="index_items">
       <ul>
         <router-link
-          v-for="(item, index) in cateTitleList"
+          v-for="(item, index) in cateTitleList.slice(0, 9)"
           :key="index"
-          :to="'/saler/wenzhang?id=' + item.id"
+          :to="index == 0 ? '/index' : '/saler/wenzhang?id=' + item.id"
         >
           <li>
             <span :class="item.icon"></span>
@@ -32,7 +32,7 @@
 </template>
 
 <script>
-  import { getMunes } from '@/api'
+  import { getMenus } from '@/api'
   export default {
     data() {
       return {
@@ -49,7 +49,7 @@
     async mounted() {
       // 处理第一次进入session为空情况
       if (!JSON.parse(window.sessionStorage.getItem('menuArr'))) {
-        let res = await getMunes()
+        let res = await getMenus()
         this.cateTitleList = res.result
         window.sessionStorage.setItem('menuArr', JSON.stringify(res.result))
       } else {
@@ -66,7 +66,7 @@
 
 <style rel="stylesheet/scss" lang="scss">
 .navbar2 {
-  background: url('../../../assets/home/top_bg.png');
+  background: url('../../../assets/home/toper_bg.jpg');
   main {
     width: 1200px;
     margin: 0 auto;
@@ -74,21 +74,20 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    .navbar2_left {
-      display: flex;
-      margin-right: 100px;
-      &_img {
-        border: 1px solid red;
-      }
-    }
+    position: relative;
 
     .navbar2_right {
       display: flex;
       height: 36px;
       line-height: 36px;
-      margin-right: 150px;
-      position: relative;
+      position: absolute;
+      width: 220px;
+      border: none;
+      right: 0;
       .el-input__inner {
+        background: #fff;
+        color: #660000;
+        opacity: 0.5;
         border-radius: 20px !important;
       }
     }

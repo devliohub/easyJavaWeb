@@ -30,12 +30,12 @@
     <div class="index_tongshi">
       <main>
         <div
-          v-for="(item, index) in 4"
+          v-for="(item, index) in homeList.list1"
           :key="index"
           :class="{ margin_right_0: index % 2 == 1 }"
         >
           <header>
-            <span>通识新闻</span>
+            <span>{{ item.menuName }}</span>
             <span>查看更多<i class="el-icon-d-arrow-right"></i></span>
           </header>
           <ul>
@@ -50,11 +50,23 @@
         </div>
       </main>
     </div>
+    <!-- 四个banner -->
+    <div class="index_luntan">
+      <ul>
+        <li
+          v-for="(item, index) in homeList.list2"
+          :key="index"
+          :class="{ margin_right_0: index == 3 }"
+        >
+          {{ item.name }}
+        </li>
+      </ul>
+    </div>
     <!-- 学生风采 -->
     <div class="index_xuesheng">
       <main>
         <header>
-          <span>学生风采</span>
+          <span>{{ homeList.list3.menuName }}</span>
           <span>查看更多<i class="el-icon-d-arrow-right"></i></span>
         </header>
         <ul>
@@ -72,7 +84,7 @@
     <div class="index_kecheng">
       <main>
         <header>
-          <span>课程成果展示</span>
+          <span>{{ homeList.list4.menuName }}</span>
           <span>查看更多<i class="el-icon-d-arrow-right"></i></span>
         </header>
         <div>
@@ -99,13 +111,11 @@
 </template>
 
 <script>
-  import { cateDesc, indexSearch } from '@/api/common/common.js'
-  import { mapGetters } from 'vuex'
+  import { getHome } from '@/api'
 
   export default {
     components: {},
     computed: {
-      ...mapGetters(['name']),
       isLogin() {
         return this.$store.state.user.token
       },
@@ -113,9 +123,13 @@
     data() {
       return {
         isloading: false,
-        cateDescList: [], // 下方主活动
-
         tabList: [], // tab公用栏
+        homeList: {
+          list1: [],
+          list2: [],
+          list3: {},
+          list4: {},
+        },
         test_entity: [
           {
             desc: '活动预告 | 内容标题内容标题内容标题内容标题内容标题内容标题',
@@ -141,33 +155,10 @@
     },
     methods: {
       async initData() {
-        this.getThreeTabs(1)
-
-        let res1 = await cateDesc()
-        if (res1 && res1.error.errno == 200) {
-          this.cateDescList = res1.data
+        let res = await getHome()
+        if (res && res.errno == 200) {
+          this.homeList = res.result
         }
-      },
-      async getThreeTabs(num) {
-        this.isloading = true
-        let res3 = await indexSearch({
-          type: 1,
-          w_type: num,
-          module_type: 1,
-          page_no: 1,
-          page_size: 6,
-        })
-        if (res3 && res3.error.errno == 200) {
-          this.tabList = res3.data
-        }
-        this.isloading = false
-      },
-      tabClick(val, event) {
-        let num = parseInt(val.index) + 1
-        this.getThreeTabs(num)
-      },
-      handleClickImgtypes(i) {
-        this.$router.push('/allGoods/' + parseInt(i))
       },
     },
   }
@@ -252,6 +243,27 @@
     }
   }
 
+  .index_luntan {
+    width: 100%;
+    margin-bottom: 25px;
+    ul {
+      width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      text-align: center;
+      li {
+        background: url('../../../assets/home/word_bg.jpg') 100% 100% no-repeat;
+        flex: 1;
+        font-family: 'Courier New', Courier, monospace;
+        font-weight: bold;
+        color: #660000;
+        margin-right: 20px;
+        padding: 15px 0;
+        letter-spacing: 5px;
+      }
+    }
+  }
+
   .index_xuesheng {
     width: 100%;
     main {
@@ -281,6 +293,7 @@
 
   .index_kecheng {
     width: 100%;
+    margin-top: 25px;
     main {
       width: 1200px;
       margin: 0 auto;

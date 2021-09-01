@@ -52,10 +52,7 @@ module.exports = {
         open: false,
         proxy: {
             '/': {
-                ws: false, // proxy websockets
-                // target: 'http://106.54.237.151',
                 target: 'http://121.36.22.149:2000',
-                // target: 'http://192.168.0.145',
                 changeOrigin: true
             }
         }

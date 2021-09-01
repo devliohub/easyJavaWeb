@@ -13,21 +13,21 @@
           {{ dayjs(item.create_time * 1000).format('YYYY/MM/DD HH:mm') }}
         </span>
       </li>
+      <el-pagination
+        background
+        style="margin: 15px 0"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="form.pageNo"
+        :page-sizes="[10, 20]"
+        :page-size="form.pageSize"
+        layout="total, sizes, prev, pager, next"
+        :total="table_total"
+      ></el-pagination>
     </ul>
     <div v-else class="no_data_div">
       <div>暂无数据</div>
     </div>
-    <el-pagination
-      background
-      style="margin: 15px 0"
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page="form.pageNo"
-      :page-sizes="[10, 20]"
-      :page-size="form.pageSize"
-      layout="total, sizes, prev, pager, next"
-      :total="table_total"
-    ></el-pagination>
   </div>
 </template>
 <script>
@@ -44,18 +44,25 @@
         form: {
           pageNo: 1,
           pageSize: 10,
+          menu_pid: '',
+          menu_id: '',
         },
       }
     },
     mounted() {
       this.getListData()
     },
-    watch: {},
+    watch: {
+      $route: function (val) {
+        if (val) this.getListData()
+      },
+    },
     methods: {
       async getListData() {
         this.isloading = true
         let res = await getArticle({
           ...this.form,
+          name: this.$route.query.keyword,
         })
         if (res && res.errno == 200) {
           this.tableData = res.result.list

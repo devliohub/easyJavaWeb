@@ -1,12 +1,10 @@
 import axios from 'axios'
-import Message from 'element-ui';
+// import Message from 'element-ui';
 
 // 创建axios实例
 const service = axios.create({
     timeout: 10000 // 请求超时时间
 })
-
-service.baseURL = process.env.NODE_ENV == 'production' ? "http://106.54.237.151" : null
 
 // request拦截器
 service.interceptors.request.use(
@@ -20,13 +18,9 @@ service.interceptors.request.use(
 service.interceptors.response.use(
     response => {
         const res = response.data
-        // 导出方法不做数据回调处理
-        if (response.config.responseType == 'blob') {
-            return res
-        }
-        if (res.errno != 200) {
-            Message.fail(res.usermsg);
-        }
+        // if (res.errno != 200) {
+        //     Message.fail(res.usermsg);
+        // }
         return res
     },
     error => {
