@@ -42,15 +42,24 @@ public class CourseModulesServlet extends BaseServlet
 //					
 //			   }
 //			});
+			
+			long total1 = CourseService.getCount(String.format("module_id=%s and is_delete=0 ", 1));  
+			long total2 = CourseService.getCount(String.format("module_id=%s and is_delete=0 ", 2));  
+			long total3 = CourseService.getCount(String.format("module_id=%s and is_delete=0 ", 3));  
+			long total4 = CourseService.getCount(String.format("module_id=%s and is_delete=0 ", 4));  
+			long total5 = CourseService.getCount(String.format("module_id=%s and is_delete=0 ", 5));  
+			long total6 = CourseService.getCount(String.format("module_id=%s and is_delete=0 ", 6));  
+			long total7 = CourseService.getCount(String.format("module_id=%s and is_delete=0 ", 7));  
+			 
 			  
 			return jsonReturn(new DictData[] {
-					new DictData(1, "道德规范力"),
-					new DictData(2, "协助领导力"),
-					new DictData(3, "认识理解力"),
-					new DictData(4, "应用行动力"),
-					new DictData(5, "高阶创新力"),
-					new DictData(6, "沟通表达力"),
-					new DictData(7, "审美鉴赏力")
+					new DictData(1, "道德规范力", total1),
+					new DictData(2, "协助领导力", total2),
+					new DictData(3, "认识理解力", total3),
+					new DictData(4, "应用行动力", total4),
+					new DictData(5, "高阶创新力", total5),
+					new DictData(6, "沟通表达力", total6),
+					new DictData(7, "审美鉴赏力", total7)
 			});
 
 		  }

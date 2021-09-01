@@ -39,6 +39,30 @@ public class ArticleService
 		return obj;
 	}
 	
+	
+	
+	//
+	public static List<Article> getLimitRows(String where, String order, int limit) throws SQLException 
+	{
+		//
+		List<Article> list = new ArrayList<>();
+		
+		
+		//TODO repalce getOne list for cache arr  
+		try (Connection conn = DbConfig.getPool().getConnection()) { 
+			String sql = String.format("SELECT * FROM article WHERE %s  order by %s  limit %s",  where, order, limit);
+			try (PreparedStatement ps = conn.prepareStatement(sql)) {
+				try (ResultSet rs = ps.executeQuery()) {
+					while (rs.next()) {
+						list.add(extractRow(rs));
+					}
+				}
+			}
+		}
+		
+		return list;
+	}
+	
 
 	
 	

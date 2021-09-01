@@ -38,6 +38,26 @@ public class MenuService
 	
 	
 	//
+	public static Menu getRowByName(String Name) throws SQLException {
+		Menu obj = null;
+		try (Connection conn = DbConfig.getPool().getConnection()) { 
+			try (PreparedStatement ps = conn.prepareStatement("SELECT * FROM menu WHERE name = ?")) {
+				ps.setString(1, Name); 
+				try (ResultSet rs = ps.executeQuery()) {
+					while (rs.next()) {
+						obj = extractRow(rs);
+					}
+				}
+			}
+		}
+		
+		// TODO add cache
+		return obj;
+	}
+	
+	
+	
+	//
 	public static List<Menu> getLimitRows(String where, String order, int limit) throws SQLException 
 	{
 		//

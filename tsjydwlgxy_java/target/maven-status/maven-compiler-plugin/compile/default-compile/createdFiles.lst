@@ -1,5 +1,6 @@
 com\tsjy\dwlgxy\common\conf\ErrConfig$1.class
 com\tsjy\dwlgxy\servlet\admin\menu\AddServlet.class
+com\tsjy\dwlgxy\bean\HomeArticleData.class
 com\tsjy\dwlgxy\servlet\admin\userAdmin\PassWordServlet.class
 com\tsjy\dwlgxy\common\conf\AppConfig.class
 com\tsjy\dwlgxy\servlet\admin\userAdmin\InfoServlet.class
@@ -30,6 +31,7 @@ com\tsjy\dwlgxy\bean\PageData.class
 com\tsjy\dwlgxy\servlet\admin\userAdmin\ListServlet.class
 com\tsjy\dwlgxy\servlet\demo\UserServlet.class
 com\tsjy\dwlgxy\servlet\sys\RoleMenusServlet.class
+com\tsjy\dwlgxy\servlet\HomeServlet.class
 com\tsjy\dwlgxy\servlet\admin\article\InfoServlet.class
 com\tsjy\dwlgxy\service\ArticleService.class
 com\tsjy\dwlgxy\servlet\admin\course\ListServlet.class
@@ -50,6 +52,7 @@ com\tsjy\dwlgxy\servlet\admin\banner\SortServlet.class
 com\tsjy\dwlgxy\servlet\admin\menu\DeleteServlet.class
 com\tsjy\dwlgxy\service\UserAdminService.class
 com\tsjy\dwlgxy\servlet\demo\IndexServlet.class
+com\tsjy\dwlgxy\bean\HomeData.class
 com\tsjy\dwlgxy\common\exception\UserException.class
 com\tsjy\dwlgxy\servlet\admin\article\DeleteServlet.class
 com\tsjy\dwlgxy\servlet\admin\course\DeleteServlet.class
