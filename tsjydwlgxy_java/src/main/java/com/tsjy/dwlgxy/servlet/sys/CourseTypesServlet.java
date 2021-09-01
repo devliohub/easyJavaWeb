@@ -37,12 +37,16 @@ public class CourseTypesServlet extends BaseServlet
 //					put(3, "核心限选课");
 //			   }
 //			});
+			  
+		    long total1 = CourseService.getCount(String.format("type_id=%s and is_delete=0 ", 1));  
+			long total2 = CourseService.getCount(String.format("type_id=%s and is_delete=0 ", 2));  
+			long total3 = CourseService.getCount(String.format("type_id=%s and is_delete=0 ", 3));  
 			
 			
 			return jsonReturn(new DictData[] {
-				    new DictData(1, "公共必修课"),
-					new DictData(2, "公共选修课"),
-					new DictData(3, "核心限选课")
+				    new DictData(1, "公共必修课", total1),
+					new DictData(2, "公共选修课", total2),
+					new DictData(3, "核心限选课", total3)
 			});
 
 		  }

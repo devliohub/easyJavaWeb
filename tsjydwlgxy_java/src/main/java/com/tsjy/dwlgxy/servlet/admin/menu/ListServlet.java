@@ -47,11 +47,13 @@ public class ListServlet extends AdminBaseServlet
 	        
 	        
 	        //#outList for dynamic column
-	        List<Menu> outList = new ArrayList<>();
+	        //List<Menu> outList = new ArrayList<>();
 	        for (Menu pre : list) {
 	        	if(pre.pid == 0) {
 	        		pre.sub_menus = MenuService.getRows( String.format("pid=%s and is_delete=0 ", pre.id), "sortnum asc");
 	        	}
+	        	
+	        	pre.is_course_menu = pre.name.equals("通识课程");
 	        }
 	        
 	        

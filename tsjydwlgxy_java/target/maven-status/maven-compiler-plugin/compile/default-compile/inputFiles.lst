@@ -1,3 +1,4 @@
+C:\Users\87537\eclipse-workspace\z-tsjy-dwlgxy\src\main\java\com\tsjy\dwlgxy\bean\HomeData.java
 C:\Users\87537\eclipse-workspace\z-tsjy-dwlgxy\src\main\java\com\tsjy\dwlgxy\servlet\sys\CourseTypesServlet.java
 C:\Users\87537\eclipse-workspace\z-tsjy-dwlgxy\src\main\java\com\tsjy\dwlgxy\service\ArticleService.java
 C:\Users\87537\eclipse-workspace\z-tsjy-dwlgxy\src\main\java\com\tsjy\dwlgxy\Main.java
@@ -16,6 +17,7 @@ C:\Users\87537\eclipse-workspace\z-tsjy-dwlgxy\src\main\java\com\tsjy\dwlgxy\com
 C:\Users\87537\eclipse-workspace\z-tsjy-dwlgxy\src\main\java\com\tsjy\dwlgxy\servlet\admin\banner\DeleteServlet.java
 C:\Users\87537\eclipse-workspace\z-tsjy-dwlgxy\src\main\java\com\tsjy\dwlgxy\servlet\admin\course\ListServlet.java
 C:\Users\87537\eclipse-workspace\z-tsjy-dwlgxy\src\main\java\com\tsjy\dwlgxy\servlet\admin\article\AddServlet.java
+C:\Users\87537\eclipse-workspace\z-tsjy-dwlgxy\src\main\java\com\tsjy\dwlgxy\servlet\HomeServlet.java
 C:\Users\87537\eclipse-workspace\z-tsjy-dwlgxy\src\main\java\com\tsjy\dwlgxy\servlet\admin\banner\ListServlet.java
 C:\Users\87537\eclipse-workspace\z-tsjy-dwlgxy\src\main\java\com\tsjy\dwlgxy\servlet\demo\UserServlet.java
 C:\Users\87537\eclipse-workspace\z-tsjy-dwlgxy\src\main\java\com\tsjy\dwlgxy\servlet\article\ListServlet.java
@@ -33,6 +35,7 @@ C:\Users\87537\eclipse-workspace\z-tsjy-dwlgxy\src\main\java\com\tsjy\dwlgxy\ser
 C:\Users\87537\eclipse-workspace\z-tsjy-dwlgxy\src\main\java\com\tsjy\dwlgxy\bean\Article.java
 C:\Users\87537\eclipse-workspace\z-tsjy-dwlgxy\src\main\java\com\tsjy\dwlgxy\common\utils\StringUtil.java
 C:\Users\87537\eclipse-workspace\z-tsjy-dwlgxy\src\main\java\com\tsjy\dwlgxy\bean\PageData.java
+C:\Users\87537\eclipse-workspace\z-tsjy-dwlgxy\src\main\java\com\tsjy\dwlgxy\bean\HomeArticleData.java
 C:\Users\87537\eclipse-workspace\z-tsjy-dwlgxy\src\main\java\com\tsjy\dwlgxy\common\AdminBaseServlet.java
 C:\Users\87537\eclipse-workspace\z-tsjy-dwlgxy\src\main\java\com\tsjy\dwlgxy\common\conf\AppConfig.java
 C:\Users\87537\eclipse-workspace\z-tsjy-dwlgxy\src\main\java\com\tsjy\dwlgxy\servlet\admin\course\InfoServlet.java

@@ -15,4 +15,5 @@ public class Menu {
 	public long create_time;
 	public long update_time;
 	public List<Menu> sub_menus;
+	public boolean is_course_menu;
 }
