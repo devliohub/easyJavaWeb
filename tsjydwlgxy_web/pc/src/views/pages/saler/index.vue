@@ -8,7 +8,7 @@
         </div>
         <!-- 右侧内容 -->
         <div class="right_content">
-          <breadcrumb />
+          <breadcrumb v-if="$route.name == 'wenzhang'" />
 
           <transition name="fade-transform" mode="out-in">
             <router-view></router-view>
@@ -20,7 +20,7 @@
 </template>
 <script>
   import breadcrumb from '@/components/breadCrumb.vue'
-  import sideBar from '@/components/sideBar'
+  import sideBar from '@/components/siderBar.vue'
 
   export default {
     name: 'saler',

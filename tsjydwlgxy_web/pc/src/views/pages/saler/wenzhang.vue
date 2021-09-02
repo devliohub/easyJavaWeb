@@ -44,14 +44,13 @@
         form: {
           pageNo: 1,
           pageSize: 10,
-          menu_pid: '',
-          menu_id: '',
         },
       }
     },
     mounted() {
       this.getListData()
     },
+    computed: {},
     watch: {
       $route: function (val) {
         if (val) this.getListData()
@@ -63,6 +62,8 @@
         let res = await getArticle({
           ...this.form,
           name: this.$route.query.keyword,
+          menu_id: this.$route.query.id,
+          menu_pid: this.$route.query.pid,
         })
         if (res && res.errno == 200) {
           this.tableData = res.result.list

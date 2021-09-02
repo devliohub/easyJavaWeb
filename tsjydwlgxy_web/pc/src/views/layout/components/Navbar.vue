@@ -16,16 +16,14 @@
     <!-- tab栏目 -->
     <div class="index_items">
       <ul>
-        <router-link
+        <li
           v-for="(item, index) in cateTitleList.slice(0, 9)"
           :key="index"
-          :to="index == 0 ? '/index' : '/saler/wenzhang?id=' + item.id"
+          @click="handleGo(item, index)"
         >
-          <li>
-            <span :class="item.icon"></span>
-            {{ item.name }}
-          </li>
-        </router-link>
+          <span :class="item.icon"></span>
+          {{ item.name }}
+        </li>
       </ul>
     </div>
   </div>
@@ -40,14 +38,8 @@
         cateTitleList: [],
       }
     },
-    watch: {
-      $route: function (v) {
-        // console.log(v)
-        if (v.name != 'allGoods') this.search_word = ''
-      },
-    },
+    watch: {},
     async mounted() {
-      // 处理第一次进入session为空情况
       if (!JSON.parse(window.sessionStorage.getItem('menuArr'))) {
         let res = await getMenus()
         this.cateTitleList = res.result
@@ -59,6 +51,23 @@
     methods: {
       handleIconClick() {
         this.$emit('handleSearch', this.search_word)
+      },
+      handleGo(item, index) {
+        console.log(item)
+        if (index == 0) {
+          this.$router.push('/index')
+        } else if (index == 2) {
+          this.$router.push('/saler/kecheng?_t=' + Date.parse(new Date()))
+        } else {
+          this.$router.push({
+            path: '/saler/wenzhang',
+            query: {
+              id: item.id,
+              pid: item.pid,
+              _t: Date.parse(new Date()),
+            },
+          })
+        }
       },
     },
   }
@@ -100,7 +109,8 @@
       justify-content: space-between;
       width: 1200px;
       margin: 0 auto;
-      a {
+      li {
+        cursor: pointer;
         flex: 1;
         height: 50px;
         line-height: 50px;

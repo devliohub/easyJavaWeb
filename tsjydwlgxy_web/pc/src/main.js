@@ -10,7 +10,14 @@ import "normalize.css/normalize.css";
 import "@/assets/iconfont/iconfont.css"
 import '@/styles/index.scss'
 
+
+const originalReplace = VueRouter.prototype.replace;
+VueRouter.prototype.replace = function replace(location) {
+  return originalReplace.call(this, location).catch(err => err);
+};
+
 Vue.use(VueRouter)
+
 import {
   Pagination,
   Dialog,
@@ -136,9 +143,11 @@ Vue.prototype.$notify = Notification;
 import dayjs from 'dayjs'
 Vue.prototype.dayjs = dayjs;
 
+
 const router = new VueRouter({
   routes
 })
+
 
 new Vue({
   router,

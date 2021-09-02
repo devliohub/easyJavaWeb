@@ -6,22 +6,41 @@
           <header>全部课程</header>
           <el-input
             size="small"
-            v-model="addObj.product_url"
+            v-model="queryObj.name"
             style="width: 200px"
             placeholder="关键词搜索"
-            clearable
           >
             <i
               class="el-icon-search el-input__icon"
               slot="suffix"
-              @click="handleClickAdd"
+              @click="getData"
             >
             </i>
           </el-input>
         </div>
         <div class="query_section">
           <nav>
-            <span v-for="(item, index) in 4" :key="index">{{ item }}</span>
+            <el-radio-group
+              v-model="queryObj.type_id"
+              size="small"
+              @change="() => getData()"
+              :max="1"
+            >
+              <el-radio
+                v-for="(item, index) in courseArr"
+                :label="item.code"
+                :key="index"
+                @click.prevent.native="handleRadioClick(item.code)"
+                border
+                >{{ item.name }}</el-radio
+              >
+            </el-radio-group>
+            <!-- <span
+              v-for="(item, index) in courseArr"
+              :key="index"
+              @click="handleClickCourese(item)"
+              >{{ item.name }}</span
+            > -->
           </nav>
 
           <ul>
@@ -51,64 +70,64 @@
   </div>
 </template>
 <script>
-  import { getKecheng } from '@/api'
+  import { getKecheng, getCoursetypes } from '@/api'
   export default {
     name: 'kecheng',
     data() {
       return {
         isloading: false,
-        addObj: {
-          opt: 'add',
-          product_url: '',
-        },
+        courseArr: [],
         queryObj: {
-          condition: '',
-          condition_value: '',
+          type_id: [],
+          name: '',
           pageNo: 1,
           pageSize: 8,
         },
         total_count: 0,
 
         entitys: [],
-        target_pid: '',
       }
     },
-    watch: {},
+    watch: {
+      $route() {
+        this.getData()
+      },
+    },
     mounted() {
-      this.getGoods()
+      this.getData()
+      this.getCourses()
     },
     methods: {
-      async getGoods() {
+      async getData() {
         this.isloading = true
-        let res = await getKecheng(this.queryObj)
+        let res = await getKecheng({
+          ...this.queryObj,
+          module_id: this.$route.query.module_id,
+        })
         if (res && res.errno == 200) {
           this.entitys = res.result.list
           this.total_count = res.result.total
         }
         this.isloading = false
       },
-      // 新增商品
-      async handleClickAdd() {
-        if (!this.addObj.product_url) {
-          return this.$message.warning('请填写宝贝链接')
-        } else {
-          this.isloading = true
-          let res = await salerOption(this.addObj)
-          if (res && res.error.errno == 200) {
-            this.$message.success('添加成功！')
-            this.getGoods()
-          }
-          this.isloading = false
+      async getCourses() {
+        let res = await getCoursetypes()
+        if (res && res.errno == 200) {
+          this.courseArr = res.result
         }
+      },
+      handleRadioClick(v) {
+        this.$set(this.queryObj, 'type_id', v == this.queryObj.type_id ? '' : v)
+        this.getData()
       },
       handleSizeChange(val) {
         this.queryObj.pageNo = 1
         this.queryObj.pageSize = val
-        this.getGoods()
+        this.getData()
       },
       handleCurrentChange(val) {
         this.queryObj.pageNo = val
-        this.getGoods()
+        this.getData()
       },
     },
   }
@@ -142,13 +161,14 @@
           display: flex;
           align-items: center;
           margin: 18px 0;
-          span {
-            display: inline-block;
-            padding: 5px 15px;
-            border: 1px solid #e4e4e4;
-            margin-right: 20px;
-            border-radius: 20px;
-          }
+          // span {
+          //   cursor: pointer;
+          //   display: inline-block;
+          //   padding: 5px 15px;
+          //   border: 1px solid #e4e4e4;
+          //   margin-right: 20px;
+          //   border-radius: 20px;
+          // }
         }
 
         & > ul {
@@ -156,7 +176,6 @@
           display: flex;
           flex-wrap: wrap;
           li {
-            border: 1px solid red;
             width: calc(25% - 18px);
             margin-right: 24px;
             img {
