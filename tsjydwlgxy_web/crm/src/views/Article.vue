@@ -5,7 +5,7 @@
         <div>
           <el-select
             size="small"
-            v-model="queryObj.menu_id"
+            v-model="queryObj.menu_pid"
             placeholder="请选择一级菜单"
             clearable
             @change="handleMenuchange"
@@ -19,7 +19,7 @@
           </el-select>
           <el-select
             size="small"
-            v-model="queryObj.menu_pid"
+            v-model="queryObj.menu_id"
             placeholder="请选择二级菜单"
             clearable
           >
@@ -133,8 +133,8 @@
         submenuOptions: [],
 
         queryObj: {
-          menu_id: '', // 一级栏目
-          menu_pid: '', // 二级栏目
+          menu_pid: '',
+          menu_id: '',
           title: '', // 标题
           pageNo: 1, // 当前页
           pageSize: 10, // 分页大小
@@ -169,7 +169,7 @@
       const handleMenuchange = (val) => {
         if (val) {
           getOptions(val)
-          state.ruleForm.menu_pid = ''
+          state.ruleForm.menu_id = ''
         } else {
           state.submenuOptions = []
         }

@@ -20,10 +20,10 @@
       </el-form-item>
       <el-row>
         <el-col :span="12">
-          <el-form-item label="所属栏目：" prop="menu_id">
+          <el-form-item label="所属栏目：" prop="menu_pid">
             <el-select
               size="small"
-              v-model="ruleForm.menu_id"
+              v-model="ruleForm.menu_pid"
               placeholder="请选择一级菜单"
               @change="handleMenuchange"
             >
@@ -37,10 +37,10 @@
           </el-form-item>
         </el-col>
         <el-col :span="12">
-          <el-form-item label="所属栏目：" prop="menu_pid">
+          <el-form-item label="所属栏目：" prop="menu_id">
             <el-select
               size="small"
-              v-model="ruleForm.menu_pid"
+              v-model="ruleForm.menu_id"
               placeholder="请选择二级菜单"
             >
               <el-option
@@ -122,7 +122,7 @@
       const handleMenuchange = (val) => {
         if (val) {
           getOptions(val)
-          state.ruleForm.menu_pid = ''
+          state.ruleForm.menu_id = ''
         } else {
           state.submenuOptions = []
         }

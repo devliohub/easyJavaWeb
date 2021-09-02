@@ -34,7 +34,7 @@ export default ({ mode }) => defineConfig({
     open: false,
     proxy: {
       '/api': {
-        target: 'http://121.36.22.149:2000',
+        target: 'http://121.36.22.149:9098',
         changeOrigin: true,
       }
     }
