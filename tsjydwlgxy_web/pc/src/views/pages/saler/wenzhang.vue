@@ -1,18 +1,38 @@
 <template>
   <div class="wenzhang" v-loading="isloading">
-    <ul v-if="tableData.length > 0">
-      <li
-        class="_li"
-        :class="{ single_class: x % 2 == 0 }"
-        v-for="(item, x) in tableData"
-        :key="x"
-        @click="handleClick(item)"
-      >
-        <span> {{ item.title }}</span>
-        <span>
-          {{ dayjs(item.create_time * 1000).format('YYYY/MM/DD HH:mm') }}
-        </span>
-      </li>
+    <template v-if="tableData.length > 0">
+      <ul class="card_ul" v-if="isCard">
+        <li
+          v-for="(entity, x) in tableData"
+          :key="x"
+          :class="{ margin_right_0: x % 4 == 3 }"
+          @click="handleClick(entity)"
+        >
+          <img src="../../../assets/2parts_xqg.png" alt="" />
+          <div class="title">
+            <span v-if="entity.is_top == 1"> [置顶] </span>
+            {{ entity.title }}
+          </div>
+          <div class="timer">
+            {{ dayjs(entity.create_time * 1000).format('YYYY/MM/DD HH:mm') }}
+          </div>
+        </li>
+        <br />
+      </ul>
+      <ul class="list_ul" v-else>
+        <li
+          class="_li"
+          :class="{ single_class: x % 2 == 0 }"
+          v-for="(item, x) in tableData"
+          :key="x"
+          @click="handleClick(item)"
+        >
+          <span> {{ item.title }}</span>
+          <span>
+            {{ dayjs(item.create_time * 1000).format('YYYY/MM/DD HH:mm') }}
+          </span>
+        </li>
+      </ul>
       <el-pagination
         background
         style="margin: 15px 0"
@@ -24,7 +44,7 @@
         layout="total, sizes, prev, pager, next"
         :total="table_total"
       ></el-pagination>
-    </ul>
+    </template>
     <div v-else class="no_data_div">
       <div>暂无数据</div>
     </div>
@@ -38,6 +58,7 @@
     data() {
       return {
         isloading: false,
+        isCard: false,
 
         tableData: [],
         table_total: null,
@@ -68,6 +89,7 @@
         if (res && res.errno == 200) {
           this.tableData = res.result.list
           this.table_total = res.result.total
+          this.isCard = res.result.layout == 2
         }
         this.isloading = false
       },
@@ -81,37 +103,71 @@
         this.getListData()
       },
       handleClick(item) {
-        this.$router.push('/saler/wenzhangdesc?id=' + item.id)
+        this.$router.push(
+          '/saler/wenzhangdesc?id=' +
+            this.$route.query.id +
+            '&name=' +
+            this.$route.query.name +
+            '&descId=' +
+            item.id
+        )
       },
     },
   }
 </script>
 <style lang="scss" scope>
 .wenzhang {
-  & > ul {
-    border: 1px solid #efeff7;
-  }
-  ._li {
-    cursor: pointer;
-    background: #fff;
+  .card_ul {
+    font-size: 14px;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 15px 30px;
-    &:hover {
-      background: #efeff7;
-    }
-    span {
-      &:first-child {
-        color: #444;
+    flex-wrap: wrap;
+    li {
+      cursor: pointer;
+      width: calc(25% - 18px);
+      margin: 0 24px 20px 0;
+      img {
+        width: 100%;
       }
-      &:last-child {
-        color: #888;
+      .title {
+        font-weight: bold;
+        line-height: 1.5;
+        padding: 10px 0;
+        font-size: 14px;
+        color: #444;
+        span {
+          color: red;
+        }
+      }
+      .timer {
+        color: #969696;
       }
     }
   }
-  .single_class {
-    background: #f5f5f5;
+
+  .list_ul {
+    border: 1px solid #efeff7;
+    .single_class {
+      background: #f5f5f5 !important;
+    }
+    ._li {
+      cursor: pointer;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 30px;
+      &:hover {
+        background: #efeff7;
+      }
+      span {
+        &:first-child {
+          color: #444;
+        }
+        &:last-child {
+          color: #888;
+        }
+      }
+    }
   }
 }
 </style>

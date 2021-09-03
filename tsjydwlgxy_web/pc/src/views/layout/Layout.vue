@@ -27,14 +27,12 @@
     computed: {},
     methods: {
       handleSearch(val) {
-        if (this.$route.name == 'wenzhang') {
-          console.log(
-            this.$refs['app_ref'].$children[0].$children[0].$children[2]
-          )
-          // this.$refs['app_ref'].$children[0].$children[0]
-        } else {
-          this.$router.push('/saler/wenzhang?keyword=' + val)
-        }
+        // if (this.$route.name == 'wenzhang') {
+        //   // this.$refs['app_ref'].$children[0].$children[0]
+        // } else {
+        //   this.$router.push('/saler/search?keyword=' + val)
+        // }
+        this.$router.push('/saler/search?keyword=' + val)
       },
     },
   }

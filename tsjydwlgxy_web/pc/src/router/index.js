@@ -30,14 +30,13 @@ export default [
             meta: { title: '文章列表' },
           },
           {
-            hidden: true,
             path: 'wenzhangdesc',
             name: 'wenzhangdesc',
             component: (resolve) => require(['@/views/pages/saler/wenzhangdesc'], resolve),
             meta: { title: '文章详情' },
           },
           {
-            path: '/search',
+            path: 'search',
             name: 'search',
             component: (resolve) => require(['@/views/pages/saler/search'], resolve),
             meta: { title: '搜索结果' },

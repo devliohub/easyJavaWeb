@@ -1,5 +1,6 @@
 <template>
   <div class="navbar2">
+    <img src="../../../assets/home/toper_bg.jpg" alt="" />
     <main>
       <div class="navbar2_right">
         <el-input placeholder="关键词搜索" v-model="search_word">
@@ -20,8 +21,13 @@
           v-for="(item, index) in cateTitleList.slice(0, 9)"
           :key="index"
           @click="handleGo(item, index)"
+          :class="{
+            isactive:
+              $route.query.id == item.id ||
+              ($route.name == 'kecheng' && item.name == '通识课程') ||
+              ($route.name == 'index' && item.id == 1),
+          }"
         >
-          <span :class="item.icon"></span>
           {{ item.name }}
         </li>
       </ul>
@@ -75,18 +81,22 @@
 
 <style rel="stylesheet/scss" lang="scss">
 .navbar2 {
-  background: url('../../../assets/home/toper_bg.jpg');
+  width: 100%;
+  & > img {
+    width: 100%;
+    margin-bottom: -2px;
+  }
   main {
+    top: 0;
     width: 1200px;
-    margin: 0 auto;
     height: 120px;
+    position: absolute;
+    transform: translateX(-50%);
+    left: 50%;
     display: flex;
-    justify-content: center;
     align-items: center;
-    position: relative;
-
+    z-index: 0;
     .navbar2_right {
-      display: flex;
       height: 36px;
       line-height: 36px;
       position: absolute;
@@ -104,6 +114,10 @@
   .index_items {
     width: 100%;
     background: #660000;
+    .isactive {
+      background: #fff;
+      color: #660000;
+    }
     ul {
       display: flex;
       justify-content: space-between;

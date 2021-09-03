@@ -3,12 +3,14 @@
     <main>
       <section>
         <!-- 左侧路由 -->
-        <div class="left_menu">
+        <div class="left_menu" v-if="$route.name != 'search'">
           <sideBar />
         </div>
         <!-- 右侧内容 -->
         <div class="right_content">
-          <breadcrumb v-if="$route.name == 'wenzhang'" />
+          <breadcrumb
+            v-if="['wenzhang', 'wenzhangdesc', 'search'].includes($route.name)"
+          />
 
           <transition name="fade-transform" mode="out-in">
             <router-view></router-view>

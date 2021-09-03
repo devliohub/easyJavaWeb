@@ -1,5 +1,5 @@
 <template>
-  <ul v-if="$route.name == 'wenzhang'">
+  <ul v-if="isWenzhangPage">
     <li @click="handleGOwenzhang(entity)">{{ entity.name }}</li>
     <template>
       <li
@@ -36,7 +36,11 @@
         entity: {},
       }
     },
-    computed: {},
+    computed: {
+      isWenzhangPage() {
+        return ['wenzhang', 'wenzhangdesc'].includes(this.$route.name)
+      },
+    },
     watch: {
       $route: function () {
         this.getData()
@@ -52,7 +56,7 @@
           if (res && res.errno == 200) {
             this.entity = res.result
           }
-        } else if (this.$route.name == 'wenzhang') {
+        } else if (this.isWenzhangPage) {
           JSON.parse(window.sessionStorage.getItem('menuArr')).map((item) => {
             if (item.id == this.$route.query.id) this.entity = item
 
@@ -96,9 +100,21 @@
       cursor: pointer;
       font-weight: normal;
       &:first-child {
+        transform: translateX(-5%);
+        width: 105%;
         padding-left: 10px;
         color: #fff;
         background: #660000;
+        &::before {
+          position: absolute;
+          left: 0;
+          bottom: -10px;
+          content: '';
+          width: 0;
+          height: 0;
+          border-top: 10px solid red;
+          border-left: 10px solid transparent;
+        }
       }
     }
   }

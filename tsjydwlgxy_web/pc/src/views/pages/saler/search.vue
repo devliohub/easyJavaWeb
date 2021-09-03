@@ -1,6 +1,6 @@
 <template>
   <div class="search" v-loading="isloading">
-    <nav>关键词：{{ form.key_value }}</nav>
+    <nav>关键词：{{ form.title }}</nav>
     <!-- 表格内容 -->
     <ul v-if="tableData.length > 0">
       <li
@@ -8,9 +8,12 @@
         :class="{ single_class: x % 2 == 0 }"
         v-for="(item, x) in tableData"
         :key="x"
+        @click="handleGo(item)"
       >
         <span> {{ item.title }}</span>
-        <span>{{ item.task_start }}</span>
+        <span>{{
+          dayjs(item.create_time * 1000).format('YYYY/MM/DD HH:mm')
+        }}</span>
       </li>
     </ul>
     <div v-else class="no_data_div">
@@ -21,9 +24,9 @@
       style="margin: 15px 0"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      :current-page="form.page_no"
+      :current-page="form.pageNo"
       :page-sizes="[5, 10, 20]"
-      :page-size="form.page_size"
+      :page-size="form.pageSize"
       layout="total, sizes, prev, pager, next"
       :total="table_total"
     ></el-pagination>
@@ -41,9 +44,9 @@
         tableData: [],
         table_total: null,
         form: {
-          key_value: this.$route.query.keyVal,
-          page_no: 1,
-          page_size: 5,
+          title: this.$route.query.keyword,
+          pageNo: 1,
+          pageSize: 5,
         },
       }
     },
@@ -63,13 +66,23 @@
         this.isloading = false
       },
       handleSizeChange(val) {
-        this.form.page_no = 1
-        this.form.page_size = val
+        this.form.pageNo = 1
+        this.form.pageSize = val
         this.getListData()
       },
       handleCurrentChange(val) {
-        this.form.page_no = val
+        this.form.pageNo = val
         this.getListData()
+      },
+      handleGo(item) {
+        this.$router.push(
+          '/saler/wenzhangdesc?id=' +
+            item.menu_id +
+            '&name=' +
+            item.menu_name +
+            '&descId=' +
+            item.id
+        )
       },
     },
   }
@@ -81,14 +94,15 @@
     padding: 0 30px;
     height: 50px;
     line-height: 50px;
+    font-weight: bold;
   }
   ._li {
     background: #fff;
-    margin-bottom: 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 15px 30px;
+    padding: 20px 30px;
+    cursor: pointer;
     span {
       &:first-child {
         color: #444;

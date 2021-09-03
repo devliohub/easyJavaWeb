@@ -2,9 +2,12 @@
   <el-breadcrumb class="app-breadcrumb" separator=">">
     <transition-group name="breadcrumb">
       <el-breadcrumb-item :key="1">{{ levelList.name }}</el-breadcrumb-item>
-      <el-breadcrumb-item :key="2" v-if="$route.query.name">{{
+      <el-breadcrumb-item :key="2" v-if="$route.query.name && isWenzhangPage">{{
         $route.query.name
       }}</el-breadcrumb-item>
+      <el-breadcrumb-item :key="3" v-if="$route.name == 'search'"
+        >搜索</el-breadcrumb-item
+      >
     </transition-group>
   </el-breadcrumb>
 </template>
@@ -13,6 +16,11 @@
   export default {
     created() {
       this.getBreadcrumb()
+    },
+    computed: {
+      isWenzhangPage() {
+        return ['wenzhang', 'wenzhangdesc'].includes(this.$route.name)
+      },
     },
     data() {
       return {
@@ -28,7 +36,7 @@
     },
     methods: {
       async getBreadcrumb() {
-        if (this.$route.name == 'wenzhang') {
+        if (this.isWenzhangPage) {
           JSON.parse(window.sessionStorage.getItem('menuArr')).map((item) => {
             if (item.id == this.$route.query.id) this.levelList = item
 
@@ -38,6 +46,10 @@
               })
             }
           })
+        } else {
+          this.levelList = {
+            name: '首页',
+          }
         }
       },
     },

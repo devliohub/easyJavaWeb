@@ -35,12 +35,6 @@
                 >{{ item.name }}</el-radio
               >
             </el-radio-group>
-            <!-- <span
-              v-for="(item, index) in courseArr"
-              :key="index"
-              @click="handleClickCourese(item)"
-              >{{ item.name }}</span
-            > -->
           </nav>
 
           <ul>
@@ -49,8 +43,19 @@
               :key="x"
               :class="{ margin_right_0: x % 4 == 3 }"
             >
-              <el-image :src="entity.cover" alt="" />
-              <div>{{ entity.name }}</div>
+              <div class="wrapper">
+                <el-image :src="entity.cover" alt="" />
+                <span
+                  :class="{
+                    _orange: entity.typeName == '公共必修课',
+                    _blue: entity.typeName == '公共选修课',
+                    _green: entity.typeName == '核心限选课',
+                  }"
+                  >{{ entity.typeName }}</span
+                >
+              </div>
+
+              <div class="namer">{{ entity.name }}</div>
             </li>
           </ul>
 
@@ -152,7 +157,7 @@
         }
         input {
           border-radius: 50px;
-          background: #eee;
+          background: #f1f1f1;
         }
       }
 
@@ -178,10 +183,33 @@
           li {
             width: calc(25% - 18px);
             margin-right: 24px;
-            img {
+
+            .wrapper {
               width: 100%;
+              position: relative;
+              span {
+                position: absolute;
+                left: 10px;
+                bottom: 10px;
+                z-index: 999;
+                padding: 5px 15px;
+                color: #fff;
+              }
+              img {
+                width: 100%;
+              }
+              ._orange {
+                background: #ffaf00;
+              }
+              ._blue {
+                background: #0041c1;
+              }
+              ._green {
+                background: #00af09;
+              }
             }
-            div {
+
+            .namer {
               font-weight: bold;
               line-height: 1.5;
               padding: 10px 0;
