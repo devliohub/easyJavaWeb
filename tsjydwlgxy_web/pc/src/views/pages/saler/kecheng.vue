@@ -30,9 +30,8 @@
                 v-for="(item, index) in courseArr"
                 :label="item.code"
                 :key="index"
-                @click.prevent.native="handleRadioClick(item.code)"
                 border
-                >{{ item.name }}</el-radio
+                >{{ item.name }}({{ item.count }})</el-radio
               >
             </el-radio-group>
           </nav>
@@ -42,6 +41,7 @@
               v-for="(entity, x) in entitys"
               :key="x"
               :class="{ margin_right_0: x % 4 == 3 }"
+              @click="goUrl(entity)"
             >
               <div class="wrapper">
                 <el-image :src="entity.cover" alt="" />
@@ -118,12 +118,23 @@
       async getCourses() {
         let res = await getCoursetypes()
         if (res && res.errno == 200) {
-          this.courseArr = res.result
+          this.courseArr = JSON.parse(JSON.stringify(res.result))
+
+          let _t = 0
+          res.result.map((el) => {
+            _t += el.count
+          })
+
+          this.courseArr.unshift({
+            code: 0,
+            count: _t,
+            name: '全部',
+          })
         }
       },
       handleRadioClick(v) {
-        this.$set(this.queryObj, 'type_id', v == this.queryObj.type_id ? '' : v)
-        this.getData()
+        // this.$set(this.queryObj, 'type_id', v == this.queryObj.type_id ? '' : v)
+        // this.getData()
       },
       handleSizeChange(val) {
         this.queryObj.pageNo = 1
@@ -133,6 +144,9 @@
       handleCurrentChange(val) {
         this.queryObj.pageNo = val
         this.getData()
+      },
+      goUrl(item) {
+        window.open(item.url)
       },
     },
   }
@@ -183,7 +197,7 @@
           li {
             width: calc(25% - 18px);
             margin-right: 24px;
-
+            cursor: pointer;
             .wrapper {
               width: 100%;
               position: relative;

@@ -21,7 +21,7 @@
         :key="index"
         @click="handleGOkecheng(item, index)"
       >
-        {{ item.name }}
+        {{ item.name }} ({{ item.count }})
       </li>
     </template>
   </ul>
@@ -38,7 +38,7 @@
     },
     computed: {
       isWenzhangPage() {
-        return ['wenzhang', 'wenzhangdesc'].includes(this.$route.name)
+        return ['wenzhang', 'wenzhangdesc', 'search'].includes(this.$route.name)
       },
     },
     watch: {

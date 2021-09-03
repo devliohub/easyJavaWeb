@@ -44,7 +44,6 @@
         tableData: [],
         table_total: null,
         form: {
-          title: this.$route.query.keyword,
           pageNo: 1,
           pageSize: 5,
         },
@@ -53,11 +52,17 @@
     mounted() {
       this.getListData()
     },
+    watch: {
+      $route: function (val) {
+        if (val) this.getListData()
+      },
+    },
     methods: {
       async getListData() {
         this.isloading = true
         let res = await getArticle({
           ...this.form,
+          title: this.$route.query.keyword,
         })
         if (res && res.errno == 200) {
           this.tableData = res.result.list
@@ -79,7 +84,7 @@
           '/saler/wenzhangdesc?id=' +
             item.menu_id +
             '&name=' +
-            item.menu_name +
+            (item.menu_name ? item.menu_name : 'undefined') +
             '&descId=' +
             item.id
         )

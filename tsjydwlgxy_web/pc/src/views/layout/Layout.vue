@@ -32,7 +32,9 @@
         // } else {
         //   this.$router.push('/saler/search?keyword=' + val)
         // }
-        this.$router.push('/saler/search?keyword=' + val)
+        this.$router.push(
+          '/saler/search?keyword=' + val + '&_t=' + Date.parse(new Date())
+        )
       },
     },
   }

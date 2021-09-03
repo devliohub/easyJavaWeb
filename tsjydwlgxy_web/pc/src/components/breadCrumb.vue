@@ -1,15 +1,24 @@
 <template>
-  <el-breadcrumb class="app-breadcrumb" separator=">">
-    <transition-group name="breadcrumb">
-      <el-breadcrumb-item :key="1">{{ levelList.name }}</el-breadcrumb-item>
-      <el-breadcrumb-item :key="2" v-if="$route.query.name && isWenzhangPage">{{
-        $route.query.name
-      }}</el-breadcrumb-item>
-      <el-breadcrumb-item :key="3" v-if="$route.name == 'search'"
-        >搜索</el-breadcrumb-item
-      >
-    </transition-group>
-  </el-breadcrumb>
+  <div class="bread-wrapper">
+    <span>当前位置：</span>
+    <el-breadcrumb class="app-breadcrumb" separator=">">
+      <transition-group name="breadcrumb">
+        <el-breadcrumb-item :key="1">{{ levelList.name }}</el-breadcrumb-item>
+        <el-breadcrumb-item
+          :key="2"
+          v-if="$route.query.name && isWenzhangPage"
+          >{{
+            !!$route.query.name && $route.query.name != 'undefined'
+              ? $route.query.name
+              : '详情'
+          }}</el-breadcrumb-item
+        >
+        <el-breadcrumb-item :key="3" v-if="$route.name == 'search'"
+          >搜索</el-breadcrumb-item
+        >
+      </transition-group>
+    </el-breadcrumb>
+  </div>
 </template>
 
 <script>
@@ -57,12 +66,13 @@
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-.app-breadcrumb {
-  display: inline-block;
-  font-size: 14px;
-  line-height: 50px;
-  span {
-    font-weight: bold;
+.bread-wrapper {
+  display: flex;
+  align-items: center;
+  .app-breadcrumb {
+    display: inline-block;
+    font-size: 14px;
+    line-height: 50px;
   }
 }
 </style>

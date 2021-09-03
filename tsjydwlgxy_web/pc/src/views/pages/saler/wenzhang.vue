@@ -8,7 +8,7 @@
           :class="{ margin_right_0: x % 4 == 3 }"
           @click="handleClick(entity)"
         >
-          <img src="../../../assets/2parts_xqg.png" alt="" />
+          <img :src="entity.cover" alt="" />
           <div class="title">
             <span v-if="entity.is_top == 1"> [置顶] </span>
             {{ entity.title }}
