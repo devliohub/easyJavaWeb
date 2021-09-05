@@ -1,7 +1,7 @@
 <template>
   <div class="breadcrumb">
     <span style="color: #888">当前位置：</span>
-    <span>{{ Route.meta.title }}</span>
+    <span>{{ levelList.name }}</span>
   </div>
 </template>
 <script>
@@ -9,7 +9,11 @@
   export default {
     name: 'breadcrumb',
     data() {
-      return {}
+      return {
+        levelList: {
+          name: '',
+        },
+      }
     },
     computed: {
       Route() {
@@ -17,10 +21,27 @@
       },
     },
     mounted() {
-      console.log(this.$route)
+      this.getBreadcrumb()
+    },
+    watch: {
+      $route: function () {
+        this.getBreadcrumb()
+      },
     },
     methods: {
       handleClick() {},
+      async getBreadcrumb() {
+        JSON.parse(window.sessionStorage.getItem('menuArr')).map((item) => {
+          if (item.id == this.$route.query.id) this.levelList = item
+
+          if (item.sub_menus && item.sub_menus.length > 0) {
+            item.sub_menus.map((_item) => {
+              if (_item.id == this.$route.query.id) this.levelList = item
+            })
+          }
+          console.log(this.levelList)
+        })
+      },
     },
   }
 </script>
@@ -29,8 +50,8 @@
   width: 100%;
   padding: 0 15px;
   background: #fff;
-  height: 30px;
-  line-height: 30px;
+  height: 50px;
+  line-height: 50px;
   font-size: 14px;
 }
 </style>

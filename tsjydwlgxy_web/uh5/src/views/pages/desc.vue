@@ -40,7 +40,7 @@
     methods: {
       async getData() {
         this.isloading = true
-        let res = await getArticleDesc(this.$route.query.id)
+        let res = await getArticleDesc(this.$route.query.descId)
         if (res && res.errno == 200) {
           this.entity = res.result
         }

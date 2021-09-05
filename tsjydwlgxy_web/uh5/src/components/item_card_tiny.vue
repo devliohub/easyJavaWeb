@@ -1,11 +1,13 @@
 <template>
-  <div class="item_card_tiny" @click="handleClick">
+  <div class="item_card_tiny">
     <main>
       <div class="title">
         <div class="dotter"></div>
         <span>{{ entity.title }}</span>
       </div>
-      <div class="time">{{ entity.time }}</div>
+      <div class="time">
+        {{ dateFormater(entity.create_time * 1000, 'YYYY-MM-DD') }}
+      </div>
     </main>
   </div>
 </template>
@@ -23,11 +25,7 @@
     },
     mounted() {},
     computed: {},
-    methods: {
-      handleClick() {
-        this.$router.push('./desc')
-      },
-    },
+    methods: {},
   }
 </script>
 <style lang="scss" scope>

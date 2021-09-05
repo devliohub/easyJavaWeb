@@ -23,6 +23,12 @@ export default [
         meta: { title: '首页 > 搜索' }
       },
       {
+        path: '/kecheng',
+        name: 'kecheng',
+        component: () => import('@/views/pages/kecheng'),
+        meta: { title: '通识课程' }
+      },
+      {
         path: '/desc',
         name: 'desc',
         component: () => import('@/views/pages/desc'),

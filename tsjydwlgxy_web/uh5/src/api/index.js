@@ -42,3 +42,10 @@ export function getMenus() {
         method: 'get',
     })
 }
+
+export function getHome() {
+    return request({
+        url: '/api/home',
+        method: 'get',
+    })
+}

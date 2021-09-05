@@ -7,14 +7,20 @@
 </template>
 
 <script>
-export default {
-  name: "App",
-  data() {
-    return {};
-  },
-  mounted() {},
-  watch: {}
-};
+  import { getMenus } from '@/api'
+  export default {
+    name: 'App',
+    data() {
+      return {}
+    },
+    async mounted() {
+      if (!JSON.parse(window.sessionStorage.getItem('menuArr'))) {
+        let res = await getMenus()
+        window.sessionStorage.setItem('menuArr', JSON.stringify(res.result))
+      }
+    },
+    watch: {},
+  }
 </script>
 <style lang="scss">
 </style>

@@ -1,9 +1,9 @@
 <template>
-  <div class="item_card_mid" @click="handleClick">
+  <div class="item_card_mid">
     <img :src="entity.cover" alt />
     <main>
       <div class="title">
-        <span>{{ entity.name }}</span>
+        <span>{{ entity.title }}</span>
       </div>
       <div class="time">发布时间：2021-08-09</div>
     </main>
@@ -22,11 +22,7 @@
     data() {
       return {}
     },
-    methods: {
-      handleClick() {
-        this.$router.push('./desc')
-      },
-    },
+    methods: {},
   }
 </script>
 <style lang="scss" scope>

@@ -77,7 +77,11 @@
       handleMenuClick(v) {
         if (v.sub_menus && v.sub_menus.length > 0) return
         if (v && v.id != 1) {
-          this.$router.push('/list?id=' + v.id + '&pid=' + v.pid)
+          if (v.name == '通识课程') {
+            this.$router.push('/kecheng')
+          } else {
+            this.$router.push('/list?id=' + v.id + '&pid=' + v.pid)
+          }
         } else {
           this.$router.push('/index')
         }

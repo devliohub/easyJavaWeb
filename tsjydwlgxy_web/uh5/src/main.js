@@ -61,7 +61,23 @@ Vue.prototype.dateFormater = function (t, formater) {
 
 router.beforeEach((to, from, next) => {
   /* 路由发生变化修改页面title, 回到顶部 */
-  document.title = to.meta.title || ' ';
+  console.log(to)
+  JSON.parse(window.sessionStorage.getItem('menuArr')).map((item) => {
+    if (item.id == to.query.id) {
+      document.title = item.name
+      to.meta.title = item.name
+    }
+
+    if (item.sub_menus && item.sub_menus.length > 0) {
+      item.sub_menus.map((_item) => {
+        if (_item.id == to.query.id) {
+          to.meta.title = item.name
+          document.title = item.name
+        }
+      })
+    }
+  })
+
   window.scrollTo(0, 0);
   next()
 });

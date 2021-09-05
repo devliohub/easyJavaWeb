@@ -5,31 +5,46 @@
     <div v-if="isloading" class="center_loading">
       <van-loading type="spinner" />
     </div>
-    <ul v-else-if="paList.length > 0">
-      <li
-        v-for="(item, x) in paList"
-        :key="x"
-        :class="{ signle_class: x % 2 == 0 }"
-        @click="handlegoDesc(item)"
-      >
-        <div class="title">{{ item.title }}</div>
-        <div class="time">
-          发布时间：{{
-            dateFormater(item.create_time * 1000, 'YYYY-MM-DD HH:mm')
-          }}
-        </div>
-      </li>
-    </ul>
+
+    <template v-else-if="paList.length > 0">
+      <ul v-if="isCard" class="card_ul">
+        <li
+          v-for="(item, index) in paList"
+          :key="index"
+          :class="{ margrin_right0: index % 2 == 1 }"
+          @click="handlegoDesc(item)"
+        >
+          <item-card-small :entity="item" />
+        </li>
+      </ul>
+
+      <ul v-else class="list_ul">
+        <li
+          v-for="(item, x) in paList"
+          :key="x"
+          :class="{ signle_class: x % 2 == 0 }"
+          @click="handlegoDesc(item)"
+        >
+          <div class="title">{{ item.title }}</div>
+          <div class="time">
+            发布时间：{{
+              dateFormater(item.create_time * 1000, 'YYYY-MM-DD HH:mm')
+            }}
+          </div>
+        </li>
+      </ul>
+    </template>
 
     <van-empty v-else description="暂无数据" />
   </div>
 </template> 
 <script>
+  import itemCardSmall from '@/components/item_card_small'
   import { getArticle } from '@/api'
   import breadcrumb from '@/components/breadcrumb'
   export default {
     name: 'listPage',
-    components: { breadcrumb },
+    components: { breadcrumb, itemCardSmall },
     data() {
       return {
         isloading: false,
@@ -41,6 +56,7 @@
           pageSize: 10,
         },
         paList: [],
+        isCard: false,
       }
     },
     mounted() {
@@ -61,11 +77,19 @@
         let res = await getArticle(this.queryObj)
         if (res) {
           this.paList = res.result.list
+          this.isCard = res.result.layout == 2
         }
         this.isloading = false
       },
       handlegoDesc(item) {
-        this.$router.push('/desc?id=' + item.id)
+        this.$router.push(
+          '/desc?id=' +
+            item.menu_pid +
+            '&name=' +
+            item.name +
+            '&descId=' +
+            item.id
+        )
       },
     },
   }
@@ -75,12 +99,15 @@
   position: relative;
   width: 100%;
   margin-top: 50px;
-  & > ul {
+  .signle_class {
+    background: #f8f8f8;
+  }
+  & > .list_ul {
     display: flex;
     flex-direction: column;
     li {
       padding: 15px;
-      background: #fff;
+      // background: #fff;
       width: 100%;
       margin-bottom: 10px;
       line-height: 1.2;
@@ -96,6 +123,19 @@
       }
     }
   }
+  & > .card_ul {
+    display: flex;
+    flex-wrap: wrap;
+    // width: 50%;
+    padding: 0 15px;
+    li {
+      width: calc(50% - 8px);
+      margin-right: 15px;
+    }
+    .margrin_right0 {
+      margin-right: 0;
+    }
+  }
   .center_loading {
     display: block;
     position: absolute;
@@ -104,9 +144,6 @@
     left: 0;
     right: 0;
     bottom: 0;
-  }
-  .signle_class {
-    background: #f8f8f8;
   }
 }
 </style>
