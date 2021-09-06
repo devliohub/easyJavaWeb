@@ -12,18 +12,37 @@
       class="good-form"
     >
       <el-form-item label="名称" prop="name">
-        <el-input type="text" v-model="ruleForm.name"></el-input>
+        <el-input
+          type="text"
+          v-model="ruleForm.name"
+          :disabled="isDingzhi"
+        ></el-input>
       </el-form-item>
       <el-form-item label="类型" prop="type">
-        <el-radio v-model="ruleForm.type" :label="1">文章栏目</el-radio>
-        <el-radio v-model="ruleForm.type" :label="2">外部链接</el-radio>
+        <el-radio v-model="ruleForm.type" :label="1" :disabled="type != 'add'"
+          >文章栏目</el-radio
+        >
+        <el-radio v-model="ruleForm.type" :label="2" :disabled="type != 'add'"
+          >外部链接</el-radio
+        >
+        <el-radio
+          v-if="ruleForm.type == 3"
+          v-model="ruleForm.type"
+          :label="3"
+          :disabled="true"
+          >定制菜单</el-radio
+        >
       </el-form-item>
       <el-form-item label="样式" prop="layout" v-if="ruleForm.type == 1">
         <el-radio v-model="ruleForm.layout" :label="1">标题式</el-radio>
         <el-radio v-model="ruleForm.layout" :label="2">卡片式</el-radio>
       </el-form-item>
       <el-form-item label="链接" prop="url" v-if="ruleForm.type == 2">
-        <el-input type="text" v-model="ruleForm.url"></el-input>
+        <el-input
+          type="text"
+          v-model="ruleForm.url"
+          :disabled="isDingzhi"
+        ></el-input>
       </el-form-item>
     </el-form>
     <template #footer>
@@ -36,7 +55,7 @@
 </template>
 
 <script>
-  import { reactive, ref, toRefs } from 'vue'
+  import { reactive, ref, toRefs, computed } from 'vue'
   import axios from '@/utils/axios'
   import { hasEmoji } from '@/utils/index'
   import { ElMessage } from 'element-plus'
@@ -48,6 +67,9 @@
     },
     setup(props) {
       const formRef = ref(null)
+      const isDingzhi = computed(() => {
+        return state.ruleForm.is_course_menu
+      })
       const state = reactive({
         type: 'add',
         visible: false,
@@ -121,6 +143,7 @@
         close,
         formRef,
         submitForm,
+        isDingzhi,
       }
     },
   }

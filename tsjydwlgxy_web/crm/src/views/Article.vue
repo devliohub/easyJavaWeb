@@ -148,13 +148,15 @@
         getOptions(0)
       })
       const getOptions = (num) => {
-        axios.get('/api/sys/menus?pid=' + num).then((res) => {
-          if (num) {
-            state.submenuOptions = res
-          } else {
-            state.menuOptions = res
-          }
-        })
+        axios
+          .get('/api/sys/menus?is_article_type=true&pid=' + num)
+          .then((res) => {
+            if (num) {
+              state.submenuOptions = res
+            } else {
+              state.menuOptions = res
+            }
+          })
       }
       // 获取列表
       const getDataList = () => {

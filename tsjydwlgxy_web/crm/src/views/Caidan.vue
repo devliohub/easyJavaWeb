@@ -27,7 +27,7 @@
         <template #default="scope">
           <div v-if="scope.row.id != 1">
             <a
-              v-if="scope.row.id == 2"
+              v-if="scope.row.type == 1 && scope.row.sub_menus"
               style="cursor: pointer; margin-right: 10px"
               @click="handleAdd(scope.row.id)"
               >添加子菜单</a

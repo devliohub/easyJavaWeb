@@ -45,6 +45,7 @@
               <el-button type="primary" size="mini" @click="submitForm"
                 >确 定</el-button
               >
+              <el-button size="mini" @click="showPwd = false">取 消</el-button>
             </el-form>
           </template>
         </div>

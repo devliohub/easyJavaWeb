@@ -99,6 +99,16 @@
         submenuOptions: [],
         rules: {
           title: [{ required: 'true', message: '不能为空', trigger: ['change'] }],
+          menu_id: [
+            { required: 'true', message: '不能为空', trigger: ['change'] },
+          ],
+          menu_pid: [
+            { required: 'true', message: '不能为空', trigger: ['change'] },
+          ],
+          cover: [{ required: 'true', message: '不能为空', trigger: ['change'] }],
+          is_top: [
+            { required: 'true', message: '不能为空', trigger: ['change'] },
+          ],
         },
         id: '',
       })
