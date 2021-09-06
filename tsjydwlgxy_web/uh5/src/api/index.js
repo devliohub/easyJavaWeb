@@ -49,3 +49,17 @@ export function getHome() {
         method: 'get',
     })
 }
+
+export function logout() {
+    return request({
+        url: '/api/a/loginout',
+        method: 'get',
+    })
+}
+
+export function changePsw() {
+    return request({
+        url: '/api/a/user/password',
+        method: 'get',
+    })
+}

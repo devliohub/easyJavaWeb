@@ -33,13 +33,13 @@
           </li>
         </ul>
 
-        <div class="pagin">
-          <span>上一页</span>
-          <span class="num">{{ queryData.pageNo }}/{{ totalPage }}</span>
-          <span>下一页</span>
-        </div>
-
-        <!-- <van-pagination v-model="pageNo" :page-count="12" mode="simple" /> -->
+        <van-pagination
+          v-model="queryData.pageNo"
+          :total-items="totalPage"
+          :items-per-page="queryData.pageSize"
+          mode="simple"
+          @change="() => getData()"
+        />
       </div>
 
       <van-empty v-else description="暂无数据" />
@@ -63,7 +63,7 @@
           module_id: '',
           name: '',
           pageNo: 1,
-          pageSize: 50,
+          pageSize: 10,
         },
         totalPage: 0,
 

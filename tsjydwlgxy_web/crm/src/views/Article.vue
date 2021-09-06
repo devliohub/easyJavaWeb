@@ -66,7 +66,10 @@
       <el-table-column prop="title" label="标题"> </el-table-column>
       <el-table-column prop="module_id" label="所属栏目">
         <template #default="scope">
-          <span>{{ scope.row.menu_name }} / {{ scope.row.menu_pname }}</span>
+          <span
+            >{{ scope.row.menu_name ? scope.row.menu_name + '/' : '' }}
+            {{ scope.row.menu_pname }}</span
+          >
         </template>
       </el-table-column>
       <el-table-column prop="create_uname" label="发布人"></el-table-column>

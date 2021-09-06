@@ -21,9 +21,32 @@
         </template>
         <div class="nickname">
           <p>登录名：{{ (userInfo && userInfo.account) || '' }}</p>
+          <el-tag size="small" class="changePwd" @click="changePwd">
+            修改密码
+          </el-tag>
           <el-tag size="small" effect="dark" class="logout" @click="logout"
             >退出</el-tag
           >
+          <template v-if="showPwd">
+            <el-form
+              style="margin-top: 20px"
+              :model="ruleForm"
+              ref="formRef"
+              class="good-form"
+              size="mini"
+              label-width="75px"
+            >
+              <el-form-item label="密码" prop="password">
+                <el-input type="text" v-model="ruleForm.password"></el-input>
+              </el-form-item>
+              <el-form-item label="新密码" prop="newpassword">
+                <el-input type="text" v-model="ruleForm.newpassword"></el-input>
+              </el-form-item>
+              <el-button type="primary" size="mini" @click="submitForm"
+                >确 定</el-button
+              >
+            </el-form>
+          </template>
         </div>
       </el-popover>
     </div>
@@ -43,6 +66,8 @@
       const state = reactive({
         name: 'swiper',
         userInfo: null,
+        showPwd: false,
+        ruleForm: {},
       })
       onMounted(() => {
         state.userInfo = localGet('token')
@@ -53,13 +78,33 @@
           window.location.reload()
         })
       }
+      const changePwd = () => {
+        state.showPwd = true
+      }
+      const submitForm = () => {
+        axios
+          .get('/api/a/user/password', {
+            params: state.ruleForm,
+          })
+          .then((res) => {
+            console.log(res)
+            if (res && res.errno == 200) {
+              ElMessage.error('密码修改成功，请重新登陆')
+              localRemove('token')
+              window.location.reload()
+            }
+            console.log(res)
+          })
+      }
       const back = () => {
         router.back()
       }
       return {
         ...toRefs(state),
         logout,
+        changePwd,
         back,
+        submitForm,
       }
     },
   }
@@ -105,6 +150,9 @@
   position: absolute;
   right: 0;
   top: 0;
+  cursor: pointer;
+}
+.popper-user-box .nickname .changePwd {
   cursor: pointer;
 }
 </style>

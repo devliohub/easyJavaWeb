@@ -19,16 +19,22 @@
 
       <div v-else-if="dataList.length > 0">
         <ul class="ul">
-          <li v-for="(item, index) in dataList" :key="index">
+          <li
+            v-for="(item, index) in dataList"
+            :key="index"
+            @click="kechengDesc(item)"
+          >
             <item-card-small :entity="item" />
           </li>
         </ul>
 
-        <div class="pagin">
-          <span>上一页</span>
-          <span class="num">{{ queryData.pageNo }}/{{ totalPage }}</span>
-          <span>下一页</span>
-        </div>
+        <van-pagination
+          v-model="queryData.pageNo"
+          :total-items="totalPage"
+          :items-per-page="queryData.pageSize"
+          mode="simple"
+          @change="() => getData()"
+        />
       </div>
 
       <van-empty v-else description="暂无数据" />
@@ -52,7 +58,7 @@
           module_id: '',
           name: '',
           pageNo: 1,
-          pageSize: 50,
+          pageSize: 10,
         },
         totalPage: 0,
 
@@ -91,6 +97,9 @@
         }
         this.isloading = false
       },
+      kechengDesc(item) {
+        window.open(item.url)
+      },
     },
   }
 </script>
@@ -124,24 +133,6 @@
         width: 50%;
         padding: 10px 5px;
       }
-    }
-  }
-
-  .pagin {
-    padding: 20px 0;
-    display: flex;
-    justify-content: space-between;
-    font-size: 14px;
-    .num {
-      background: #c00900;
-      color: #fff;
-      border: 1px solid #c00900;
-    }
-    & > span {
-      padding: 8px 30px;
-      border: 1px solid #c5c5c5;
-      color: #444;
-      border-radius: 4px;
     }
   }
 }

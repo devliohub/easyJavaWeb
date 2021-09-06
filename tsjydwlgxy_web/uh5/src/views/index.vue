@@ -30,7 +30,7 @@
             :disabled="!item.sub_menus > 0"
             :title="item.name + (item.is_course_menu ? ' (定制)' : '')"
             :name="item.id"
-            :title-class="{ is_active: $route.meta.title == item.name }"
+            :title-class="{ is_active: $route.query.id == item.id }"
             @click.native="handleMenuClick(item)"
           >
             <template v-if="item.sub_menus.length > 0">
@@ -43,7 +43,7 @@
                   :is-link="false"
                   :title="_item.name"
                   :name="_item.id"
-                  :title-class="{ is_active: $route.meta.title == _item.name }"
+                  :title-class="{ is_active: $route.query.id == _item.id }"
                   @click.native="handleMenuClick(_item)"
                 >
                 </van-collapse-item>
@@ -78,14 +78,13 @@
         if (v.sub_menus && v.sub_menus.length > 0) return
         if (v && v.id != 1) {
           if (v.name == '通识课程') {
-            this.$router.push('/kecheng')
+            this.$router.push('/kecheng?id=' + v.id + '&pid=' + v.pid)
           } else {
             this.$router.push('/list?id=' + v.id + '&pid=' + v.pid)
           }
         } else {
           this.$router.push('/index')
         }
-        this.$set(this.$route.meta, 'title', v.name)
         this.showPop = false
       },
     },

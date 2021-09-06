@@ -60,6 +60,7 @@
       .title {
         font-size: 18px;
         line-height: 1.5;
+        overflow-wrap: break-word;
       }
       .time {
         padding: 10px 0 20px 0;
@@ -73,6 +74,7 @@
       line-height: 1.5;
       border-bottom: 1px solid #eee;
       padding-bottom: 20px;
+      overflow-wrap: break-word;
     }
     .fujianList {
       padding: 20px 0;
