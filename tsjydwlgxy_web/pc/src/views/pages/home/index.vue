@@ -17,16 +17,24 @@
     </div>
     <!-- 七大能力模块 -->
     <div class="index_modules">
-      <img src="../../../assets/home/ability_bg.png" alt="" />
-      <!-- <ul>
+      <main>
+        <img src="../../../assets/home/mokuai_title.png" alt="" />
+      </main>
+      <ul>
         <li
-          v-for="(item, index) in 8"
+          v-for="(item, index) in moduleList"
           :key="index"
           :class="{ margin_right_0: index % 4 == 3 }"
+          @click="goKecheng(item)"
         >
-          {{ item }}
+          <div style="font-weight: bold">
+            <span> {{ item.name }}</span>
+            <span v-if="index != moduleList.length - 1">
+              {{ item.count }}门</span
+            >
+          </div>
         </li>
-      </ul> -->
+      </ul>
     </div>
     <!-- 通识sections -->
     <div class="index_tongshi">
@@ -149,7 +157,7 @@
 </template>
 
 <script>
-  import { getHome } from '@/api'
+  import { getHome, getCoursemodules } from '@/api'
 
   export default {
     components: {},
@@ -157,7 +165,8 @@
     data() {
       return {
         isloading: false,
-        tabList: [], // tab公用栏
+        moduleList: [], //7大模块
+
         homeList: {
           list1: [],
           list2: [],
@@ -173,9 +182,18 @@
     },
     methods: {
       async initData() {
-        let res = await getHome()
+        let res = await getCoursemodules()
         if (res && res.errno == 200) {
-          this.homeList = res.result
+          this.moduleList = res.result
+          this.moduleList.push({
+            code: 0,
+            name: '查看全部课程 >>',
+          })
+        }
+
+        let res2 = await getHome()
+        if (res2 && res2.errno == 200) {
+          this.homeList = res2.result
         }
       },
       goDesc(item) {
@@ -194,6 +212,11 @@
       viewMore(item) {
         this.$router.push('/saler/wenzhang?id=' + item.menuId + '&pid=0')
       },
+      goKecheng(item) {
+        this.$router.push(
+          '/saler/kecheng?module_id=' + item.code + '&name=' + item.name
+        )
+      },
     },
   }
 </script>
@@ -210,10 +233,21 @@
 
   .index_modules {
     width: 100%;
-    margin-bottom: 50px;
-    & > img {
-      width: 100%;
+    background: url('../../../assets/home/mokuai_body.png') no-repeat 100% 100%;
+    main {
+      width: 1200px;
+      margin: 0 auto;
+      overflow: hidden;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      & > img {
+        width: 50%;
+        margin: 30px 0;
+      }
     }
+
     ul {
       width: 1200px;
       margin: 0 auto;
@@ -221,6 +255,7 @@
       display: flex;
       flex-wrap: wrap;
       li {
+        cursor: pointer;
         background: rgb(238, 218, 216);
         margin-right: 20px;
         margin-bottom: 30px;
@@ -285,7 +320,7 @@
       text-align: center;
       li {
         cursor: pointer;
-        background: url('../../../assets/home/word_bg.jpg') 100% 100% no-repeat;
+        background: url('../../../assets/home/words_bg.png') 100% 100% no-repeat;
         flex: 1;
         font-family: 'Courier New', Courier, monospace;
         font-weight: bold;

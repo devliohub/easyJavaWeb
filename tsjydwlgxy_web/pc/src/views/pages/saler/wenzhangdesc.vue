@@ -44,6 +44,7 @@
 .wenzhangdesc {
   position: relative;
   color: #444;
+  overflow-wrap: break-word;
   header {
     .title {
       font-size: 20px;

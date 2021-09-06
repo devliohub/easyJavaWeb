@@ -26,7 +26,14 @@
           <li>友情链接</li>
           <li>东莞理工学院官网</li>
           <li>东莞理工学院教务处</li>
-          <li>123456789</li>
+          <li>
+            <el-link
+              type="primary"
+              target="_blank"
+              href="http://121.36.22.149:9098/crm/"
+              >管理后台入口</el-link
+            >
+          </li>
         </ul>
       </div>
     </main>
