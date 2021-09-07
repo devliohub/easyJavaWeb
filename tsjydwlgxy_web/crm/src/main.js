@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import { ElRow, ElCol, ElButton, ElContainer, ElAside, ElHeader, ElMain, ElFooter, ElMenu, ElSubmenu, ElMenuItemGroup, ElMenuItem, ElForm, ElFormItem, ElInput, ElPopover, ElTag, ElCard, ElTable, ElTableColumn, ElPagination, ElDialog, ElPopconfirm, ElUpload, ElLoading, ElSelect, ElOption, ElRadioGroup, ElRadio, ElCascader, ElCheckbox, ElCheckboxGroup, ElInputNumber } from 'element-plus'
+import { ElRow, ElCol, ElButton, ElContainer, ElAside, ElHeader, ElMain, ElFooter, ElMenu, ElSubmenu, ElMenuItemGroup, ElMenuItem, ElForm, ElFormItem, ElInput, ElPopover, ElTag, ElCard, ElTable, ElTableColumn, ElPagination, ElDialog, ElPopconfirm, ElUpload, ElLoading, ElSelect, ElOption, ElRadioGroup, ElRadio, ElCascader, ElCheckbox, ElCheckboxGroup, ElInputNumber, ElDatePicker } from 'element-plus'
 import App from './App.vue'
 import router from './router/index'
 // import 'element-plus/lib/theme-chalk/index.css'
@@ -67,5 +67,6 @@ app.use(ElRow)
   .use(ElCheckbox)
   .use(ElCheckboxGroup)
   .use(ElInputNumber)
+  .use(ElDatePicker)
 
 app.mount('#app')

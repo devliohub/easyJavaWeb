@@ -140,8 +140,8 @@
                   params: {
                     id: state.ruleForm.id,
                     name: state.ruleForm.name,
-                    password: state.ruleForm.name,
-                    rolemenuids: '1,2,3,4,5',
+                    password: state.ruleForm.password,
+                    rolemenuids: state.ruleForm.rolemenuids,
                     account: state.ruleForm.account,
                   },
                 })

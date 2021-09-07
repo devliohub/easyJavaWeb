@@ -15,33 +15,43 @@
               <span>网站管理</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item index="/article"
+              <el-menu-item
+                index="/article"
+                v-if="state.roleArr.rolemenuids.includes('1')"
                 ><i class="el-icon-star-on" />文章管理</el-menu-item
               >
-              <el-menu-item index="/swiper"
+              <el-menu-item
+                index="/swiper"
+                v-if="state.roleArr.rolemenuids.includes('2')"
                 ><i class="el-icon-picture" />轮播图管理</el-menu-item
               >
-              <el-menu-item index="/caidan"
+              <el-menu-item
+                index="/caidan"
+                v-if="state.roleArr.rolemenuids.includes('3')"
                 ><i class="el-icon-menu" />菜单管理</el-menu-item
               >
             </el-menu-item-group>
           </el-submenu>
-          <el-submenu index="2">
+          <el-submenu index="2" v-if="state.roleArr.rolemenuids.includes('4')">
             <template #title>
               <span>课程管理</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item index="/kecheng"
+              <el-menu-item
+                index="/kecheng"
+                v-if="state.roleArr.rolemenuids.includes('4')"
                 ><i class="el-icon-edit" />课程管理</el-menu-item
               >
             </el-menu-item-group>
           </el-submenu>
-          <el-submenu index="3">
+          <el-submenu index="3" v-if="state.roleArr.rolemenuids.includes('5')">
             <template #title>
               <span>系统管理</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item index="/account"
+              <el-menu-item
+                index="/account"
+                v-if="state.roleArr.rolemenuids.includes('5')"
                 ><i class="el-icon-user" />用户管理</el-menu-item
               >
             </el-menu-item-group>
@@ -61,7 +71,7 @@
 </template>
 
 <script>
-  import { onUnmounted, reactive } from 'vue'
+  import { onUnmounted, reactive, nextTick } from 'vue'
   import Header from '@/components/Header.vue'
   import { useRouter } from 'vue-router'
   import { pathMap, localGet, localSet } from '@/utils'
@@ -78,8 +88,11 @@
 
       const state = reactive({
         defaultOpen: ['1', '2', '3', '4'],
-        showMenu: true,
+        showMenu: false,
         currentPath: '/account',
+        roleArr: {
+          rolemenuids: [],
+        },
       })
       // 字典字段缓存
       if (!localGet('loRoles')) {
@@ -103,7 +116,7 @@
         })
       }
 
-      const unwatch = router.beforeEach((to, from, next) => {
+      const unwatch = router.beforeEach(async (to, from, next) => {
         if (to.path == '/login') {
           next()
         } else {
@@ -115,8 +128,13 @@
             next()
           }
         }
+        await nextTick()
         state.showMenu = !noMenu.includes(to.path)
         state.currentPath = to.path
+        state.roleArr = localGet('token') || {
+          rolemenuids: [],
+        }
+
         document.title = pathMap[to.name]
       })
 

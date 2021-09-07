@@ -2,8 +2,9 @@
   <el-dialog
     :title="type == 'add' ? '发布文章' : '修改文章'"
     v-model="visible"
-    width="800px"
+    width="900px"
     top="5vh"
+    append-to-body
   >
     <el-form
       :model="ruleForm"
@@ -18,6 +19,34 @@
       <el-form-item label="详细内容：">
         <div ref="editor"></div>
       </el-form-item>
+      <el-row>
+        <el-form-item label="附 件：" prop="attachment">
+          <el-upload
+            class="imgsRef"
+            ref="imgsRef"
+            action="#"
+            :http-request="myUpload"
+            accept="image/jpeg, image/jpg, image/png"
+            :file-list="fileList"
+            :show-file-list="false"
+          >
+            <el-button size="small" type="primary">点击上传</el-button>
+            <span style="font-size: 14px; margin-left: 20px; color: #929292"
+              >支持jpg、jpeg、png格式，建议尺寸xxxx*xxx，大小不超过2M；最多添加10张图片</span
+            >
+          </el-upload>
+          <ul class="attach_ul">
+            <li
+              v-for="(item, index) in fileList"
+              :key="index"
+              @click="handleDown(item)"
+            >
+              <img :src="item.url" alt="" />
+              <span>{{ item.url }}</span>
+            </li>
+          </ul>
+        </el-form-item>
+      </el-row>
       <el-row>
         <el-col :span="12">
           <el-form-item label="所属栏目：" prop="menu_pid">
@@ -54,14 +83,24 @@
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="12">
+        <el-col :span="24">
           <el-form-item label="是否置顶：" prop="is_top">
             <el-checkbox v-model="ruleForm.is_top"></el-checkbox>
           </el-form-item>
         </el-col>
-        <el-col :span="12">
+        <el-col :span="24">
           <el-form-item label="封面图片：" prop="cover">
             <el-input type="text" v-model="ruleForm.cover"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="发布时间：" prop="publish_time">
+            <el-date-picker
+              v-model="ruleForm.publish_time"
+              type="datetime"
+              placeholder="选择日期时间"
+            >
+            </el-date-picker>
           </el-form-item>
         </el-col>
       </el-row>
@@ -81,6 +120,7 @@
   import { hasEmoji } from '@/utils/index'
   import { ElMessage } from 'element-plus'
   import WangEditor from 'wangeditor'
+  import dayjs from 'dayjs'
 
   export default {
     name: 'DialogAddArticle',
@@ -97,16 +137,14 @@
         ruleForm: {},
         menuOptions: [],
         submenuOptions: [],
+        fileList: [],
         rules: {
           title: [{ required: 'true', message: '不能为空', trigger: ['change'] }],
-          menu_id: [
-            { required: 'true', message: '不能为空', trigger: ['change'] },
-          ],
           menu_pid: [
             { required: 'true', message: '不能为空', trigger: ['change'] },
           ],
           cover: [{ required: 'true', message: '不能为空', trigger: ['change'] }],
-          is_top: [
+          publish_time: [
             { required: 'true', message: '不能为空', trigger: ['change'] },
           ],
         },
@@ -121,13 +159,15 @@
         }
       })
       const getOptions = (num) => {
-        axios.get('/api/sys/menus?pid=' + num).then((res) => {
-          if (num) {
-            state.submenuOptions = res
-          } else {
-            state.menuOptions = res
-          }
-        })
+        axios
+          .get('/api/sys/menus?is_article_type=true&pid=' + num)
+          .then((res) => {
+            if (num) {
+              state.submenuOptions = res
+            } else {
+              state.menuOptions = res
+            }
+          })
       }
       const handleMenuchange = (val) => {
         if (val) {
@@ -140,8 +180,39 @@
       // 获取详情
       const getDetail = (id) => {
         axios.get('/api/a/article/info?id=' + `${id}`).then((res) => {
-          state.ruleForm = res
+          state.ruleForm = {
+            ...res,
+            publish_time: res.publish_time * 1000,
+          }
+          state.fileList = []
+          state.ruleForm.attachment.split(',').map((el) => {
+            if (el) {
+              state.fileList.push({
+                url: el,
+                name: el,
+              })
+            }
+          })
+
           instance.txt.html(res.content)
+        })
+      }
+      // 附件上传
+      const myUpload = async (content) => {
+        let form = new FormData()
+        const sufix = content.file.name.split('.')[1] || ''
+        if (!['jpg', 'jpeg', 'png'].includes(sufix)) {
+          ElMessage.error('请上传 jpg、jpeg、png 格式的图片')
+          return false
+        }
+        form.append('img', content.file)
+        axios.post('/api/sys/upload', form).then((res) => {
+          state.fileList.push({
+            url: res,
+            uid: content.file.uid,
+            name: content.file.name,
+          })
+          return ElMessage.success('上传成功')
         })
       }
       // 开启弹窗
@@ -168,6 +239,9 @@
         instance = null
         state.visible = false
       }
+      const handleDown = (item) => {
+        window.open(item)
+      }
       const submitForm = () => {
         formRef.value.validate((valid) => {
           if (valid) {
@@ -176,6 +250,17 @@
             }
 
             state.ruleForm.content = instance.txt.html()
+            state.ruleForm.publish_time = dayjs(
+              state.ruleForm.publish_time / 1000
+            ).valueOf()
+            // 附件
+            let arr_file = []
+            if (state.fileList) {
+              state.fileList.map((el) => {
+                arr_file.push(el.url)
+              })
+              state.ruleForm.attachment = arr_file.join(',')
+            }
 
             if (state.type == 'add') {
               axios
@@ -205,9 +290,11 @@
         ...toRefs(state),
         open,
         close,
+        myUpload,
         formRef,
         editor,
         submitForm,
+        handleDown,
         handleMenuchange,
       }
     },
@@ -215,4 +302,23 @@
 </script>
 
 <style scoped>
+.attach_ul {
+  padding: 5px 0;
+}
+.attach_ul li {
+  border: 1px solid #eee;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+.attach_ul li img {
+  width: 75px;
+  height: 75px;
+  margin-right: 25px;
+}
+.attach_ul li span {
+  flex: 1;
+}
 </style>

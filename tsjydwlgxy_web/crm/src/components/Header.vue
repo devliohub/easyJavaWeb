@@ -76,6 +76,7 @@
       const logout = () => {
         axios.get('/api/a/loginout').then(() => {
           localRemove('token')
+          localRemove('loRoles')
           window.location.reload()
         })
       }

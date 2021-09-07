@@ -81,7 +81,7 @@
               .then((res) => {
                 ElMessage.success('登陆成功')
                 localSet('token', res)
-                router.push('/account')
+                router.push('/')
               })
           } else {
             console.log('error submit!!')
