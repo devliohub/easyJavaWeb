@@ -97,6 +97,8 @@
           <el-popconfirm
             title="确定删除吗？"
             @confirm="handleDelete(scope.row.id)"
+            confirm-button-text="是"
+            cancel-button-text="否"
           >
             <template #reference>
               <a style="cursor: pointer">删除</a>

@@ -50,6 +50,8 @@
             <el-popconfirm
               title="删除菜单后，对应栏目的文章不会删除。确定删除吗？"
               @confirm="handleDelete(scope.row.id)"
+              confirm-button-text="是"
+              cancel-button-text="否"
             >
               <template #reference>
                 <a style="cursor: pointer">删除</a>

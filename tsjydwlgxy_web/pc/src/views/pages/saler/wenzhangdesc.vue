@@ -1,5 +1,9 @@
 <template>
   <div class="wenzhangdesc">
+    <el-dialog title="预 览" :visible.sync="dialogVisible" width="1000px">
+      <img style="width: 960px" :src="imgsrc" alt="" />
+    </el-dialog>
+
     <header>
       <div class="title">{{ entity.title }}</div>
       <div class="time">
@@ -11,6 +15,32 @@
       <header>
         <span>附件</span>
       </header>
+      <ul>
+        <li
+          v-for="(item, index) in entity.attachmentArr"
+          :key="index"
+          @mouseenter="handleMouseSet(item, true)"
+          @mouseleave="handleMouseSet(item, false)"
+          @click="viewFunc(item)"
+        >
+          <i
+            :class="{ ishover: item.ishover }"
+            class="el-icon-document-copy"
+          ></i>
+          <div class="midder">
+            <span :class="{ ishover: item.ishover }">{{ item.fileName }}</span>
+            <span :class="{ ishover: item.ishover }">{{
+              item.sizeFormat
+            }}</span>
+          </div>
+          <span
+            v-if="item.ishover"
+            class="downclass"
+            @click="downloadFunc(item)"
+            >下 载</span
+          >
+        </li>
+      </ul>
     </div>
   </div>
 </template>
@@ -20,6 +50,9 @@
     name: 'wenzhangdesc',
     data() {
       return {
+        dialogVisible: false,
+        imgsrc: '',
+
         isloading: false,
         entity: {},
       }
@@ -34,8 +67,25 @@
         let res = await getArticleDesc(this.$route.query.descId)
         if (res && res.errno == 200) {
           this.entity = res.result
+          this.entity.attachmentArr.map((el) => {
+            this.$set(el, 'ishover', false)
+          })
         }
         this.isloading = false
+      },
+      handleMouseSet(item, flag) {
+        this.entity.attachmentArr.map((el) => {
+          if (item.fileName == el.fileName) {
+            this.$set(el, 'ishover', flag)
+          }
+        })
+      },
+      downloadFunc(item) {
+        window.open(item.fileUrl)
+      },
+      viewFunc(item) {
+        this.imgsrc = item.fileUrl
+        this.dialogVisible = true
       },
     },
   }
@@ -45,6 +95,9 @@
   position: relative;
   color: #444;
   overflow-wrap: break-word;
+  .ishover {
+    color: red !important;
+  }
   header {
     .title {
       font-size: 20px;
@@ -73,6 +126,46 @@
         padding: 0 8px;
         font-weight: bold;
         border-left: 3px solid #660000;
+      }
+    }
+    & > ul {
+      overflow: hidden;
+      li {
+        cursor: pointer;
+        padding: 10px 0;
+        display: flex;
+        align-content: center;
+        &:hover {
+          background: #eee;
+        }
+        i {
+          margin-right: 10px;
+          font-size: 32px;
+          color: #929292;
+        }
+        & > .midder {
+          width: 120px;
+          display: flex;
+          flex-direction: column;
+          span {
+            &:first-child {
+              margin-bottom: 5px;
+              color: #444;
+            }
+            &:last-child {
+              color: #929292;
+            }
+          }
+        }
+        & > .downclass {
+          cursor: pointer;
+          line-height: 32px;
+          color: #888;
+          &:hover {
+            font-weight: bold;
+            color: red;
+          }
+        }
       }
     }
   }

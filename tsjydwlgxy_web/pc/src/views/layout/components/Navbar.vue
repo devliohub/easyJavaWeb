@@ -20,15 +20,31 @@
         <li
           v-for="(item, index) in cateTitleList.slice(0, 9)"
           :key="index"
-          @click="handleGo(item, index)"
+          @click="handleGo(item)"
+          @mouseenter="handleMouseSet(item, true)"
+          @mouseleave="handleMouseSet(item, false)"
           :class="{
             isactive:
               $route.query.id == item.id ||
               ($route.name == 'kecheng' && item.name == '通识课程') ||
               ($route.name == 'index' && item.id == 1),
+            ishover: item.ishover,
           }"
         >
           {{ item.name }}
+          <ul v-if="item.sub_menus.length > 0 && item.ishover">
+            <li
+              class="innerLi"
+              v-for="(_item, _index) in item.sub_menus"
+              :key="_index"
+              @click.stop="handleGo(_item)"
+              :class="{
+                ishover: item.ishover,
+              }"
+            >
+              {{ _item.name }}
+            </li>
+          </ul>
         </li>
       </ul>
     </div>
@@ -58,18 +74,34 @@
       handleIconClick() {
         this.$emit('handleSearch', this.search_word)
       },
-      handleGo(item, index) {
-        console.log(item)
-        if (index == 0) {
-          this.$router.push('/index')
-        } else if (index == 2) {
-          this.$router.push('/saler/kecheng?_t=' + Date.parse(new Date()))
+      handleMouseSet(item, flag) {
+        this.cateTitleList.slice(0, 9).map((el) => {
+          if (item.id == el.id) {
+            this.$set(el, 'ishover', flag)
+          }
+        })
+      },
+      handleGo(item) {
+        console.log(JSON.parse(JSON.stringify(item)))
+        if (item.id == 1) {
+          this.$router.push('/index?_t=' + Date.parse(new Date()))
+        } else if (item.id == 6) {
+          this.$router.push({
+            path: '/saler/kecheng',
+            query: {
+              id: item.id,
+              pid: item.pid,
+              name: item.name,
+              _t: Date.parse(new Date()),
+            },
+          })
         } else {
           this.$router.push({
             path: '/saler/wenzhang',
             query: {
               id: item.id,
               pid: item.pid,
+              name: item.name,
               _t: Date.parse(new Date()),
             },
           })
@@ -89,7 +121,7 @@
   main {
     top: 0;
     width: 1200px;
-    height: 120px;
+    // height: 120px;
     position: absolute;
     transform: translateX(-50%);
     left: 50%;
@@ -103,6 +135,7 @@
       width: 220px;
       border: none;
       right: 0;
+      top: 36px;
       .el-input__inner {
         background: #fff;
         color: #660000;
@@ -113,28 +146,37 @@
   }
   .index_items {
     width: 100%;
-    background: #660000;
-    .isactive {
-      background: #fff;
-      color: #660000;
-    }
-    ul {
+    & > ul {
       display: flex;
       justify-content: space-between;
       width: 1200px;
       margin: 0 auto;
+      .ishover {
+        background: #fff;
+        color: #660000;
+      }
       li {
         cursor: pointer;
+        background: #660000;
         flex: 1;
         height: 50px;
         line-height: 50px;
         text-align: center;
         color: #fff;
         font-weight: bold;
+        z-index: 999;
+      }
+      .innerLi {
+        color: #fff;
+        background: #660000;
         &:hover {
           background: #fff;
           color: #660000;
         }
+      }
+      .isactive {
+        background: #fff;
+        color: #660000;
       }
     }
   }

@@ -10,7 +10,7 @@
     >
       <el-button size="small" type="primary">点击上传</el-button>
       <span style="font-size: 14px; margin-left: 20px; color: #929292"
-        >支持jpg、jpeg、png格式，建议尺寸xxxx*xxx，大小不超过2M；最多添加10张图片</span
+        >支持jpg、jpeg、png格式，建议尺寸1920*360，大小不超过2M；最多添加10张图片</span
       >
     </el-upload>
 
@@ -30,6 +30,8 @@
             <el-popconfirm
               title="确定删除吗？"
               @confirm="handleDelete(item.id)"
+              confirm-button-text="是"
+              cancel-button-text="否"
             >
               <template #reference>
                 <el-button plain type="danger">删 除</el-button>

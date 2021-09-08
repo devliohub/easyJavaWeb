@@ -24,11 +24,15 @@
           大能力模块，构建通识教育课程体系
         </div>
         <ul>
-          <li v-for="(item, index) in moduleList" :key="index">
+          <li
+            v-for="(item, index) in moduleList"
+            :key="index"
+            @click="goKecheng(item)"
+          >
             <div><van-icon :name="iconArr[index]" /></div>
             <div>
               <span style="font-weight: bold"> {{ item.name }}</span>
-              <span> 80门</span>
+              <span> {{ item.count }}</span>
             </div>
           </li>
         </ul>
@@ -128,7 +132,7 @@
           'setting-o',
           'fire-o',
           'coupon-o',
-          'cart-o',
+          'arrow',
         ], // 模块icon
         queryData: {
           type: 1,
@@ -180,6 +184,9 @@
             '&descId=' +
             item.id
         )
+      },
+      goKecheng(item) {
+        this.$router.push('/kecheng?id=6&pid=0')
       },
     },
     async mounted() {

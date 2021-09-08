@@ -45,7 +45,7 @@
 <script>
   import axios from '@/utils/axios'
   import { reactive, ref, toRefs, onMounted, onUnmounted } from 'vue'
-  import { localSet } from '@/utils'
+  import { localSet, localGet } from '@/utils'
   import { ElMessage } from 'element-plus'
   import { useRouter } from 'vue-router'
 
@@ -81,7 +81,31 @@
               .then((res) => {
                 ElMessage.success('登陆成功')
                 localSet('token', res)
-                router.push('/')
+                let arr = [
+                  {
+                    name: '文章管理',
+                    url: '/article',
+                  },
+                  {
+                    name: '轮播图管理',
+                    url: '/swiper',
+                  },
+                  {
+                    name: '菜单管理',
+                    url: '/caidan',
+                  },
+                  {
+                    name: '课程管理',
+                    url: '/kecheng',
+                  },
+                  {
+                    name: '用户管理',
+                    url: '/account',
+                  },
+                ]
+                if (res.rolemenuids[0]) {
+                  router.push(arr[res.rolemenuids[0] * 1 - 1].url)
+                }
               })
           } else {
             console.log('error submit!!')

@@ -48,7 +48,7 @@
     position: absolute;
     left: 3px;
     top: 45px;
-    z-index: 999;
+    z-index: 1;
     padding: 5px 10px;
     border-radius: 3px;
     color: #fff;

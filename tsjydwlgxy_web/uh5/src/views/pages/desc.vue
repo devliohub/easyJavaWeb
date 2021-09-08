@@ -17,6 +17,21 @@
         <header>
           <span>附件</span>
         </header>
+        <ul>
+          <li
+            v-for="(item, index) in entity.attachmentArr"
+            :key="index"
+            @mouseenter="handleMouseSet(item, true)"
+            @mouseleave="handleMouseSet(item, false)"
+            @click="downloadFunc(item)"
+          >
+            <i class="el-icon-document-copy"></i>
+            <div class="midder">
+              <span>{{ item.fileName }}</span>
+              <span>{{ item.item.sizeFormat }}</span>
+            </div>
+          </li>
+        </ul>
       </div>
     </section>
   </div>
@@ -45,6 +60,17 @@
           this.entity = res.result
         }
         this.isloading = false
+      },
+      handleMouseSet(item, flag) {
+        this.entity.attachmentArr.map((el) => {
+          if (item.fileName == el.fileName) {
+            console.log(el)
+            this.$set(el, 'ishover', flag)
+          }
+        })
+      },
+      downloadFunc(item) {
+        window.open(item.fileUrl)
       },
     },
   }
@@ -85,6 +111,35 @@
           padding: 0 8px;
           font-weight: bold;
           border-left: 3px solid #660000;
+        }
+      }
+      & > ul {
+        overflow: hidden;
+        li {
+          cursor: pointer;
+          padding: 10px 0;
+          display: flex;
+          align-content: center;
+          font-size: 14px;
+          i {
+            margin-right: 10px;
+            font-size: 32px;
+            color: #929292;
+          }
+          & > .midder {
+            width: 120px;
+            display: flex;
+            flex-direction: column;
+            span {
+              &:first-child {
+                margin-bottom: 5px;
+                color: #444;
+              }
+              &:last-child {
+                color: #929292;
+              }
+            }
+          }
         }
       }
     }

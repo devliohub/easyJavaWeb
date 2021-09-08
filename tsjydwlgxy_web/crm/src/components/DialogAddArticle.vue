@@ -20,32 +20,29 @@
         <div ref="editor"></div>
       </el-form-item>
       <el-row>
-        <el-form-item label="附 件：" prop="attachment">
-          <el-upload
-            class="imgsRef"
-            ref="imgsRef"
-            action="#"
-            :http-request="myUpload"
-            accept="image/jpeg, image/jpg, image/png"
-            :file-list="fileList"
-            :show-file-list="false"
-          >
-            <el-button size="small" type="primary">点击上传</el-button>
-            <span style="font-size: 14px; margin-left: 20px; color: #929292"
-              >支持jpg、jpeg、png格式，建议尺寸xxxx*xxx，大小不超过2M；最多添加10张图片</span
+        <el-col :span="24">
+          <el-form-item label="附 件：" prop="attachment">
+            <el-upload
+              class="imgsRef"
+              ref="imgsRef"
+              action="#"
+              :http-request="myUpload"
+              :file-list="fileList"
+              :show-file-list="false"
             >
-          </el-upload>
-          <ul class="attach_ul">
-            <li
-              v-for="(item, index) in fileList"
-              :key="index"
-              @click="handleDown(item)"
-            >
-              <img :src="item.url" alt="" />
-              <span>{{ item.url }}</span>
-            </li>
-          </ul>
-        </el-form-item>
+              <el-button size="small" type="primary">点击上传</el-button>
+              <span style="font-size: 14px; margin-left: 20px; color: #929292"
+                >大小不超过2M</span
+              >
+            </el-upload>
+            <ul class="attach_ul">
+              <li v-for="(item, index) in fileList" :key="index">
+                <img :src="item.url" alt="" />
+                <span>{{ item.name }}</span>
+              </li>
+            </ul>
+          </el-form-item>
+        </el-col>
       </el-row>
       <el-row>
         <el-col :span="12">
@@ -89,8 +86,30 @@
           </el-form-item>
         </el-col>
         <el-col :span="24">
-          <el-form-item label="封面图片：" prop="cover">
+          <!-- <el-form-item label="" prop="cover">
             <el-input type="text" v-model="ruleForm.cover"></el-input>
+          </el-form-item> -->
+          <el-form-item label="封面图片：" prop="attachment">
+            <el-upload
+              class="imgsRef"
+              ref="imgsRef"
+              action="#"
+              :http-request="myUpload2"
+              :file-list="fileListCover"
+              :show-file-list="false"
+              accept="image/jpeg, image/jpg, image/png"
+            >
+              <el-button size="small" type="primary">点击上传</el-button>
+              <span style="font-size: 14px; margin-left: 20px; color: #929292"
+                >支持jpg、jpeg、png格式，建议尺寸xxxx*xxx，大小不超过2M</span
+              >
+            </el-upload>
+            <ul class="attach_ul">
+              <li v-for="(item, index) in fileListCover" :key="index">
+                <img :src="item.url" alt="" />
+                <span>{{ item.url }}</span>
+              </li>
+            </ul>
           </el-form-item>
         </el-col>
         <el-col :span="12">
@@ -138,6 +157,7 @@
         menuOptions: [],
         submenuOptions: [],
         fileList: [],
+        fileListCover: [],
         rules: {
           title: [{ required: 'true', message: '不能为空', trigger: ['change'] }],
           menu_pid: [
@@ -185,9 +205,18 @@
             publish_time: res.publish_time * 1000,
           }
           state.fileList = []
-          state.ruleForm.attachment.split(',').map((el) => {
+          state.ruleForm.attachmentArr.map((el) => {
             if (el) {
               state.fileList.push({
+                url: el.fileUrl,
+                name: el.fileName,
+              })
+            }
+          })
+          state.fileListCover = []
+          state.ruleForm.cover.split(',').map((el) => {
+            if (el) {
+              state.fileListCover.push({
                 url: el,
                 name: el,
               })
@@ -208,6 +237,24 @@
         form.append('img', content.file)
         axios.post('/api/sys/upload', form).then((res) => {
           state.fileList.push({
+            url: res,
+            uid: content.file.uid,
+            name: content.file.name,
+          })
+          return ElMessage.success('上传成功')
+        })
+      }
+      // 附件上传
+      const myUpload2 = async (content) => {
+        let form = new FormData()
+        const sufix = content.file.name.split('.')[1] || ''
+        if (!['jpg', 'jpeg', 'png'].includes(sufix)) {
+          ElMessage.error('请上传 jpg、jpeg、png 格式的图片')
+          return false
+        }
+        form.append('img', content.file)
+        axios.post('/api/sys/upload', form).then((res) => {
+          state.fileListCover.push({
             url: res,
             uid: content.file.uid,
             name: content.file.name,
@@ -239,9 +286,6 @@
         instance = null
         state.visible = false
       }
-      const handleDown = (item) => {
-        window.open(item)
-      }
       const submitForm = () => {
         formRef.value.validate((valid) => {
           if (valid) {
@@ -254,12 +298,19 @@
               state.ruleForm.publish_time / 1000
             ).valueOf()
             // 附件
-            let arr_file = []
+            let arr_file = [],
+              arr_file2 = []
             if (state.fileList) {
               state.fileList.map((el) => {
                 arr_file.push(el.url)
               })
               state.ruleForm.attachment = arr_file.join(',')
+            }
+            if (state.fileListCover) {
+              state.fileListCover.map((el) => {
+                arr_file2.push(el.url)
+              })
+              state.ruleForm.cover = arr_file2.join(',')
             }
 
             if (state.type == 'add') {
@@ -291,10 +342,10 @@
         open,
         close,
         myUpload,
+        myUpload2,
         formRef,
         editor,
         submitForm,
-        handleDown,
         handleMenuchange,
       }
     },
