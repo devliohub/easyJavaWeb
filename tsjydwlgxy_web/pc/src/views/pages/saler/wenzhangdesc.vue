@@ -1,7 +1,16 @@
 <template>
   <div class="wenzhangdesc">
-    <el-dialog title="预 览" :visible.sync="dialogVisible" width="1000px">
-      <img style="width: 960px" :src="imgsrc" alt="" />
+    <el-dialog
+      title="预 览"
+      top="5vh"
+      :visible.sync="dialogVisible"
+      width="1000px"
+    >
+      <iframe
+        style="width: 960px; height: 80vh"
+        :src="imgsrc"
+        frameborder="0"
+      ></iframe>
     </el-dialog>
 
     <header>

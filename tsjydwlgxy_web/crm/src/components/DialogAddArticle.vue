@@ -27,18 +27,18 @@
               ref="imgsRef"
               action="#"
               :http-request="myUpload"
-              :file-list="fileList"
+              :file-list="ruleForm.attachmentArr"
               :show-file-list="false"
             >
               <el-button size="small" type="primary">点击上传</el-button>
               <span style="font-size: 14px; margin-left: 20px; color: #929292"
-                >大小不超过2M</span
+                >大小不超过500M</span
               >
             </el-upload>
             <ul class="attach_ul">
-              <li v-for="(item, index) in fileList" :key="index">
-                <img :src="item.url" alt="" />
-                <span>{{ item.name }}</span>
+              <li v-for="(item, index) in ruleForm.attachmentArr" :key="index">
+                <img :src="item.fileUrl" alt="" />
+                <span>{{ item.fileName }}</span>
               </li>
             </ul>
           </el-form-item>
@@ -153,10 +153,11 @@
         type: 'add',
         visible: false,
         instance: null,
-        ruleForm: {},
+
         menuOptions: [],
         submenuOptions: [],
-        fileList: [],
+
+        ruleForm: {},
         fileListCover: [],
         rules: {
           title: [{ required: 'true', message: '不能为空', trigger: ['change'] }],
@@ -204,15 +205,6 @@
             ...res,
             publish_time: res.publish_time * 1000,
           }
-          state.fileList = []
-          state.ruleForm.attachmentArr.map((el) => {
-            if (el) {
-              state.fileList.push({
-                url: el.fileUrl,
-                name: el.fileName,
-              })
-            }
-          })
           state.fileListCover = []
           state.ruleForm.cover.split(',').map((el) => {
             if (el) {
@@ -229,22 +221,17 @@
       // 附件上传
       const myUpload = async (content) => {
         let form = new FormData()
-        const sufix = content.file.name.split('.')[1] || ''
-        if (!['jpg', 'jpeg', 'png'].includes(sufix)) {
-          ElMessage.error('请上传 jpg、jpeg、png 格式的图片')
-          return false
-        }
         form.append('img', content.file)
         axios.post('/api/sys/upload', form).then((res) => {
-          state.fileList.push({
-            url: res,
-            uid: content.file.uid,
-            name: content.file.name,
+          state.ruleForm.attachmentArr.push({
+            fileUrl: res,
+            fileName: content.file.name,
+            size: content.file.size,
           })
           return ElMessage.success('上传成功')
         })
       }
-      // 附件上传
+      // 图片上传
       const myUpload2 = async (content) => {
         let form = new FormData()
         const sufix = content.file.name.split('.')[1] || ''
@@ -297,22 +284,19 @@
             state.ruleForm.publish_time = dayjs(
               state.ruleForm.publish_time / 1000
             ).valueOf()
-            // 附件
-            let arr_file = [],
-              arr_file2 = []
-            if (state.fileList) {
-              state.fileList.map((el) => {
-                arr_file.push(el.url)
-              })
-              state.ruleForm.attachment = arr_file.join(',')
-            }
+
+            // cover转换
+            let arr_file = []
             if (state.fileListCover) {
               state.fileListCover.map((el) => {
-                arr_file2.push(el.url)
+                arr_file.push(el.url)
               })
-              state.ruleForm.cover = arr_file2.join(',')
+              state.ruleForm.cover = arr_file.join(',')
             }
-
+            // 附件json化
+            state.ruleForm.attachment = JSON.stringify(
+              state.ruleForm.attachmentArr
+            )
             if (state.type == 'add') {
               axios
                 .get('/api/a/article/add', {

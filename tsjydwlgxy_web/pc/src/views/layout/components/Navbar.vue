@@ -146,6 +146,7 @@
   }
   .index_items {
     width: 100%;
+    background: #660000;
     & > ul {
       display: flex;
       justify-content: space-between;
