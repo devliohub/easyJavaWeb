@@ -58,6 +58,7 @@
             title="确定删除吗？"
             confirm-button-text="是"
             cancel-button-text="否"
+            :hide-icon="true"
             @confirm="handleDelete(scope.row.id)"
           >
             <template #reference>

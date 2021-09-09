@@ -17,7 +17,9 @@
               :value="item.id"
             />
           </el-select>
+
           <el-select
+            style="margin: 0 20px"
             size="small"
             v-model="queryObj.menu_id"
             placeholder="请选择二级菜单"
@@ -32,7 +34,7 @@
           </el-select>
           <el-input
             size="small"
-            style="width: 250px; margin: 0 30px"
+            style="width: 200px; margin-right: 20px"
             type="text"
             clearable
             v-model="queryObj.title"
@@ -66,10 +68,10 @@
       <el-table-column prop="title" label="标题"> </el-table-column>
       <el-table-column prop="module_id" label="所属栏目">
         <template #default="scope">
-          <span
-            >{{ scope.row.menu_name ? scope.row.menu_name + '/' : '' }}
-            {{ scope.row.menu_pname }}</span
-          >
+          <span>
+            {{ scope.row.menu_pname }}
+            {{ scope.row.menu_name ? '/' + scope.row.menu_name : '' }}
+          </span>
         </template>
       </el-table-column>
       <el-table-column prop="create_uname" label="发布人"></el-table-column>
@@ -77,7 +79,7 @@
         <template #default="scope">
           <span>{{
             $filters.dateFormater(
-              scope.row.create_time * 1000,
+              scope.row.publish_time * 1000,
               'YYYY-MM-DD HH:mm'
             )
           }}</span>
@@ -94,6 +96,7 @@
             title="确定删除吗？"
             confirm-button-text="是"
             cancel-button-text="否"
+            :hide-icon="true"
             @confirm="handleDelete(scope.row.id)"
           >
             <template #reference>

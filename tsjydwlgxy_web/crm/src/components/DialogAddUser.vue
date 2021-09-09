@@ -18,7 +18,11 @@
         <el-input type="text" v-model="ruleForm.account"></el-input>
       </el-form-item>
       <el-form-item label="密码" prop="password">
-        <el-input type="text" v-model="ruleForm.password"></el-input>
+        <el-input
+          type="password"
+          v-model.trim="ruleForm.password"
+          autocomplete="off"
+        ></el-input>
       </el-form-item>
       <el-form-item label="用户权限">
         <el-checkbox-group v-model="ruleForm.checkList">
@@ -68,13 +72,13 @@
         },
         rules: {
           name: [
-            { required: 'true', message: '名称不能为空', trigger: ['change'] },
+            { required: 'true', message: '姓名不能为空', trigger: ['change'] },
           ],
           password: [
-            { required: 'true', message: '编号不能为空', trigger: ['change'] },
+            { required: 'true', message: '密码不能为空', trigger: ['change'] },
           ],
           account: [
-            { required: 'true', message: '排序不能为空', trigger: ['change'] },
+            { required: 'true', message: '账号不能为空', trigger: ['change'] },
           ],
         },
         id: '',

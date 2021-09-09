@@ -4,8 +4,21 @@
     v-model="visible"
     width="900px"
     top="5vh"
-    append-to-body
   >
+    <el-dialog
+      title="预 览"
+      v-model="dialogShow"
+      append-to-body
+      width="1000px"
+      top="5vh"
+    >
+      <iframe
+        style="width: 960px; height: 70vh"
+        :src="viewUrl"
+        frameborder="0"
+      ></iframe>
+    </el-dialog>
+
     <el-form
       :model="ruleForm"
       :rules="rules"
@@ -30,15 +43,24 @@
               :file-list="ruleForm.attachmentArr"
               :show-file-list="false"
             >
-              <el-button size="small" type="primary">点击上传</el-button>
+              <el-button size="small" type="warning" v-loading="isloading"
+                >点击上传</el-button
+              >
               <span style="font-size: 14px; margin-left: 20px; color: #929292"
                 >大小不超过500M</span
               >
             </el-upload>
             <ul class="attach_ul">
-              <li v-for="(item, index) in ruleForm.attachmentArr" :key="index">
-                <img :src="item.fileUrl" alt="" />
-                <span>{{ item.fileName }}</span>
+              <li
+                v-for="(item, index) in ruleForm.attachmentArr"
+                :key="index"
+                @click="viewIframe(item)"
+              >
+                <!-- <img :src="item.fileUrl" alt="" /> -->
+                <span
+                  >&nbsp;&nbsp;&nbsp;<b>{{ index + 1 }}. </b
+                  >{{ item.fileName }}</span
+                >
               </li>
             </ul>
           </el-form-item>
@@ -97,11 +119,13 @@
               :http-request="myUpload2"
               :file-list="fileListCover"
               :show-file-list="false"
+              :limit="1"
+              :on-exceed="onExceed"
               accept="image/jpeg, image/jpg, image/png"
             >
-              <el-button size="small" type="primary">点击上传</el-button>
+              <el-button size="small" type="warning">点击上传</el-button>
               <span style="font-size: 14px; margin-left: 20px; color: #929292"
-                >支持jpg、jpeg、png格式，建议尺寸xxxx*xxx，大小不超过2M</span
+                >支持jpg、jpeg、png格式，建议尺寸1920*360，大小不超过500M</span
               >
             </el-upload>
             <ul class="attach_ul">
@@ -153,7 +177,10 @@
         type: 'add',
         visible: false,
         instance: null,
+        isloading: false,
 
+        dialogShow: false, // 附件预览
+        viewUrl: '',
         menuOptions: [],
         submenuOptions: [],
 
@@ -198,6 +225,11 @@
           state.submenuOptions = []
         }
       }
+      // 附件预览
+      const viewIframe = (item) => {
+        state.dialogShow = true
+        state.viewUrl = item.fileUrl
+      }
       // 获取详情
       const getDetail = (id) => {
         axios.get('/api/a/article/info?id=' + `${id}`).then((res) => {
@@ -218,16 +250,21 @@
           instance.txt.html(res.content)
         })
       }
+      const onExceed = () => {
+        return ElMessage.error('只能上传一张封面')
+      }
       // 附件上传
       const myUpload = async (content) => {
         let form = new FormData()
         form.append('img', content.file)
+        state.isloading = true
         axios.post('/api/sys/upload', form).then((res) => {
           state.ruleForm.attachmentArr.push({
             fileUrl: res,
             fileName: content.file.name,
             size: content.file.size,
           })
+          state.isloading = false
           return ElMessage.success('上传成功')
         })
       }
@@ -331,6 +368,8 @@
         editor,
         submitForm,
         handleMenuchange,
+        onExceed,
+        viewIframe,
       }
     },
   }

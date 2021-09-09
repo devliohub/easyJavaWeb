@@ -174,6 +174,6 @@
   padding: 0;
 }
 .login-form .el-form-item {
-  margin-bottom: 12px;
+  margin-bottom: 20px;
 }
 </style>

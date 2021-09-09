@@ -99,6 +99,7 @@
             @confirm="handleDelete(scope.row.id)"
             confirm-button-text="是"
             cancel-button-text="否"
+            :hide-icon="true"
           >
             <template #reference>
               <a style="cursor: pointer">删除</a>

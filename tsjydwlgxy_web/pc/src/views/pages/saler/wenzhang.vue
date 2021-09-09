@@ -14,7 +14,7 @@
             </div>
           </el-image>
           <div class="title">
-            <span v-if="entity.is_top == 1"> [置顶] </span>
+            <span v-if="entity.is_top"> [置顶] </span>
             {{ entity.title }}
           </div>
           <div class="timer">

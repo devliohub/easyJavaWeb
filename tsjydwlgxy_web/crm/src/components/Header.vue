@@ -37,10 +37,16 @@
               label-width="75px"
             >
               <el-form-item label="密码" prop="password">
-                <el-input type="text" v-model="ruleForm.password"></el-input>
+                <el-input
+                  type="password"
+                  v-model="ruleForm.password"
+                ></el-input>
               </el-form-item>
               <el-form-item label="新密码" prop="newpassword">
-                <el-input type="text" v-model="ruleForm.newpassword"></el-input>
+                <el-input
+                  type="password"
+                  v-model="ruleForm.newpassword"
+                ></el-input>
               </el-form-item>
               <el-button type="primary" size="mini" @click="submitForm"
                 >确 定</el-button
@@ -146,7 +152,7 @@
 }
 .popper-user-box .nickname {
   position: relative;
-  color: #ffffff;
+  color: #333;
 }
 .popper-user-box .nickname .logout {
   position: absolute;

@@ -8,11 +8,11 @@
       :file-list="fileList"
       :show-file-list="false"
     >
-      <el-button size="small" type="primary">点击上传</el-button>
-      <span style="font-size: 14px; margin-left: 20px; color: #929292"
-        >支持jpg、jpeg、png格式，建议尺寸1920*360，大小不超过2M；最多添加10张图片</span
-      >
+      <el-button size="small" type="warning">点击上传</el-button>
     </el-upload>
+    <div style="font-size: 14px; margin-top: 10px; color: #929292">
+      支持jpg、jpeg、png格式，建议尺寸1920*360，大小不超过2M；最多添加10张图片
+    </div>
 
     <ul>
       <li v-for="(item, index) in fileList" :key="index">
@@ -32,6 +32,7 @@
               @confirm="handleDelete(item.id)"
               confirm-button-text="是"
               cancel-button-text="否"
+              :hide-icon="true"
             >
               <template #reference>
                 <el-button plain type="danger">删 除</el-button>
@@ -95,8 +96,8 @@
           return false
         }
         form.append('img', content.file)
+        state.loading = true
         axios.post('/api/sys/upload', form).then((res) => {
-          console.log(res)
           state.fileList.push({
             url: res,
             uid: content.file.uid,
@@ -161,7 +162,7 @@
 }
 .swiper-container ul {
   padding: 0;
-  margin: 50px 0;
+  margin: 20px 0;
 }
 .swiper-container ul li {
   list-style: none;
@@ -169,6 +170,7 @@
   border-radius: 15px;
   padding: 20px;
   display: flex;
+  display: -webkit-flex;
   margin-bottom: 50px;
 }
 .swiper-container ul li img {
@@ -179,7 +181,10 @@
   text-align: right;
   flex: 1;
   display: flex;
+  display: -webkit-flex;
   align-items: center;
+  -webkit-align-items: center;
   justify-content: space-between;
+  -webkit-justify-content: space-between;
 }
 </style>
