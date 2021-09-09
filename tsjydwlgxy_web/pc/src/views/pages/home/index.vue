@@ -29,8 +29,9 @@
         >
           <div style="font-weight: bold">
             <span> {{ item.name }}</span>
+            &nbsp;&nbsp;&nbsp;
             <span v-if="index != moduleList.length - 1">
-              {{ item.count }}门</span
+              {{ item.count }} 门</span
             >
           </div>
         </li>
@@ -77,7 +78,7 @@
           :class="{ margin_right_0: index == 3 }"
           @click="goWengzhang(item)"
         >
-          {{ item.name }}
+          <img :src="getImgUrl(item.name)" alt="" />
         </li>
       </ul>
     </div>
@@ -96,7 +97,11 @@
             :key="_index"
             @click="goDesc(_item)"
           >
-            <img :src="_item.cover" alt="" />
+            <el-image :src="_item.cover" alt="">
+              <div slot="error" class="image-slot">
+                <img src="@/assets/404_images/404.png" alt="" />
+              </div>
+            </el-image>
             <div class="title">
               {{ _item.title }}
             </div>
@@ -121,7 +126,11 @@
             class="index_kecheng_left"
             @click="goDesc(homeList.list4.list[0])"
           >
-            <img :src="homeList.list4.list[0].cover" alt="" />
+            <el-image :src="homeList.list4.list[0].cover" alt="">
+              <div slot="error" class="image-slot">
+                <img src="@/assets/404_images/404.png" alt="" />
+              </div>
+            </el-image>
             <div class="title">
               {{ homeList.list4.list[0].title }}
             </div>
@@ -139,7 +148,11 @@
               :key="_index"
               @click="goDesc(_item)"
             >
-              <img :src="_item.cover" alt="" />
+              <el-image :src="_item.cover" alt="">
+                <div slot="error" class="image-slot">
+                  <img src="@/assets/404_images/404.png" alt="" />
+                </div>
+              </el-image>
               <div>
                 <div class="title">
                   {{ _item.title }}
@@ -196,6 +209,9 @@
           this.homeList = res2.result
         }
       },
+      getImgUrl(img) {
+        return require('@/assets/home/' + img + '@2x.png')
+      },
       goDesc(item) {
         this.$router.push(
           '/saler/wenzhangdesc?id=' +
@@ -207,7 +223,14 @@
         )
       },
       goWengzhang(item) {
-        this.$router.push('/saler/wenzhang?id=' + item.id + '&pid=' + item.pid)
+        this.$router.push(
+          '/saler/wenzhang?id=' +
+            item.id +
+            '&pid=' +
+            item.pid +
+            '&name=' +
+            item.name
+        )
       },
       viewMore(item) {
         this.$router.push('/saler/wenzhang?id=' + item.menuId + '&pid=0')
@@ -256,15 +279,21 @@
       flex-wrap: wrap;
       li {
         cursor: pointer;
-        background: rgb(238, 218, 216);
+        background: rgba(238, 218, 216, 0.5);
         margin-right: 20px;
         margin-bottom: 30px;
+        font-size: 16px;
         border: 1px solid #660000;
         color: #660000;
         flex: calc(25% - 15px);
         height: 65px;
         line-height: 65px;
         text-align: center;
+        &:hover {
+          color: goldenrod;
+          background: #660000;
+          border: 1px solid goldenrod;
+        }
       }
     }
   }
@@ -320,14 +349,12 @@
       text-align: center;
       li {
         cursor: pointer;
-        background: url('../../../assets/home/words_bg.png') 100% 100% no-repeat;
+        // background: url('../../../assets/home/words_bg.png') no-repeat;
         flex: 1;
-        font-family: 'Courier New', Courier, monospace;
-        font-weight: bold;
-        color: #660000;
         margin-right: 20px;
-        padding: 15px 0;
-        letter-spacing: 5px;
+        img {
+          width: 100%;
+        }
       }
     }
   }
@@ -343,6 +370,7 @@
           float: left;
           width: 22%;
           margin-right: 3%;
+          cursor: pointer;
           img {
             width: 100%;
           }
@@ -371,6 +399,7 @@
         .index_kecheng_left {
           flex: 3;
           margin-right: 50px;
+          cursor: pointer;
           img {
             width: 100%;
           }
@@ -389,10 +418,11 @@
           overflow: hidden;
           // padding: 20px;
           li {
+            cursor: pointer;
             display: flex;
             align-items: center;
             margin-bottom: 15px;
-            & > img {
+            img {
               width: 180px;
               margin-right: 24px;
             }
