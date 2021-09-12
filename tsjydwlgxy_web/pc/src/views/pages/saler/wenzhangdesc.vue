@@ -1,14 +1,15 @@
 <template>
   <div class="wenzhangdesc">
     <el-dialog
-      title="预 览"
-      top="5vh"
+      :title="viewEntity.fileName"
+      top="10vh"
       :visible.sync="dialogVisible"
-      width="1000px"
+      :width="dialogWidth"
     >
       <iframe
-        style="width: 960px; height: 80vh"
-        :src="imgsrc"
+        @load="handleIframeOnload"
+        class="iframe_class"
+        :src="viewEntity.fileUrl"
         frameborder="0"
       ></iframe>
     </el-dialog>
@@ -60,7 +61,8 @@
     data() {
       return {
         dialogVisible: false,
-        imgsrc: '',
+        dialogWidth: '1000px',
+        viewEntity: {},
 
         isloading: false,
         entity: {},
@@ -71,6 +73,22 @@
       this.getData()
     },
     methods: {
+      handleIframeOnload() {
+        let iframe = document.querySelectorAll('.iframe_class')[0]
+        let idoc = iframe.contentWindow.document
+        let img = idoc.querySelectorAll('img')[0]
+        if (img) {
+          if (img.width >= img.height) {
+            img.width = iframe.clientWidth
+            let top = (iframe.clientHeight - img.height) / 2
+            img.style.marginTop = top + 'px'
+          } else {
+            img.height = iframe.clientHeight
+            let left = (iframe.clientWidth - img.width) / 2
+            img.style.marginLeft = left + 'px'
+          }
+        }
+      },
       async getData() {
         this.isloading = true
         let res = await getArticleDesc(this.$route.query.descId)
@@ -93,7 +111,7 @@
         window.open(item.fileUrl)
       },
       viewFunc(item) {
-        this.imgsrc = item.fileUrl
+        this.viewEntity = JSON.parse(JSON.stringify(item))
         this.dialogVisible = true
       },
     },
@@ -177,6 +195,11 @@
         }
       }
     }
+  }
+
+  .iframe_class {
+    width: 100%;
+    // max-height: 80vh;
   }
 }
 </style>

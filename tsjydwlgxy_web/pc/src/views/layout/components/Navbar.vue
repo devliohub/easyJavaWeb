@@ -83,7 +83,9 @@
       },
       handleGo(item) {
         console.log(JSON.parse(JSON.stringify(item)))
-        if (item.id == 1) {
+        if (item.type == 2) {
+          window.open(item.url)
+        } else if (item.id == 1) {
           this.$router.push('/index?_t=' + Date.parse(new Date()))
         } else if (item.id == 6) {
           this.$router.push({

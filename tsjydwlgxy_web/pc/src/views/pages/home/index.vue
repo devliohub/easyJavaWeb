@@ -99,7 +99,7 @@
           >
             <el-image :src="_item.cover" alt="">
               <div slot="error" class="image-slot">
-                <img src="@/assets/404_images/404.png" alt="" />
+                <img src="@/assets/wenzhangMR.jpg" alt="" />
               </div>
             </el-image>
             <div class="title">
@@ -128,7 +128,7 @@
           >
             <el-image :src="homeList.list4.list[0].cover" alt="">
               <div slot="error" class="image-slot">
-                <img src="@/assets/404_images/404.png" alt="" />
+                <img src="@/assets/wenzhangMR.jpg" alt="" />
               </div>
             </el-image>
             <div class="title">
@@ -150,7 +150,7 @@
             >
               <el-image :src="_item.cover" alt="">
                 <div slot="error" class="image-slot">
-                  <img src="@/assets/404_images/404.png" alt="" />
+                  <img src="@/assets/kechengMR.jpg" alt="" />
                 </div>
               </el-image>
               <div>
@@ -400,8 +400,9 @@
           flex: 3;
           margin-right: 50px;
           cursor: pointer;
-          img {
+          .el-image {
             width: 100%;
+            height: 29vw;
           }
           .title {
             padding: 20px 0;
@@ -416,20 +417,19 @@
         .index_kecheng_right {
           flex: 2;
           overflow: hidden;
-          // padding: 20px;
           li {
             cursor: pointer;
-            display: flex;
-            align-items: center;
             margin-bottom: 15px;
-            img {
+            .el-image {
+              float: left;
               width: 180px;
-              margin-right: 24px;
+              height: 101px;
             }
             & > div {
-              flex: 1;
+              float: left;
+              margin-right: 24px;
               .title {
-                padding: 10px 0;
+                margin-bottom: 70px;
                 color: #444;
                 font-weight: bold;
               }

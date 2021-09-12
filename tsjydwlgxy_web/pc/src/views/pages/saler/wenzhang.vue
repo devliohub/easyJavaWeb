@@ -10,7 +10,7 @@
         >
           <el-image :src="entity.cover" alt="">
             <div slot="error" class="image-slot">
-              <img src="@/assets/404_images/404.png" alt="" />
+              <img src="@/assets/wenzhangMR.jpg" alt="" />
             </div>
           </el-image>
           <div class="title">
@@ -43,7 +43,7 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="form.pageNo"
-        :page-sizes="[10, 20]"
+        :page-sizes="[10]"
         :page-size="form.pageSize"
         layout="total, sizes, prev, pager, next"
         :total="table_total"
@@ -92,8 +92,12 @@
         })
         if (res && res.errno == 200) {
           this.tableData = res.result.list
-          this.table_total = res.result.total
           this.isCard = res.result.layout == 2
+          this.table_total = res.result.total
+          // 单篇跳转详情
+          if (this.table_total == 1) {
+            this.handleClick(this.tableData[0])
+          }
         }
         this.isloading = false
       },
@@ -128,9 +132,10 @@
     li {
       cursor: pointer;
       width: calc(25% - 18px);
-      margin: 0 24px 20px 0;
+      margin: 0 24px 24px 0;
       img {
         width: 100%;
+        height: 9vw;
       }
       .title {
         font-weight: bold;

@@ -6,17 +6,23 @@
     top="5vh"
   >
     <el-dialog
-      title="预 览"
+      :title="canView ? '预 览' : '下 载'"
       v-model="dialogShow"
       append-to-body
       width="1000px"
       top="5vh"
+      :before-close="() => (dialogShow = false)"
     >
       <iframe
+        v-if="canView"
         style="width: 960px; height: 70vh"
         :src="viewUrl"
         frameborder="0"
       ></iframe>
+      <div v-else>
+        暂不支持预览，点击
+        <el-link target="_blank" type="primary" :href="viewUrl">下 载</el-link>
+      </div>
     </el-dialog>
 
     <el-form
@@ -180,6 +186,8 @@
         isloading: false,
 
         dialogShow: false, // 附件预览
+        canView: false, // 是否支持预览
+
         viewUrl: '',
         menuOptions: [],
         submenuOptions: [],
@@ -227,8 +235,16 @@
       }
       // 附件预览
       const viewIframe = (item) => {
-        state.dialogShow = true
+        state.viewUrl = ''
+        const sufix = item.fileName.split('.')[1] || ''
+        if (['doc', 'docx', 'ppt', 'pptx'].includes(sufix)) {
+          ElMessage.error('该类型暂不支持预览')
+          state.canView = false
+        } else {
+          state.canView = true
+        }
         state.viewUrl = item.fileUrl
+        state.dialogShow = true
       }
       // 获取详情
       const getDetail = (id) => {

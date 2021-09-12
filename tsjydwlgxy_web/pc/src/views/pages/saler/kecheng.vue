@@ -44,7 +44,11 @@
               @click="goUrl(entity)"
             >
               <div class="wrapper">
-                <el-image :src="entity.cover" alt="" />
+                <el-image :src="entity.cover" alt="">
+                  <div slot="error" class="image-slot">
+                    <img src="@/assets/kechengMR.jpg" alt="" />
+                  </div>
+                </el-image>
                 <span
                   :class="{
                     _orange: entity.typeName == '公共必修课',
@@ -196,7 +200,7 @@
           flex-wrap: wrap;
           li {
             width: calc(25% - 18px);
-            margin-right: 24px;
+            margin: 0 24px 24px 0;
             cursor: pointer;
             .wrapper {
               width: 100%;
@@ -211,6 +215,7 @@
               }
               img {
                 width: 100%;
+                height: 9vw; //16:9
               }
               ._orange {
                 background: #ffaf00;
