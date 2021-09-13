@@ -4,6 +4,7 @@
     v-model="visible"
     width="900px"
     top="5vh"
+    custom-class="wenzahngClass"
   >
     <el-dialog
       :title="canView ? '预 览' : '下 载'"
@@ -48,12 +49,14 @@
               :http-request="myUpload"
               :file-list="ruleForm.attachmentArr"
               :show-file-list="false"
+              :limit="5"
+              :on-exceed="onExceed"
             >
               <el-button size="small" type="warning" v-loading="isloading"
                 >点击上传</el-button
               >
               <span style="font-size: 14px; margin-left: 20px; color: #929292"
-                >大小不超过500M</span
+                >最多上传5个附件，单个文件大小不超过500M</span
               >
             </el-upload>
             <ul class="attach_ul">
@@ -73,7 +76,7 @@
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="12">
+        <el-col :span="24">
           <el-form-item label="所属栏目：" prop="menu_pid">
             <el-select
               size="small"
@@ -88,10 +91,7 @@
                 :value="item.id"
               />
             </el-select>
-          </el-form-item>
-        </el-col>
-        <el-col :span="12">
-          <el-form-item label="所属栏目：" prop="menu_id">
+            &nbsp; &nbsp; &nbsp;
             <el-select
               size="small"
               v-model="ruleForm.menu_id"
@@ -131,7 +131,7 @@
             >
               <el-button size="small" type="warning">点击上传</el-button>
               <span style="font-size: 14px; margin-left: 20px; color: #929292"
-                >支持jpg、jpeg、png格式，建议尺寸1920*360，大小不超过500M</span
+                >支持jpg、jpeg、png格式，大小不超过500M</span
               >
             </el-upload>
             <ul class="attach_ul">
@@ -211,6 +211,16 @@
       watch(editor, (a) => {
         if (a) {
           instance = new WangEditor(editor.value)
+
+          instance.config.showLinkImg = false // 隐藏外链上传
+          instance.config.customUploadImg = function (content, insert) {
+            let form = new FormData()
+            form.append('img', content[0])
+            axios.post('/api/sys/upload', form).then((res) => {
+              insert(res)
+            })
+          }
+
           instance.create()
         }
       })
@@ -262,6 +272,10 @@
               })
             }
           })
+
+          if (state.ruleForm.menu_pid) {
+            getOptions(state.ruleForm.menu_pid)
+          }
 
           instance.txt.html(res.content)
         })
@@ -317,6 +331,7 @@
             cover: '',
             menu_id: '',
             menu_pid: '',
+            publish_time: dayjs().valueOf(),
           }
         }
       }
@@ -393,7 +408,7 @@
 
 <style scoped>
 .attach_ul {
-  padding: 5px 0;
+  padding: 0;
 }
 .attach_ul li {
   border: 1px solid #eee;
@@ -410,5 +425,9 @@
 }
 .attach_ul li span {
   flex: 1;
+}
+
+.wenzahngClass .el-form-item {
+  margin-bottom: 10px;
 }
 </style>

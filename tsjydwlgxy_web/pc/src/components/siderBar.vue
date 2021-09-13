@@ -13,10 +13,12 @@
     </template>
   </ul>
   <ul v-else-if="$route.name == 'kecheng'">
-    <li @click="$router.push('/saler/kecheng')">通识课程</li>
+    <li>通识课程</li>
     <template>
       <li
-        :class="{ isactive: $route.query.name == item.name }"
+        :class="{
+          isactive: $route.query.name == item.name,
+        }"
         v-for="(item, index) in entity"
         :key="index"
         @click="handleGOkecheng(item, index)"
@@ -55,6 +57,16 @@
           let res = await getCoursemodules()
           if (res && res.errno == 200) {
             this.entity = res.result
+
+            let _num = 0
+            this.entity.map((el) => {
+              _num += el.count
+            })
+            this.entity.unshift({
+              code: 0,
+              count: _num,
+              name: '全部课程',
+            })
           }
         } else if (this.isWenzhangPage) {
           JSON.parse(window.sessionStorage.getItem('menuArr')).map((item) => {

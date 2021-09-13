@@ -93,7 +93,7 @@
             query: {
               id: item.id,
               pid: item.pid,
-              name: item.name,
+              name: '全部课程',
               _t: Date.parse(new Date()),
             },
           })

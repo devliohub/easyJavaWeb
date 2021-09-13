@@ -7,7 +7,6 @@
             size="small"
             v-model="queryObj.menu_pid"
             placeholder="请选择一级菜单"
-            clearable
             @change="handleMenuchange"
           >
             <el-option
@@ -141,7 +140,7 @@
         submenuOptions: [],
 
         queryObj: {
-          menu_pid: '',
+          menu_pid: 0,
           menu_id: '',
           title: '', // 标题
           pageNo: 1, // 当前页
@@ -160,6 +159,10 @@
               state.submenuOptions = res
             } else {
               state.menuOptions = res
+              state.menuOptions.unshift({
+                id: 0,
+                name: '全部栏目',
+              })
             }
           })
       }
@@ -177,9 +180,13 @@
           })
       }
       const handleMenuchange = (val) => {
-        if (val) {
+        console.log(val)
+        if (val == 0) {
+          state.submenuOptions = []
+          state.queryObj.menu_id = ''
+        } else if (val) {
           getOptions(val)
-          state.ruleForm.menu_id = ''
+          state.queryObj.menu_id = ''
         } else {
           state.submenuOptions = []
         }

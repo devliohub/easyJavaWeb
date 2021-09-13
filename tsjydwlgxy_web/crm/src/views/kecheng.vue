@@ -8,6 +8,7 @@
             v-model="queryObj.module_id"
             placeholder="请选择课程模块"
             clearable
+            style="margin-right: 20px"
           >
             <el-option
               v-for="item in moduleOptions"
@@ -33,7 +34,7 @@
           </el-select>
           <el-input
             size="small"
-            style="width: 250px; margin: 0 30px"
+            style="width: 250px; margin: 0 20px"
             type="text"
             clearable
             v-model="queryObj.name"

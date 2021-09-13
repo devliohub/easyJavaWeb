@@ -6,6 +6,7 @@
           <el-input
             style="width: 250px; margin-right: 30px"
             type="text"
+            size="small"
             clearable
             v-model="queryObj.name"
           ></el-input>

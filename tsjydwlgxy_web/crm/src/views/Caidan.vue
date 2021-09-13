@@ -22,7 +22,11 @@
       default-expand-all
       :tree-props="{ children: 'sub_menus' }"
     >
-      <el-table-column prop="name" label="名称" width="500"> </el-table-column>
+      <el-table-column prop="name" label="名称" width="500">
+        <template #default="scope">
+          {{ scope.row.name }}{{ scope.row.is_course_menu ? '（定制）' : '' }}
+        </template>
+      </el-table-column>
       <el-table-column label="操作">
         <template #default="scope">
           <div v-if="scope.row.id != 1">
@@ -48,6 +52,7 @@
               >下移</a
             >
             <el-popconfirm
+              v-if="!scope.row.is_course_menu"
               title="删除菜单后，对应栏目的文章不会删除。确定删除吗？"
               @confirm="handleDelete(scope.row.id)"
               confirm-button-text="是"
