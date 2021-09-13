@@ -33,6 +33,8 @@
 <style lang="scss" scope>
 .saler {
   width: 100%;
+  background: url('../../../assets/home/次级页面背景.png') no-repeat bottom left;
+  background-size: cover;
   & > main {
     width: 1200px;
     margin: 0 auto;

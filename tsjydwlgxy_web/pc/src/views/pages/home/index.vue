@@ -147,6 +147,7 @@
               v-for="(_item, _index) in homeList.list4.list"
               :key="_index"
               @click="goDesc(_item)"
+              :class="{ padding_top10: _index != 0 }"
             >
               <el-image :src="_item.cover" alt="">
                 <div slot="error" class="image-slot">
@@ -266,7 +267,7 @@
       flex-direction: column;
       align-items: center;
       & > img {
-        width: 50%;
+        width: 412px;
         margin: 30px 0;
       }
     }
@@ -307,7 +308,7 @@
       & > div {
         width: 580px;
         float: left;
-        margin: 0 40px 40px 0;
+        margin: 0 40px 20px 0;
         ul {
           li {
             display: flex;
@@ -341,7 +342,7 @@
 
   .index_luntan {
     width: 100%;
-    margin-bottom: 25px;
+    margin-bottom: 40px;
     ul {
       width: 1200px;
       margin: 0 auto;
@@ -351,7 +352,7 @@
         cursor: pointer;
         // background: url('../../../assets/home/words_bg.png') no-repeat;
         flex: 1;
-        margin-right: 20px;
+        margin-right: 24px;
         img {
           width: 100%;
         }
@@ -365,13 +366,15 @@
       width: 1200px;
       margin: 0 auto;
       & > ul {
+        margin-top: 20px;
         overflow: hidden;
         li {
           float: left;
-          width: 22%;
+          width: 282px;
           margin-right: 3%;
           cursor: pointer;
           img {
+            height: 158px;
             width: 100%;
           }
           .title {
@@ -389,47 +392,62 @@
 
   .index_kecheng {
     width: 100%;
-    margin-top: 25px;
+    background: url('../../../assets/home/首页底部背景图.png') no-repeat top
+      left;
+    background-size: cover;
     main {
       width: 1200px;
       margin: 0 auto;
+      padding-bottom: 100px;
       & > div {
+        margin-top: 50px;
         display: flex;
         padding: 30px 20px;
+        background: url('../../../assets/home/课程成果展示背景.png') no-repeat
+          top left;
+        background-size: cover;
+
         .index_kecheng_left {
-          flex: 3;
-          margin-right: 50px;
+          width: 669px;
           cursor: pointer;
           .el-image {
-            width: 100%;
-            height: 29vw;
+            border: 20px solid #fff;
+            width: 630px;
+            height: 336px;
           }
           .title {
             padding: 20px 0;
             font-size: 18px;
             font-weight: bold;
+            color: #fff;
           }
           .time {
+            margin-right: 40px;
             text-align: right;
             color: #969696;
           }
         }
         .index_kecheng_right {
-          flex: 2;
+          flex: 1;
           overflow: hidden;
+          .padding_top10 {
+            padding-top: 0 !important;
+          }
           li {
             cursor: pointer;
-            margin-bottom: 15px;
+            overflow: hidden;
+            background: #fff;
+            padding: 20px;
             .el-image {
               float: left;
-              width: 180px;
-              height: 101px;
+              width: 160px;
+              height: 90px;
             }
             & > div {
               float: left;
               margin-right: 24px;
               .title {
-                margin-bottom: 70px;
+                margin-bottom: 60px;
                 color: #444;
                 font-weight: bold;
               }
@@ -447,21 +465,43 @@
     display: flex;
     align-items: center;
     color: #c00900;
-    margin-bottom: 20px;
+    margin-bottom: 8px;
+    position: relative;
     span {
+      position: relative;
       padding: 10px 0;
       &:first-child {
         font-size: 18px;
         font-weight: bold;
-        border-bottom: 3px solid #c00900;
+        border-bottom: 5px solid #c00900;
+        margin-right: 10px;
+        &::before {
+          position: absolute;
+          content: '';
+          width: 0;
+          height: 0;
+          border-top: 5px solid #c00900;
+          border-right: 5px solid transparent;
+          right: -5px;
+          bottom: -5px;
+        }
       }
       &:last-child {
         cursor: pointer;
-        margin-left: 5px;
         flex: 1;
         text-align: right;
         font-size: 12px;
         border-bottom: 1px solid #c00900;
+        &::before {
+          position: absolute;
+          content: '';
+          width: 1px;
+          height: 5px;
+          transform: rotate(45deg);
+          background: #c00900;
+          left: -2px;
+          bottom: -5px;
+        }
       }
     }
   }

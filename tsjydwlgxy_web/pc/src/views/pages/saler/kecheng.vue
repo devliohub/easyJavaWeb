@@ -40,8 +40,11 @@
             <li
               v-for="(entity, x) in entitys"
               :key="x"
-              :class="{ margin_right_0: x % 4 == 3 }"
-              @click="goUrl(entity)"
+              :class="{
+                margin_right_0: x % 4 == 3,
+              }"
+              @mouseenter="handleMouseSet(entity, true)"
+              @mouseleave="handleMouseSet(entity, false)"
             >
               <div class="wrapper">
                 <el-image :src="entity.cover" alt="">
@@ -49,6 +52,9 @@
                     <img src="@/assets/kechengMR.jpg" alt="" />
                   </div>
                 </el-image>
+                <b class="descBtn" v-if="entity.ishover" @click="goUrl(entity)"
+                  >查看详情</b
+                >
                 <span
                   :class="{
                     _orange: entity.typeName == '公共必修课',
@@ -58,14 +64,15 @@
                   >{{ entity.typeName }}</span
                 >
               </div>
-
               <div class="namer">{{ entity.name }}</div>
             </li>
           </ul>
 
           <el-pagination
             background
+            :hide-on-single-page="true"
             style="margin: 15px 0"
+            :pager-count="5"
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="queryObj.pageNo"
@@ -90,7 +97,7 @@
           type_id: [],
           name: '',
           pageNo: 1,
-          pageSize: 8,
+          pageSize: 12,
         },
         total_count: 0,
 
@@ -115,6 +122,9 @@
         })
         if (res && res.errno == 200) {
           this.entitys = res.result.list
+          this.entitys.map((el) => {
+            this.$set(el, 'ishover', false)
+          })
           this.total_count = res.result.total
         }
         this.isloading = false
@@ -151,6 +161,13 @@
       },
       goUrl(item) {
         window.open(item.url)
+      },
+      handleMouseSet(item, flag) {
+        this.entitys.map((el) => {
+          if (item.id == el.id) {
+            this.$set(el, 'ishover', flag)
+          }
+        })
       },
     },
   }
@@ -199,9 +216,8 @@
           display: flex;
           flex-wrap: wrap;
           li {
-            width: calc(25% - 18px);
-            margin: 0 24px 24px 0;
-            cursor: pointer;
+            flex: 1;
+            margin: 0 20px 20px 0;
             .wrapper {
               width: 100%;
               position: relative;
@@ -213,9 +229,27 @@
                 padding: 5px 15px;
                 color: #fff;
               }
+              .descBtn {
+                position: absolute;
+                padding: 8px 20px;
+                color: #fff;
+                cursor: pointer;
+                font-weight: 400;
+                background: #c00900;
+                border-radius: 4px;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                &:hover {
+                  background: #de3b32;
+                }
+                &:active {
+                  background: #660000;
+                }
+              }
               img {
-                width: 100%;
-                height: 9vw; //16:9
+                width: 218px;
+                height: 123px;
               }
               ._orange {
                 background: #ffaf00;
@@ -229,11 +263,16 @@
             }
 
             .namer {
+              max-width: 218px;
               font-weight: bold;
               line-height: 1.5;
-              padding: 10px 0;
+              margin-top: 10px;
               font-size: 14px;
               color: #444;
+              display: -webkit-box;
+              -webkit-box-orient: vertical;
+              -webkit-line-clamp: 2;
+              overflow: hidden;
             }
           }
         }

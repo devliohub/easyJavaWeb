@@ -31,7 +31,10 @@
           :key="x"
           @click="handleClick(item)"
         >
-          <span> {{ item.title }}</span>
+          <span>
+            <b v-if="item.is_top"> [置顶] </b>
+            {{ item.title }}
+          </span>
           <span>
             {{ dayjs(item.create_time * 1000).format('YYYY/MM/DD HH:mm') }}
           </span>
@@ -39,13 +42,14 @@
       </ul>
       <el-pagination
         background
+        :hide-on-single-page="true"
         style="margin: 15px 0"
+        :pager-count="5"
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="form.pageNo"
-        :page-sizes="[10]"
         :page-size="form.pageSize"
-        layout="total, sizes, prev, pager, next"
+        layout="prev, pager, next"
         :total="table_total"
       ></el-pagination>
     </template>
@@ -68,7 +72,7 @@
         table_total: null,
         form: {
           pageNo: 1,
-          pageSize: 10,
+          pageSize: 12,
         },
       }
     },
@@ -133,18 +137,26 @@
       cursor: pointer;
       width: calc(25% - 18px);
       margin: 0 24px 24px 0;
+      &:hover {
+        .title {
+          color: #660000;
+        }
+        .title span {
+          color: #c00900;
+        }
+      }
       img {
         width: 100%;
-        height: 9vw;
+        height: 124px;
       }
       .title {
-        font-weight: bold;
+        font-weight: 400;
         line-height: 1.5;
         padding: 10px 0;
         font-size: 14px;
         color: #444;
         span {
-          color: red;
+          color: #dfa665;
         }
       }
       .timer {
@@ -169,6 +181,9 @@
         background: #efeff7;
       }
       span {
+        b {
+          color: #c00900;
+        }
         &:first-child {
           color: #444;
         }

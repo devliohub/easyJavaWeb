@@ -101,10 +101,12 @@
 <style lang="scss" scope>
 .left_menu {
   & > ul {
+    border: 1px solid #efeff7;
+    min-height: 400px;
     font-weight: bold;
     font-size: 15px;
     li {
-      border: 1px solid #efeff7;
+      border-bottom: 1px solid #efeff7;
       border-top: none;
       height: 50px;
       line-height: 50px;

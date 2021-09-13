@@ -3,7 +3,13 @@
     <img src="../../../assets/home/toper_bg.jpg" alt="" />
     <main>
       <div class="navbar2_right">
-        <el-input placeholder="关键词搜索" v-model="search_word">
+        <el-input
+          placeholder="关键词搜索"
+          v-model="search_word"
+          @focus="isFocus = true"
+          @blur="isFocus = false"
+          :class="{ focus_class: isFocus, blur_class: !isFocus }"
+        >
           <i
             class="el-icon-search el-input__icon"
             slot="suffix"
@@ -58,6 +64,7 @@
       return {
         search_word: '',
         cateTitleList: [],
+        isFocus: false,
       }
     },
     watch: {},
@@ -71,6 +78,8 @@
       }
     },
     methods: {
+      // 聚焦改变样式
+      changeStyle() {},
       handleIconClick() {
         this.$emit('handleSearch', this.search_word)
       },
@@ -135,14 +144,22 @@
       line-height: 36px;
       position: absolute;
       width: 220px;
-      border: none;
       right: 0;
       top: 36px;
       .el-input__inner {
-        background: #fff;
-        color: #660000;
-        opacity: 0.5;
+        background: rgba(255, 255, 255, 0.3);
         border-radius: 20px !important;
+        border: none;
+      }
+      .el-input__suffix {
+        cursor: pointer;
+      }
+      .focus_class input,
+      .focus_class .el-input__suffix {
+        color: rgba(255, 255, 255, 1) !important;
+      }
+      .blur_class input .blur_class .el-input__suffix {
+        color: rgba(255, 255, 255, 0.3) !important;
       }
     }
   }

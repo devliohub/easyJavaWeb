@@ -21,13 +21,14 @@
     </div>
     <el-pagination
       background
+      :hide-on-single-page="true"
       style="margin: 15px 0"
+      :pager-count="5"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="form.pageNo"
-      :page-sizes="[5, 10, 20]"
       :page-size="form.pageSize"
-      layout="total, sizes, prev, pager, next"
+      layout="prev, pager, next"
       :total="table_total"
     ></el-pagination>
   </div>
@@ -45,7 +46,7 @@
         table_total: null,
         form: {
           pageNo: 1,
-          pageSize: 5,
+          pageSize: 10,
         },
       }
     },

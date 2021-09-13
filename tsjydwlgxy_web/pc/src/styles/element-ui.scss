@@ -79,7 +79,9 @@
   overflow-x: auto !important;
   position: relative;
 }
-
+.el-pagination.is-background .el-pager li:not(.disabled).active {
+  background-color: #c00900;
+}
 // .image-slot {
 //   width: 100%;
 //   height: 375px;
