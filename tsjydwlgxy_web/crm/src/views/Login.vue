@@ -45,7 +45,7 @@
 <script>
   import axios from '@/utils/axios'
   import { reactive, ref, toRefs, onMounted, onUnmounted } from 'vue'
-  import { localSet, localGet } from '@/utils'
+  import { localSet } from '@/utils'
   import { ElMessage } from 'element-plus'
   import { useRouter } from 'vue-router'
 

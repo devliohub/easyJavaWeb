@@ -4,6 +4,7 @@
       ref="imgsRef"
       action="#"
       :http-request="myUpload"
+      :before-upload="beforeAvatarUpload"
       accept="image/jpeg, image/jpg, image/png"
       :file-list="fileList"
       :show-file-list="false"
@@ -88,6 +89,18 @@
           state.loading = false
         })
       }
+      const beforeAvatarUpload = (file) => {
+        const isLt2M = file.size / 1024 / 1024 < 2
+        const isLt10P = state.fileList.length <= 10
+
+        if (!isLt2M) {
+          ElMessage.error('上传大小不能超过 2MB')
+        }
+        if (!isLt10P) {
+          ElMessage.error('总共不能超过10张')
+        }
+        return isLt10P && isLt2M
+      }
       const myUpload = async (content) => {
         let form = new FormData()
         const sufix = content.file.name.split('.')[1] || ''
@@ -109,7 +122,7 @@
                 img: res,
               },
             })
-            .then((res2) => {
+            .then(() => {
               getCarousels()
               ElMessage.success('上传成功')
             })
@@ -148,6 +161,7 @@
         getCarousels,
         myUpload,
         handleMove,
+        beforeAvatarUpload,
       }
     },
   }

@@ -7,7 +7,6 @@
             size="small"
             v-model="queryObj.module_id"
             placeholder="请选择课程模块"
-            clearable
             style="margin-right: 20px"
           >
             <el-option
@@ -22,7 +21,6 @@
             size="small"
             v-model="queryObj.type_id"
             placeholder="请选择课程类型"
-            clearable
           >
             <el-option
               v-for="item in typeOptions"
@@ -68,12 +66,12 @@
       <el-table-column prop="name" label="课程名称"> </el-table-column>
       <el-table-column prop="module_id" label="模块">
         <template #default="scope">
-          <span>{{ moduleOptions[scope.row.module_id - 1].name }}</span>
+          <span>{{ moduleOptions[scope.row.module_id].name }}</span>
         </template>
       </el-table-column>
       <el-table-column prop="type_id" label="类型">
         <template #default="scope">
-          <span>{{ typeOptions[scope.row.type_id - 1].name }}</span>
+          <span>{{ typeOptions[scope.row.type_id].name }}</span>
         </template>
       </el-table-column>
       <el-table-column prop="create_time" label="创建时间">
@@ -126,7 +124,7 @@
 <script>
   import DialogKecheng from '@/components/DialogAddKecheng.vue'
   import { ElMessage } from 'element-plus'
-  import { onMounted, ref, reactive, toRefs } from 'vue'
+  import { onMounted, ref, reactive, toRefs, computed } from 'vue'
   import axios from '@/utils/axios'
   import { localGet } from '@/utils'
 
@@ -136,17 +134,21 @@
       DialogKecheng,
     },
     setup() {
+      const moduleOptions = computed(() => {
+        return [{ code: 0, name: '全部模块' }].concat(localGet('loModules'))
+      })
+      const typeOptions = computed(() => {
+        return [{ code: 0, name: '全部类型' }].concat(localGet('loTypes'))
+      })
       const addKechengRef = ref(null)
-      const moduleOptions = localGet('loModules')
-      const typeOptions = localGet('loTypes')
       const state = reactive({
         loading: false,
         tableData: [], // 数据列表
         total: 0, // 总条数
 
         queryObj: {
-          module_id: '',
-          type_id: '',
+          module_id: 0,
+          type_id: 0,
           name: '', // 名称
           pageNo: 1, // 当前页
           pageSize: 10, // 分页大小

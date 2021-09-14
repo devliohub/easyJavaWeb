@@ -44,11 +44,7 @@
       const state = reactive({
         visible: false,
         ruleForm: {},
-        rules: {
-          url: [
-            { required: 'true', message: '链接不能为空', trigger: ['change'] },
-          ],
-        },
+        rules: {},
         id: '',
       })
       // 开启弹窗

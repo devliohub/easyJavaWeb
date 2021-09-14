@@ -9,6 +9,7 @@
           @focus="isFocus = true"
           @blur="isFocus = false"
           :class="{ focus_class: isFocus, blur_class: !isFocus }"
+          @keyup.enter.native="handleIconClick"
         >
           <i
             class="el-icon-search el-input__icon"

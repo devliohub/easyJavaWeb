@@ -36,7 +36,7 @@
       <el-form-item label="文章标题：" prop="title">
         <el-input type="text" v-model="ruleForm.title"></el-input>
       </el-form-item>
-      <el-form-item label="详细内容：">
+      <el-form-item style="margin-top: 20px" label="详细内容：">
         <div ref="editor"></div>
       </el-form-item>
       <el-row>
@@ -192,7 +192,9 @@
         menuOptions: [],
         submenuOptions: [],
 
-        ruleForm: {},
+        ruleForm: {
+          attachmentArr: [],
+        },
         fileListCover: [],
         rules: {
           title: [{ required: 'true', message: '不能为空', trigger: ['change'] }],
@@ -212,6 +214,15 @@
         if (a) {
           instance = new WangEditor(editor.value)
 
+          instance.config.fontSizes = {
+            'x-small': { name: '12px', value: '1' },
+            small: { name: '14px', value: '2' },
+            normal: { name: '16px', value: '3' },
+            large: { name: '18px', value: '4' },
+            'x-large': { name: '24px', value: '5' },
+            'xx-large': { name: '32px', value: '6' },
+            'xxx-large': { name: '48px', value: '7' },
+          }
           instance.config.showLinkImg = false // 隐藏外链上传
           instance.config.customUploadImg = function (content, insert) {
             let form = new FormData()
@@ -263,7 +274,6 @@
             ...res,
             publish_time: res.publish_time * 1000,
           }
-          state.fileListCover = []
           state.ruleForm.cover.split(',').map((el) => {
             if (el) {
               state.fileListCover.push({
@@ -272,31 +282,31 @@
               })
             }
           })
+          instance.txt.html(res.content)
 
           if (state.ruleForm.menu_pid) {
             getOptions(state.ruleForm.menu_pid)
           }
-
-          instance.txt.html(res.content)
         })
       }
       const onExceed = () => {
-        return ElMessage.error('只能上传一张封面')
+        return ElMessage.error('超出个数限制')
       }
       // 附件上传
       const myUpload = async (content) => {
         let form = new FormData()
-        form.append('img', content.file)
+        form.append('file', content.file)
         state.isloading = true
-        axios.post('/api/sys/upload', form).then((res) => {
+        let res = await axios.post('/api/sys/upload', form)
+        if (res) {
           state.ruleForm.attachmentArr.push({
             fileUrl: res,
             fileName: content.file.name,
             size: content.file.size,
           })
-          state.isloading = false
-          return ElMessage.success('上传成功')
-        })
+        }
+        state.isloading = false
+        return ElMessage.success('上传成功')
       }
       // 图片上传
       const myUpload2 = async (content) => {
@@ -320,6 +330,10 @@
       const open = (id) => {
         state.visible = true
         getOptions(0)
+        state.fileListCover = []
+
+        if (instance) instance.txt.html('<p><br></p>') // 清空上一次内容
+
         if (id) {
           state.type = 'edit'
           state.id = id
@@ -332,13 +346,12 @@
             menu_id: '',
             menu_pid: '',
             publish_time: dayjs().valueOf(),
+            attachmentArr: [],
           }
         }
       }
       // 关闭弹窗
       const close = () => {
-        instance.destroy()
-        instance = null
         state.visible = false
       }
       const submitForm = () => {
@@ -429,5 +442,12 @@
 
 .wenzahngClass .el-form-item {
   margin-bottom: 10px;
+}
+
+font[size='1'] {
+  font-size: 12px;
+}
+font[size='2'] {
+  font-size: 14px;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="search" v-loading="isloading">
-    <nav>关键词：{{ form.title }}</nav>
+    <nav>关键词：{{ $route.query.keyword }}</nav>
     <!-- 表格内容 -->
     <ul v-if="tableData.length > 0">
       <li

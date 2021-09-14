@@ -3,17 +3,18 @@
     <section v-loading="isloading">
       <main>
         <div class="add_section">
-          <header>全部课程</header>
+          <header>{{ $route.query.name }}</header>
           <el-input
             size="small"
             v-model="queryObj.name"
             style="width: 200px"
             placeholder="关键词搜索"
+            @keyup.enter.native="getData()"
           >
             <i
               class="el-icon-search el-input__icon"
               slot="suffix"
-              @click="getData"
+              @click="getData()"
             >
             </i>
           </el-input>
@@ -52,8 +53,12 @@
                     <img src="@/assets/kechengMR.jpg" alt="" />
                   </div>
                 </el-image>
-                <b class="descBtn" v-if="entity.ishover" @click="goUrl(entity)"
-                  >查看详情</b
+                <a
+                  class="descBtn"
+                  v-if="entity.ishover"
+                  :href="entity.url"
+                  target="_blank"
+                  >查看详情</a
                 >
                 <span
                   :class="{
@@ -94,7 +99,7 @@
         isloading: false,
         courseArr: [],
         queryObj: {
-          type_id: [],
+          type_id: 0,
           name: '',
           pageNo: 1,
           pageSize: 12,
@@ -106,7 +111,7 @@
     },
     watch: {
       $route() {
-        this.getData()
+        this.getData(true)
       },
     },
     mounted() {
@@ -114,8 +119,16 @@
       this.getCourses()
     },
     methods: {
-      async getData() {
+      async getData(flag) {
         this.isloading = true
+        if (flag) {
+          this.queryObj = {
+            type_id: 0,
+            name: '',
+            pageNo: 1,
+            pageSize: 12,
+          }
+        }
         let res = await getKecheng({
           ...this.queryObj,
           module_id: this.$route.query.module_id,
@@ -158,9 +171,6 @@
       handleCurrentChange(val) {
         this.queryObj.pageNo = val
         this.getData()
-      },
-      goUrl(item) {
-        window.open(item.url)
       },
       handleMouseSet(item, flag) {
         this.entitys.map((el) => {
@@ -216,7 +226,7 @@
           display: flex;
           flex-wrap: wrap;
           li {
-            flex: 1;
+            width: 218px;
             margin: 0 20px 20px 0;
             .wrapper {
               width: 100%;

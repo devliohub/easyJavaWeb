@@ -24,7 +24,7 @@
           autocomplete="off"
         ></el-input>
       </el-form-item>
-      <el-form-item label="用户权限">
+      <el-form-item label="用户权限" prop="checkList">
         <el-checkbox-group v-model="ruleForm.checkList">
           <el-checkbox
             v-for="item in roleArr"
@@ -79,6 +79,9 @@
           ],
           account: [
             { required: 'true', message: '账号不能为空', trigger: ['change'] },
+          ],
+          checkList: [
+            { required: 'true', message: '权限不能为空', trigger: ['change'] },
           ],
         },
         id: '',

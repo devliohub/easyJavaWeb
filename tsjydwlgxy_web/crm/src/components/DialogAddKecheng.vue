@@ -2,7 +2,7 @@
   <el-dialog
     :title="type == 'add' ? '添加课程' : '修改课程'"
     v-model="visible"
-    width="550px"
+    width="600px"
   >
     <el-form
       :model="ruleForm"
@@ -65,7 +65,6 @@
         <ul class="attach_ul">
           <li v-for="(item, index) in fileListCover" :key="index">
             <img :src="item.url" alt="" />
-            <span>{{ item.url }}</span>
           </li>
         </ul>
       </el-form-item>
@@ -233,19 +232,12 @@
   padding: 5px 0;
 }
 .attach_ul li {
-  border: 1px solid #eee;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  cursor: pointer;
   margin-bottom: 10px;
 }
 .attach_ul li img {
-  width: 75px;
-  height: 75px;
-  margin-right: 25px;
-}
-.attach_ul li span {
-  flex: 1;
+  width: 250px;
 }
 </style>

@@ -21,7 +21,7 @@
       </div>
     </header>
     <article v-html="entity.content"></article>
-    <div class="fujianList">
+    <div class="fujianList" v-if="entity.attachmentArr.length > 0">
       <header>
         <span>附件</span>
       </header>
@@ -65,7 +65,9 @@
         viewEntity: {},
 
         isloading: false,
-        entity: {},
+        entity: {
+          attachmentArr: [],
+        },
       }
     },
     computed: {},
@@ -138,13 +140,13 @@
     }
   }
   article {
-    text-indent: 2em;
+    // text-indent: 2em;
     font-size: 14px;
     line-height: 1.5;
-    border-bottom: 1px solid #eee;
     padding-bottom: 20px;
   }
   .fujianList {
+    border-top: 1px solid #eee;
     padding: 20px 0;
     & > header {
       padding: 10px 0;

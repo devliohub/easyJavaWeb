@@ -71,7 +71,7 @@
 </template>
 
 <script>
-  import { onUnmounted, reactive, nextTick } from 'vue'
+  import { onUnmounted, reactive } from 'vue'
   import Header from '@/components/Header.vue'
   import { useRouter } from 'vue-router'
   import { pathMap, localGet, localSet } from '@/utils'
@@ -89,6 +89,7 @@
       const state = reactive({
         defaultOpen: ['1', '2', '3', '4'],
         showMenu: false,
+
         currentPath: '/account',
         roleArr: {
           rolemenuids: [],
@@ -128,13 +129,12 @@
             next()
           }
         }
-        await nextTick()
+
         state.showMenu = !noMenu.includes(to.path)
         state.currentPath = to.path
         state.roleArr = localGet('token') || {
           rolemenuids: [],
         }
-
         document.title = pathMap[to.name]
       })
 

@@ -18,7 +18,7 @@
             {{ entity.title }}
           </div>
           <div class="timer">
-            {{ dayjs(entity.create_time * 1000).format('YYYY/MM/DD HH:mm') }}
+            {{ dayjs(entity.create_time * 1000).format('YYYY-MM-DD') }}
           </div>
         </li>
         <br />
@@ -150,16 +150,22 @@
         height: 124px;
       }
       .title {
+        max-width: 220px;
         font-weight: 400;
         line-height: 1.5;
-        padding: 10px 0;
+        margin: 10px 0;
         font-size: 14px;
         color: #444;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
         span {
           color: #dfa665;
         }
       }
       .timer {
+        font-size: 12px;
         color: #969696;
       }
     }
