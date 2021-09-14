@@ -2,7 +2,7 @@
   <el-dialog
     :title="type == 'add' ? '添加课程' : '修改课程'"
     v-model="visible"
-    width="600px"
+    width="700px"
   >
     <el-form
       :model="ruleForm"
@@ -55,18 +55,19 @@
           action="#"
           :http-request="myUpload2"
           :file-list="fileListCover"
-          :show-file-list="false"
           :limit="1"
+          list-type="picture"
           :on-exceed="onExceed"
+          :on-remove="onRemove"
           accept="image/jpeg, image/jpg, image/png"
         >
           <el-button size="small" type="warning">点击上传</el-button>
         </el-upload>
-        <ul class="attach_ul">
+        <!-- <ul class="attach_ul">
           <li v-for="(item, index) in fileListCover" :key="index">
             <img :src="item.url" alt="" />
           </li>
-        </ul>
+        </ul> -->
       </el-form-item>
     </el-form>
     <template #footer>
@@ -116,6 +117,9 @@
       })
       const onExceed = () => {
         return ElMessage.error('只能上传一张封面')
+      }
+      const onRemove = () => {
+        state.fileListCover = []
       }
       // 获取详情
       const getDetail = (id) => {
@@ -204,7 +208,7 @@
                   params: state.ruleForm,
                 })
                 .then(() => {
-                  ElMessage.success('添加成功')
+                  ElMessage.success('修改成功')
                   state.visible = false
                   if (props.reload) props.reload()
                 })
@@ -222,6 +226,7 @@
         typeOptions,
         myUpload2,
         onExceed,
+        onRemove,
       }
     },
   }

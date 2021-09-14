@@ -394,7 +394,7 @@
                   params: state.ruleForm,
                 })
                 .then(() => {
-                  ElMessage.success('添加成功')
+                  ElMessage.success('修改成功')
                   state.visible = false
                   if (props.reload) props.reload()
                 })
