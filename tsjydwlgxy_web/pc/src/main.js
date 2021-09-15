@@ -4,11 +4,16 @@ import App from "./App.vue";
 import routes from "./router/index";
 import store from "./store";
 
+import SvgIcon from '@/components/SvgIcon'// svg组件
+Vue.component('svg-icon', SvgIcon)
+
 import "element-ui/lib/theme-chalk/index.css"; // 主题样式
 import 'nprogress/nprogress.css'// Progress 进度条样式
 import "normalize.css/normalize.css";
-import "@/assets/iconfont/iconfont.css"
 import '@/styles/index.scss'
+
+import '@/assets/iconfont/iconfont.js'
+import "@/assets/iconfont/iconfont.css"
 
 
 const originalReplace = VueRouter.prototype.replace;

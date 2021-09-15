@@ -139,9 +139,6 @@
       margin: 0 24px 24px 0;
       &:hover {
         .title {
-          color: #660000;
-        }
-        .title span {
           color: #c00900;
         }
       }

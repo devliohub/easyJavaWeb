@@ -1,0 +1,65 @@
+{
+  "id": "2814559",
+  "name": "通识",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "24363023",
+      "name": "全部",
+      "font_class": "quanbu",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
+      "icon_id": "24363024",
+      "name": "道德规范力",
+      "font_class": "daodeguifanli",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
+      "icon_id": "24363025",
+      "name": "认识理解",
+      "font_class": "renshilijie",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
+      "icon_id": "24363026",
+      "name": "高阶创新力",
+      "font_class": "gaojiechuangxinli",
+      "unicode": "e605",
+      "unicode_decimal": 58885
+    },
+    {
+      "icon_id": "24363027",
+      "name": "沟通表达力",
+      "font_class": "goutongbiaodali",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    },
+    {
+      "icon_id": "24363028",
+      "name": "应用行动力",
+      "font_class": "yingyonghangdongli",
+      "unicode": "e607",
+      "unicode_decimal": 58887
+    },
+    {
+      "icon_id": "24363029",
+      "name": "审美鉴赏力",
+      "font_class": "shenmeijianshangli",
+      "unicode": "e608",
+      "unicode_decimal": 58888
+    },
+    {
+      "icon_id": "24363030",
+      "name": "协作领导力",
+      "font_class": "xiezuolingdaoli",
+      "unicode": "e609",
+      "unicode_decimal": 58889
+    }
+  ]
+}

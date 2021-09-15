@@ -32,7 +32,7 @@
                 :label="item.code"
                 :key="index"
                 border
-                >{{ item.name }}({{ item.count }})</el-radio
+                >{{ item.name }} ({{ item.count }})</el-radio
               >
             </el-radio-group>
           </nav>
@@ -69,7 +69,9 @@
                   >{{ entity.typeName }}</span
                 >
               </div>
-              <div class="namer">{{ entity.name }}</div>
+              <div class="namer" :class="{ turnred: entity.ishover }">
+                {{ entity.name }}
+              </div>
             </li>
           </ul>
 
@@ -282,6 +284,9 @@
               -webkit-box-orient: vertical;
               -webkit-line-clamp: 2;
               overflow: hidden;
+            }
+            .turnred {
+              color: #c00900;
             }
           }
         }

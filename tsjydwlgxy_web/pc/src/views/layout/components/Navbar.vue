@@ -147,20 +147,27 @@
       width: 220px;
       right: 0;
       top: 36px;
+      input::-webkit-input-placeholder {
+        color: rgba(255, 255, 255, 0.3);
+      }
       .el-input__inner {
         background: rgba(255, 255, 255, 0.3);
         border-radius: 20px !important;
         border: none;
       }
-      .el-input__suffix {
-        cursor: pointer;
-      }
       .focus_class input,
       .focus_class .el-input__suffix {
         color: rgba(255, 255, 255, 1) !important;
+        &::-webkit-input-placeholder {
+          color: rgba(255, 255, 255, 1) !important;
+        }
       }
-      .blur_class input .blur_class .el-input__suffix {
+      .blur_class input,
+      .blur_class .el-input__suffix {
         color: rgba(255, 255, 255, 0.3) !important;
+        &::-webkit-input-placeholder {
+          color: rgba(255, 255, 255, 0.3) !important;
+        }
       }
     }
   }

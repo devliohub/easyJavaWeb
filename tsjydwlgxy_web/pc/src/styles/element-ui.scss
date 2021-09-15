@@ -92,7 +92,11 @@
 .el-radio__input.is-checked + .el-radio__label {
   color: #c00900;
 }
-// .image-slot {
-//   width: 100%;
-//   height: 375px;
-// }
+.el-radio--small.is-bordered {
+  border-radius: 25px;
+  padding-top: 4px;
+  height: 26px;
+}
+.el-radio__input {
+  display: none;
+}

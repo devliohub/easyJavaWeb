@@ -101,6 +101,7 @@
 <style lang="scss" scope>
 .left_menu {
   & > ul {
+    background: #fff;
     border: 1px solid #efeff7;
     min-height: 400px;
     font-weight: bold;

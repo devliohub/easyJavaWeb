@@ -27,12 +27,23 @@
           :class="{ margin_right_0: index % 4 == 3 }"
           @click="goKecheng(item)"
         >
-          <div style="font-weight: bold">
+          <div class="li_div">
+            <i
+              v-if="index != moduleList.length - 1"
+              class="iconfont"
+              :class="`icon-` + item.iconName"
+            ></i>
+            &nbsp;&nbsp;
             <span> {{ item.name }}</span>
             &nbsp;&nbsp;&nbsp;
             <span v-if="index != moduleList.length - 1">
               {{ item.count }} 门</span
             >
+            <i
+              v-if="index == moduleList.length - 1"
+              class="iconfont"
+              :class="`icon-` + item.iconName"
+            ></i>
           </div>
         </li>
       </ul>
@@ -183,7 +194,6 @@
       return {
         isloading: false,
         moduleList: [], //7大模块
-
         homeList: {
           list1: [],
           list2: [],
@@ -204,7 +214,8 @@
           this.moduleList = res.result
           this.moduleList.push({
             code: 0,
-            name: '查看全部课程 >>',
+            name: '查看全部课程',
+            iconName: 'quanbu',
           })
         }
 
@@ -250,7 +261,10 @@
 <style lang="scss" scoped>
 .index {
   width: 100%;
-
+  .iconfont {
+    font-size: 20px;
+    font-weight: normal;
+  }
   .index_banner {
     .bannerimg1 {
       width: 100%;
@@ -299,6 +313,15 @@
           color: goldenrod;
           background: #660000;
           border: 1px solid goldenrod;
+        }
+        .li_div {
+          font-weight: bold;
+          display: flex;
+          display: -webkit-flex;
+          align-items: center;
+          -webkit-align-items: center;
+          justify-content: center;
+          -webkit-justify-content: center;
         }
       }
     }
