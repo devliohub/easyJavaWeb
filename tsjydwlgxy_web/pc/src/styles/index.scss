@@ -128,3 +128,17 @@ a:hover {
 .margin_right_0 {
   margin-right: 0 !important;
 }
+.margin_bottom_0 {
+  margin-bottom: 0 !important;
+}
+
+.viewDialog {
+  background: rgba(0, 0, 0, 0.6) !important;
+  .el-dialog__header {
+    background: rgba(0, 0, 0, 1) !important;
+    .el-dialog__title,
+    .el-dialog__headerbtn {
+      color: #fff !important;
+    }
+  }
+}

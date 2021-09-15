@@ -56,6 +56,9 @@
         flex: 1;
         min-height: calc(100vh - 230px);
         overflow: auto;
+        border: 1px solid #efeff7;
+        padding: 0 20px;
+        background: #fff;
       }
     }
   }

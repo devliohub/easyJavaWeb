@@ -188,8 +188,7 @@
     width: 100%;
     & > main {
       width: 100%;
-      border: 1px solid #efeff7;
-      padding: 15px 20px;
+      padding: 15px 0;
       .add_section {
         width: 100%;
         display: flex;

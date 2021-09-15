@@ -1,10 +1,10 @@
 <template>
   <div class="wenzhangdesc">
     <el-dialog
+      custom-class="viewDialog"
       :title="viewEntity.fileName"
-      top="10vh"
       :visible.sync="dialogVisible"
-      :width="dialogWidth"
+      fullscreen
     >
       <iframe
         @load="handleIframeOnload"
@@ -61,7 +61,6 @@
     data() {
       return {
         dialogVisible: false,
-        dialogWidth: '1000px',
         viewEntity: {},
 
         isloading: false,
@@ -80,15 +79,18 @@
         let idoc = iframe.contentWindow.document
         let img = idoc.querySelectorAll('img')[0]
         if (img) {
-          if (img.width >= img.height) {
-            img.width = iframe.clientWidth
-            let top = (iframe.clientHeight - img.height) / 2
-            img.style.marginTop = top + 'px'
-          } else {
-            img.height = iframe.clientHeight
-            let left = (iframe.clientWidth - img.width) / 2
-            img.style.marginLeft = left + 'px'
-          }
+          iframe.clientWidth = img.width
+          iframe.height = img.height
+
+          // if (img.width >= img.height) {
+          //   img.width = iframe.clientWidth
+          //   let top = (iframe.clientHeight - img.height) / 2
+          //   img.style.marginTop = top + 'px'
+          // } else {
+          //   img.height = iframe.clientHeight
+          //   let left = (iframe.clientWidth - img.width) / 2
+          //   img.style.marginLeft = left + 'px'
+          // }
         }
       },
       async getData() {
@@ -125,7 +127,7 @@
   color: #444;
   overflow-wrap: break-word;
   .ishover {
-    color: red !important;
+    color: #c00900 !important;
   }
   header {
     .title {
@@ -192,7 +194,10 @@
           color: #888;
           &:hover {
             font-weight: bold;
-            color: red;
+            color: #c00900;
+          }
+          &:click {
+            color: #660000;
           }
         }
       }
@@ -201,7 +206,7 @@
 
   .iframe_class {
     width: 100%;
-    // max-height: 80vh;
+    min-height: 60vh;
   }
 }
 </style>

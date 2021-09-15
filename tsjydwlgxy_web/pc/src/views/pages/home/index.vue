@@ -43,7 +43,10 @@
         <div
           v-for="(item, index) in homeList.list1"
           :key="index"
-          :class="{ margin_right_0: index % 2 == 1 }"
+          :class="{
+            margin_right_0: index % 2 == 1,
+            margin_bottom_0: index > homeList.list1.length - 3,
+          }"
         >
           <header>
             <span>{{ item.menuName }}</span>
@@ -257,7 +260,9 @@
 
   .index_modules {
     width: 100%;
+    padding-bottom: 20px;
     background: url('../../../assets/home/mokuai_body.png') no-repeat 100% 100%;
+    background-size: cover;
     main {
       width: 1200px;
       margin: 0 auto;
@@ -268,7 +273,7 @@
       align-items: center;
       & > img {
         width: 412px;
-        margin: 30px 0;
+        margin: 30px 0 40px 0;
       }
     }
 
@@ -301,6 +306,7 @@
 
   .index_tongshi {
     width: 100%;
+    padding-top: 50px;
     main {
       width: 1200px;
       margin: 0 auto;
@@ -308,7 +314,7 @@
       & > div {
         width: 580px;
         float: left;
-        margin: 0 40px 20px 0;
+        margin: 0 40px 50px 0;
         ul {
           li {
             display: flex;
@@ -323,6 +329,12 @@
               color: #444;
               display: flex;
               align-items: center;
+              span {
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                max-width: 460px;
+              }
               .dotter {
                 margin-right: 8px;
                 width: 6px;
@@ -342,7 +354,7 @@
 
   .index_luntan {
     width: 100%;
-    margin-bottom: 40px;
+    margin-bottom: 50px;
     ul {
       width: 1200px;
       margin: 0 auto;
@@ -352,7 +364,7 @@
         cursor: pointer;
         // background: url('../../../assets/home/words_bg.png') no-repeat;
         flex: 1;
-        margin-right: 24px;
+        margin: 20px 20px 0 0;
         img {
           width: 100%;
         }
@@ -378,9 +390,16 @@
             width: 100%;
           }
           .title {
-            padding: 10px 0;
+            margin: 10px 0;
             color: #444;
             font-weight: bold;
+
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            max-width: 100%;
           }
           .time {
             color: #969696;
@@ -396,6 +415,7 @@
       left;
     background-size: cover;
     main {
+      padding-top: 50px;
       width: 1200px;
       margin: 0 auto;
       padding-bottom: 100px;
@@ -416,10 +436,17 @@
             height: 336px;
           }
           .title {
-            padding: 20px 0;
+            margin: 20px 0;
             font-size: 18px;
             font-weight: bold;
             color: #fff;
+            width: 95%;
+
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
           }
           .time {
             margin-right: 40px;
@@ -445,9 +472,19 @@
             }
             & > div {
               float: left;
+              width: calc(100% - 220px);
               margin-right: 24px;
+              display: flex;
+              flex-direction: column;
+              justify-content: space-between;
+              height: 90px;
+
               .title {
-                margin-bottom: 60px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
                 color: #444;
                 font-weight: bold;
               }
@@ -469,9 +506,9 @@
     position: relative;
     span {
       position: relative;
-      padding: 10px 0;
       &:first-child {
-        font-size: 18px;
+        padding: 5px 0;
+        font-size: 24px;
         font-weight: bold;
         border-bottom: 5px solid #c00900;
         margin-right: 10px;
@@ -487,20 +524,21 @@
         }
       }
       &:last-child {
+        padding: 10px 0;
         cursor: pointer;
         flex: 1;
         text-align: right;
-        font-size: 12px;
-        border-bottom: 1px solid #c00900;
+        font-size: 14px;
+        border-bottom: 2px solid #c00900;
         &::before {
           position: absolute;
           content: '';
-          width: 1px;
-          height: 5px;
+          width: 2px;
+          height: 6px;
           transform: rotate(45deg);
           background: #c00900;
           left: -2px;
-          bottom: -5px;
+          bottom: -6px;
         }
       }
     }

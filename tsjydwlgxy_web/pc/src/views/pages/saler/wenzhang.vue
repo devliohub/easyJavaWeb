@@ -49,7 +49,7 @@
         @current-change="handleCurrentChange"
         :current-page="form.pageNo"
         :page-size="form.pageSize"
-        layout="prev, pager, next"
+        layout="prev, pager, next, jumper"
         :total="table_total"
       ></el-pagination>
     </template>
@@ -187,6 +187,13 @@
         background: #efeff7;
       }
       span {
+        &:first-child {
+          max-width: 85%;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+
         b {
           color: #c00900;
         }

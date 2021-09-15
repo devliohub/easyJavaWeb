@@ -28,7 +28,7 @@
       @current-change="handleCurrentChange"
       :current-page="form.pageNo"
       :page-size="form.pageSize"
-      layout="prev, pager, next"
+      layout="prev, pager, next, jumper"
       :total="table_total"
     ></el-pagination>
   </div>
