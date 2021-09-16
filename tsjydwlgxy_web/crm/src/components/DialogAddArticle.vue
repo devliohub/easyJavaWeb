@@ -48,6 +48,7 @@
               action="#"
               :http-request="myUpload"
               :file-list="ruleForm.attachmentArr"
+              :before-upload="beforeAvatarUpload"
               :show-file-list="false"
               :limit="5"
               :on-exceed="onExceed"
@@ -64,12 +65,20 @@
                 v-for="(item, index) in ruleForm.attachmentArr"
                 :key="index"
                 @click="viewIframe(item)"
+                @mouseenter="handleMouseSet(item, true, index)"
+                @mouseleave="handleMouseSet(item, false, index)"
               >
                 <!-- <img :src="item.fileUrl" alt="" /> -->
                 <span
                   >&nbsp;&nbsp;&nbsp;<b>{{ index + 1 }}. </b
                   >{{ item.fileName }}</span
                 >
+
+                <i
+                  v-if="item.ishover"
+                  @click.stop="handleDelete(item, index)"
+                  class="el-icon-circle-close"
+                ></i>
               </li>
             </ul>
           </el-form-item>
@@ -122,24 +131,26 @@
               class="imgsRef"
               ref="imgsRef"
               action="#"
+              :before-upload="beforeAvatarUpload2"
               :http-request="myUpload2"
               :file-list="fileListCover"
-              :show-file-list="false"
               :limit="1"
               :on-exceed="onExceed"
+              :on-remove="handleRemove"
+              list-type="picture"
               accept="image/jpeg, image/jpg, image/png"
             >
               <el-button size="small" type="warning">点击上传</el-button>
               <span style="font-size: 14px; margin-left: 20px; color: #929292"
-                >支持jpg、jpeg、png格式，大小不超过500M</span
+                >支持jpg、jpeg、png格式，大小不超过2M</span
               >
             </el-upload>
-            <ul class="attach_ul">
+            <!-- <ul class="attach_ul">
               <li v-for="(item, index) in fileListCover" :key="index">
                 <img :src="item.url" alt="" />
                 <span>{{ item.url }}</span>
               </li>
-            </ul>
+            </ul> -->
           </el-form-item>
         </el-col>
         <el-col :span="12">
@@ -241,6 +252,10 @@
           .then((res) => {
             if (num) {
               state.submenuOptions = res
+              state.submenuOptions.unshift({
+                id: 0,
+                name: '--',
+              })
             } else {
               state.menuOptions = res
             }
@@ -253,6 +268,16 @@
         } else {
           state.submenuOptions = []
         }
+      }
+      const handleMouseSet = (item, flag, index) => {
+        state.ruleForm.attachmentArr.map((el, _i) => {
+          if (index == _i) {
+            el['ishover'] = flag
+          }
+        })
+      }
+      const handleDelete = (item, index) => {
+        state.ruleForm.attachmentArr.splice(index, 1)
       }
       // 附件预览
       const viewIframe = (item) => {
@@ -292,6 +317,16 @@
       const onExceed = () => {
         return ElMessage.error('超出个数限制')
       }
+      const handleRemove = (file, fileList) => {
+        state.fileListCover = []
+      }
+      const beforeAvatarUpload = (file) => {
+        const isLt2M = file.size / 1024 / 1024 < 500
+        if (!isLt2M) {
+          ElMessage.error('上传大小不能超过 500MB')
+        }
+        return isLt2M
+      }
       // 附件上传
       const myUpload = async (content) => {
         let form = new FormData()
@@ -303,10 +338,18 @@
             fileUrl: res,
             fileName: content.file.name,
             size: content.file.size,
+            ishover: false,
           })
         }
         state.isloading = false
         return ElMessage.success('上传成功')
+      }
+      const beforeAvatarUpload2 = (file) => {
+        const isLt2M = file.size / 1024 / 1024 < 2
+        if (!isLt2M) {
+          ElMessage.error('上传大小不能超过 2MB')
+        }
+        return isLt2M
       }
       // 图片上传
       const myUpload2 = async (content) => {
@@ -362,9 +405,6 @@
             }
 
             state.ruleForm.content = instance.txt.html()
-            state.ruleForm.publish_time = dayjs(
-              state.ruleForm.publish_time / 1000
-            ).valueOf()
 
             // cover转换
             let arr_file = []
@@ -378,10 +418,14 @@
             state.ruleForm.attachment = JSON.stringify(
               state.ruleForm.attachmentArr
             )
+
             if (state.type == 'add') {
               axios
                 .get('/api/a/article/add', {
-                  params: state.ruleForm,
+                  params: {
+                    ...state.ruleForm,
+                    publish_time: state.ruleForm.publish_time / 1000,
+                  },
                 })
                 .then(() => {
                   ElMessage.success('添加成功')
@@ -391,7 +435,10 @@
             } else {
               axios
                 .get('/api/a/article/update', {
-                  params: state.ruleForm,
+                  params: {
+                    ...state.ruleForm,
+                    publish_time: state.ruleForm.publish_time / 1000,
+                  },
                 })
                 .then(() => {
                   ElMessage.success('修改成功')
@@ -406,6 +453,9 @@
         ...toRefs(state),
         open,
         close,
+        beforeAvatarUpload,
+        beforeAvatarUpload2,
+        handleRemove,
         myUpload,
         myUpload2,
         formRef,
@@ -414,6 +464,8 @@
         handleMenuchange,
         onExceed,
         viewIframe,
+        handleMouseSet,
+        handleDelete,
       }
     },
   }
@@ -439,7 +491,16 @@
 .attach_ul li span {
   flex: 1;
 }
-
+.attach_ul li i {
+  font-size: 18px;
+  margin-right: 20px;
+  font-weight: 400;
+  color: #de3b32;
+  cursor: pointer;
+}
+.attach_ul li i:hover {
+  color: #c00900;
+}
 .wenzahngClass .el-form-item {
   margin-bottom: 10px;
 }

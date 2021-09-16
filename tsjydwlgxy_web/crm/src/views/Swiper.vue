@@ -91,7 +91,7 @@
       }
       const beforeAvatarUpload = (file) => {
         const isLt2M = file.size / 1024 / 1024 < 2
-        const isLt10P = state.fileList.length <= 10
+        const isLt10P = state.fileList.length < 10
 
         if (!isLt2M) {
           ElMessage.error('上传大小不能超过 2MB')

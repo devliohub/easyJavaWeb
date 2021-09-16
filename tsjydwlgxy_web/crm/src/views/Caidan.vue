@@ -9,6 +9,7 @@
           @click="handleAdd(0)"
           >添加菜单</el-button
         >
+        <span>修改菜单后，需重新打开网站才能看到新的版本</span>
       </div>
     </template>
     <el-table
@@ -149,9 +150,9 @@
 .caidan-container {
   min-height: 99%;
 }
-.caidan-container .header {
-  display: flex;
-  justify-content: space-between;
+.caidan-container .header span {
+  margin-left: 20px;
+  color: red;
 }
 .el-card.is-always-shadow {
   min-height: 99% !important;

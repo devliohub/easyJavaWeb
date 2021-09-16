@@ -22,7 +22,7 @@
         </template>
         <div class="nickname">
           <el-tag size="small" effect="dark" class="logout" @click="logout"
-            >退出登陆</el-tag
+            >退出登录</el-tag
           >
           <br />
           <el-tag size="small" class="changePwd" @click="changePwd">

@@ -14,14 +14,14 @@
           v-model="ruleForm.password"
         ></el-input>
       </el-form-item>
-      <el-form-item label="新密码" prop="newpassword">
+      <el-form-item label="新密码" prop="newpassword" required>
         <el-input
           type="password"
           placeholder="请输入新密码"
           v-model="ruleForm.newpassword"
         ></el-input>
       </el-form-item>
-      <el-form-item label="新密码" prop="newpassword2">
+      <el-form-item label="新密码" prop="newpassword2" required>
         <el-input
           type="password"
           placeholder="再次输入新密码"
