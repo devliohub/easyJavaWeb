@@ -73,7 +73,12 @@
 .el-table--border th:first-child .cell {
   padding: 0;
 }
-
+.el-radio {
+  margin-right: 20px;
+}
+.el-radio.is-bordered + .el-radio.is-bordered {
+  margin-left: 0;
+}
 .el-table__body-wrapper {
   overflow-y: overlay !important;
   overflow-x: auto !important;

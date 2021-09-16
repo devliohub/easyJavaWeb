@@ -81,14 +81,18 @@
         }
       },
       handleGOwenzhang(item) {
-        this.$router.push(
-          '/saler/wenzhang?id=' +
-            item.id +
-            '&pid=' +
-            item.pid +
-            '&name=' +
-            item.name
-        )
+        if (item.type == 2) {
+          window.open(item.url)
+        } else {
+          this.$router.push(
+            '/saler/wenzhang?id=' +
+              item.id +
+              '&pid=' +
+              item.pid +
+              '&name=' +
+              item.name
+          )
+        }
       },
       handleGOkecheng(item) {
         this.$router.push(
@@ -114,6 +118,10 @@
       padding-left: 25px;
       cursor: pointer;
       font-weight: normal;
+      &:hover {
+        color: #660000;
+        background: rgba(102, 0, 0, 0.05);
+      }
       &:first-child {
         transform: translateX(-5%);
         width: 105%;

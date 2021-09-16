@@ -92,7 +92,6 @@
         })
       },
       handleGo(item) {
-        console.log(JSON.parse(JSON.stringify(item)))
         if (item.type == 2) {
           window.open(item.url)
         } else if (item.id == 1) {
@@ -108,15 +107,28 @@
             },
           })
         } else {
-          this.$router.push({
-            path: '/saler/wenzhang',
-            query: {
-              id: item.id,
-              pid: item.pid,
-              name: item.name,
-              _t: Date.parse(new Date()),
-            },
-          })
+          // 有子菜单默认跳转第一个
+          if (item.sub_menus && item.sub_menus.length > 0) {
+            this.$router.push({
+              path: '/saler/wenzhang',
+              query: {
+                id: item.sub_menus[0].id,
+                pid: item.sub_menus[0].pid,
+                name: item.sub_menus[0].name,
+                _t: Date.parse(new Date()),
+              },
+            })
+          } else {
+            this.$router.push({
+              path: '/saler/wenzhang',
+              query: {
+                id: item.id,
+                pid: item.pid,
+                name: item.name,
+                _t: Date.parse(new Date()),
+              },
+            })
+          }
         }
       },
     },

@@ -11,7 +11,12 @@
         :height="'18.75vw'"
       >
         <el-carousel-item v-for="(item, index) in homeList.list0" :key="index">
-          <img class="bannerimg1" :src="item.img" alt="" />
+          <img
+            @click="handleOpen(item)"
+            class="bannerimg1"
+            :src="item.img"
+            alt=""
+          />
         </el-carousel-item>
       </el-carousel>
     </div>
@@ -62,7 +67,7 @@
           <header>
             <span>{{ item.menuName }}</span>
             <span @click="viewMore(item)"
-              >查看更多<i class="el-icon-d-arrow-right"></i
+              >查看更多<i class="iconfont icon-gengduo"></i
             ></span>
           </header>
           <ul>
@@ -76,7 +81,7 @@
                 <span>{{ _item.title }}</span>
               </div>
               <div class="time">
-                {{ dayjs(_item.create_time * 1000).format('YYYY-MM-DD') }}
+                {{ dayjs(_item.publish_time * 1000).format('YYYY-MM-DD') }}
               </div>
             </li>
           </ul>
@@ -102,7 +107,7 @@
         <header>
           <span>{{ homeList.list3.menuName }}</span>
           <span @click="viewMore(homeList.list3)"
-            >查看更多<i class="el-icon-d-arrow-right"></i
+            >查看更多<i class="iconfont icon-gengduo"></i
           ></span>
         </header>
         <ul>
@@ -120,7 +125,7 @@
               {{ _item.title }}
             </div>
             <div class="time">
-              {{ dayjs(_item.create_time * 1000).format('YYYY-MM-DD') }}
+              {{ dayjs(_item.publish_time * 1000).format('YYYY-MM-DD') }}
             </div>
           </li>
         </ul>
@@ -132,7 +137,7 @@
         <header>
           <span>{{ homeList.list4.menuName }}</span>
           <span @click="viewMore(homeList.list4)"
-            >查看更多<i class="el-icon-d-arrow-right"></i
+            >查看更多<i class="iconfont icon-gengduo"></i
           ></span>
         </header>
         <div v-if="homeList.list4.list.length > 0">
@@ -150,7 +155,7 @@
             </div>
             <div class="time">
               {{
-                dayjs(homeList.list4.list[0].create_time * 1000).format(
+                dayjs(homeList.list4.list[0].publish_time * 1000).format(
                   'YYYY-MM-DD'
                 )
               }}
@@ -173,7 +178,7 @@
                   {{ _item.title }}
                 </div>
                 <div class="time">
-                  {{ dayjs(_item.create_time * 1000).format('YYYY-MM-DD') }}
+                  {{ dayjs(_item.publish_time * 1000).format('YYYY-MM-DD') }}
                 </div>
               </div>
             </li>
@@ -214,7 +219,7 @@
           this.moduleList = res.result
           this.moduleList.push({
             code: 0,
-            name: '查看全部课程',
+            name: '全部课程',
             iconName: 'quanbu',
           })
         }
@@ -227,6 +232,9 @@
       getImgUrl(img) {
         return require('@/assets/home/' + img + '@2x.png')
       },
+      handleOpen(item) {
+        if (item.url) window.open(item.url)
+      },
       goDesc(item) {
         this.$router.push(
           '/saler/wenzhangdesc?id=' +
@@ -238,6 +246,7 @@
         )
       },
       goWengzhang(item) {
+        return
         this.$router.push(
           '/saler/wenzhang?id=' +
             item.id +
@@ -268,6 +277,7 @@
   .index_banner {
     .bannerimg1 {
       width: 100%;
+      cursor: pointer;
       // background: url('../../../assets/home/banner1.png') no-repeat 100% 100%;
     }
   }
@@ -384,8 +394,7 @@
       display: flex;
       text-align: center;
       li {
-        cursor: pointer;
-        // background: url('../../../assets/home/words_bg.png') no-repeat;
+        // cursor: pointer;
         flex: 1;
         margin: 20px 20px 0 0;
         img {
@@ -553,6 +562,10 @@
         text-align: right;
         font-size: 14px;
         border-bottom: 2px solid #c00900;
+        i {
+          margin-left: 4px;
+          font-size: 12px;
+        }
         &::before {
           position: absolute;
           content: '';

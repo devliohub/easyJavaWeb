@@ -182,6 +182,9 @@
       padding: 15px 30px;
       &:hover {
         background: #efeff7;
+        span:first-child {
+          color: #c00900;
+        }
       }
       span {
         &:first-child {
@@ -192,7 +195,7 @@
         }
 
         b {
-          color: #c00900;
+          color: #dfa665;
         }
         &:first-child {
           color: #444;

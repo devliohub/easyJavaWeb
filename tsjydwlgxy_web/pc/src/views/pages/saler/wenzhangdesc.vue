@@ -79,9 +79,9 @@
         let idoc = iframe.contentWindow.document
         let img = idoc.querySelectorAll('img')[0]
         if (img) {
-          iframe.clientWidth = img.width
-          iframe.height = img.height
-
+          img.width = iframe.clientWidth
+          let top = (iframe.clientHeight - img.height) / 2
+          img.style.marginTop = top + 'px'
           // if (img.width >= img.height) {
           //   img.width = iframe.clientWidth
           //   let top = (iframe.clientHeight - img.height) / 2
@@ -115,7 +115,17 @@
         window.open(item.fileUrl)
       },
       viewFunc(item) {
-        this.viewEntity = JSON.parse(JSON.stringify(item))
+        // wps预览模式区分
+        const sufix = item.fileName.split('.')[1] || ''
+        if (['doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx'].includes(sufix)) {
+          this.viewEntity = {
+            ...JSON.parse(JSON.stringify(item)),
+            fileUrl:
+              `https://view.officeapps.live.com/op/view.aspx?src=` + item.fileUrl,
+          }
+        } else {
+          this.viewEntity = JSON.parse(JSON.stringify(item))
+        }
         this.dialogVisible = true
       },
     },
@@ -206,7 +216,7 @@
 
   .iframe_class {
     width: 100%;
-    min-height: 60vh;
+    min-height: 85vh;
   }
 }
 </style>

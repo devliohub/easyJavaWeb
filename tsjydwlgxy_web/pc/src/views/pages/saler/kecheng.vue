@@ -32,7 +32,7 @@
                 :label="item.code"
                 :key="index"
                 border
-                >{{ item.name }} ({{ item.count }})</el-radio
+                >{{ item.name }} {{ item.count }}</el-radio
               >
             </el-radio-group>
           </nav>
@@ -44,6 +44,7 @@
               :class="{
                 margin_right_0: x % 4 == 3,
               }"
+              @click="handleOpen(entity)"
               @mouseenter="handleMouseSet(entity, true)"
               @mouseleave="handleMouseSet(entity, false)"
             >
@@ -53,13 +54,13 @@
                     <img src="@/assets/kechengMR.jpg" alt="" />
                   </div>
                 </el-image>
-                <a
+                <!-- <a
                   class="descBtn"
                   v-if="entity.ishover"
                   :href="entity.url"
                   target="_blank"
                   >查看详情</a
-                >
+                > -->
                 <span
                   :class="{
                     _orange: entity.typeName == '公共必修课',
@@ -161,9 +162,8 @@
           })
         }
       },
-      handleRadioClick(v) {
-        // this.$set(this.queryObj, 'type_id', v == this.queryObj.type_id ? '' : v)
-        // this.getData()
+      handleOpen(item) {
+        window.open(item.url)
       },
       handleSizeChange(val) {
         this.queryObj.pageNo = 1
@@ -228,16 +228,21 @@
           flex-wrap: wrap;
           li {
             width: 218px;
+            padding: 6px;
             margin: 0 20px 20px 0;
+            &:hover {
+              box-shadow: 0 0 12px #eee;
+            }
             .wrapper {
               width: 100%;
               position: relative;
+              cursor: pointer;
               span {
                 position: absolute;
-                left: 10px;
-                bottom: 10px;
+                left: 12px;
+                bottom: 14px;
                 z-index: 999;
-                padding: 5px 15px;
+                padding: 6px;
                 color: #fff;
               }
               .descBtn {
@@ -259,7 +264,7 @@
                 }
               }
               img {
-                width: 218px;
+                width: 204px;
                 height: 123px;
               }
               ._orange {
@@ -274,7 +279,7 @@
             }
 
             .namer {
-              max-width: 218px;
+              max-width: 204px;
               font-weight: bold;
               line-height: 1.5;
               margin-top: 10px;
