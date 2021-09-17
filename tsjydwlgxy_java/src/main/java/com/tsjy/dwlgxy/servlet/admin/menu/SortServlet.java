@@ -123,7 +123,7 @@ public class SortServlet extends AdminBaseServlet
 		  catch (Exception ex){
 			    logger.error("exception:", ex);
 	            return jsonReturn(
-	                ErrConfig.getErr(ErrConfig.INTERNAL_SERVER_ERROR, ex.getMessage())
+            		ErrConfig.getErr(ErrConfig.WRITING_ERROR,  "不能移动")
 	            );
 	      }
 	}

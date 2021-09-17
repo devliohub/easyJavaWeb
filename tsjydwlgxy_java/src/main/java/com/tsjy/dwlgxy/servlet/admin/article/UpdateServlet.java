@@ -13,6 +13,7 @@ import com.tsjy.dwlgxy.common.exception.*;
 import com.tsjy.dwlgxy.common.AdminBaseServlet;
 import com.tsjy.dwlgxy.service.ArticleService;
 import com.tsjy.dwlgxy.service.CourseService;
+import com.tsjy.dwlgxy.service.MenuService;
 
 
 
@@ -38,14 +39,15 @@ public class UpdateServlet extends AdminBaseServlet
 	        String attachment   = StringUtil.getString(request.getParameter("attachment"), "")  ;
 	        int menu_pid   = StringUtil.getInt(request.getParameter("menu_pid"), 0)  ;
 	        int menu_id    = StringUtil.getInt(request.getParameter("menu_id"), 0)  ;
-	        int is_top   = StringUtil.getInt(request.getParameter("is_top"), 0)  ;
+	        boolean is_top   =   StringUtil.getBoolean(request.getParameter("is_top"));
 	        String cover   = StringUtil.getString(request.getParameter("cover"), "")  ;
+	        int publish_time   = StringUtil.getInt(request.getParameter("publish_time"), 0)  ;
 	        
 	        
 	        
 	        
 	        //# || StringUtil.invalid(attachment) || menu_id == 0 || StringUtil.invalid(cover)
-	        if( id == 0 || StringUtil.invalid(title) || StringUtil.invalid(content)   || menu_pid == 0  ) 
+	        if( id == 0 ) 
 	        {
 	        	// TODO  Log
 	        	return jsonReturn(
@@ -53,16 +55,69 @@ public class UpdateServlet extends AdminBaseServlet
 	            );
 	        	
 	        }
-	        
-	        
-	        //#
-			if ( this.userInfo == null  ) 
+	        if( StringUtil.invalid(title) ) 
 	        {
-				// TODO  Log
+	        	// TODO  Log
 	        	return jsonReturn(
-	                ErrConfig.getErr(ErrConfig.NOT_LOGIN, "")
+	                ErrConfig.getErr(ErrConfig.WRITING_ERROR, "请输入标题")
 	            );
 	        	
+	        }
+	        if( title.length() > 200 )
+	        {
+	        	// TODO  Log
+                return jsonReturn(
+                    ErrConfig.getErr(ErrConfig.INTERNAL_SERVER_ERROR, "标题不能超过100字符")
+                );
+	        }
+	        if( StringUtil.invalid(content) ) 
+	        {
+	        	// TODO  Log
+	        	return jsonReturn(
+	                ErrConfig.getErr(ErrConfig.WRITING_ERROR, "请输入正文")
+	            );
+	        	
+	        }
+	        if( content.length() > 20000 )
+	        {
+	        	// TODO  Log
+                return jsonReturn(
+                    ErrConfig.getErr(ErrConfig.INTERNAL_SERVER_ERROR, "正文不能超过20000字符")
+                );
+	        }
+	        if( menu_pid == 0 ) 
+	        {
+	        	// TODO  Log
+	        	return jsonReturn(
+	                ErrConfig.getErr(ErrConfig.WRITING_ERROR, "请选择所属栏目")
+	            );
+	        	
+	        }
+	        List<Menu> subMenuList = MenuService.getRows( String.format("pid=%s and is_delete=0 ", menu_pid), "sortnum asc");
+	        if( subMenuList.size() > 0 && menu_id == 0 ) 
+	        {
+	        	// TODO  Log
+	        	return jsonReturn(
+	                ErrConfig.getErr(ErrConfig.WRITING_ERROR, "请选择所属栏目")
+	            );
+	        	
+	        }
+//	        if( publish_time == 0 ) 
+//	        {
+//	        	// TODO  Log
+//	        	return jsonReturn(
+//		                ErrConfig.getErr(ErrConfig.WRITING_ERROR, "请选择发布时间")
+//		            );
+//	        	
+//	        }
+	        if( StringUtil.invalid(cover) ) 
+	        {
+	        	// EGs: content = "<p>哈喽2<img src=\"http://121.36.22.149:9098/upload/20210827000900405.jpg\" contenteditable=\"false\" style=\"font-size: 14px; max-width: 100%;\"/><img src=\"http://121.36.22.149:9098/upload/20210910162511508.jpg\" style=\"max-width:100%;\" contenteditable=\"false\"/></p>";
+		        List<String>  imgList =  StringUtil.getImgStr(content);
+		        if( imgList.size() > 0 )
+		        {
+		        	cover = imgList.get(0);
+		        }
 	        }
 	        
 	        
@@ -90,6 +145,7 @@ public class UpdateServlet extends AdminBaseServlet
 	        obj.is_top =  is_top ;
 	        obj.cover =  cover ;
 	        obj.update_time = new Date().getTime() / 1000;	
+	        obj.publish_time = (publish_time > 0 ? publish_time : new Date().getTime() / 1000);
 	        int ret =  ArticleService.update(obj);
 	        if(ret == 0)
 	        {

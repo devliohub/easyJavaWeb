@@ -40,13 +40,28 @@ public class UpdateServlet extends AdminBaseServlet
 	        
 	        
 	        //#
-	        if( id == 0 || StringUtil.invalid(img)  ||  StringUtil.invalid(url)  ) 
+	        if( id == 0 ) 
 	        {
 	        	// TODO  Log
 	        	return jsonReturn(
 	                ErrConfig.getErr(ErrConfig.BAD_REQUEST, "")
 	            );
 	        	
+	        }
+	        if( StringUtil.invalid(img)  ) 
+	        {
+	        	// TODO  Log
+	        	return jsonReturn(
+	        			ErrConfig.getErr(ErrConfig.INTERNAL_SERVER_ERROR, "图片不能为空")
+	            );
+	        	
+	        }
+	        if( ! StringUtil.invalid(url) && ! StringUtil.ValidURL(url) ) 
+	        {
+	        	// TODO  Log
+                return jsonReturn(
+                    ErrConfig.getErr(ErrConfig.INTERNAL_SERVER_ERROR, "请输入有效链接地址")
+                );
 	        }
 	        
 	        

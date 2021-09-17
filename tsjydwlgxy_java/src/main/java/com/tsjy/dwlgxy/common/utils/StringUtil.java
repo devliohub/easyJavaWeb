@@ -1,6 +1,9 @@
 package com.tsjy.dwlgxy.common.utils;
 
 import javax.servlet.http.HttpServletRequest;
+
+import com.tsjy.dwlgxy.common.conf.ErrConfig;
+
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
@@ -18,6 +21,11 @@ public class StringUtil
 {
 	private final static String RAND_STRING = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";//随机产生的字符串
 	private final static String RAND_Integer = "0123456789";//随机产生的数字 
+    private final static Pattern pImage = Pattern.compile("<img.*src\\s*=\\s*(.*?)[^>]*?>", Pattern.CASE_INSENSITIVE);
+    private final static Pattern rImage = Pattern.compile("src\\s*=\\s*\"?(.*?)(\"|>|\\s+)");
+	
+	
+	
 		/**
          * Escapes any html characters in the input string.
          *
@@ -1342,6 +1350,95 @@ public class StringUtil
 		Matcher m = p.matcher(card);
 		return m.matches();
 	}
+	
+	
+	
+	/**
+	 * 方法描述：判断登录账号是否合法
+	 * @param account
+	 * @return
+	 */
+	public static boolean checkLoginAccountInput(String account)
+    {
+            boolean res = true;
+
+            if (account != null)
+            {
+                    //StringBuffer out = new StringBuffer();
+                    String in = account;
+
+                    for (int i = 0; i < in.length(); i++)
+                    {
+                            char c = in.charAt(i);
+                            
+
+                            if ( ! isMatchesLoginAccount(String.valueOf(c)) )
+                            {
+                            	 res = false;
+                            	 break;
+                            }
+                           
+                    }
+            }
+
+            return res;
+    }
+	public static boolean isMatchesLoginAccount(String account) {
+		
+		 //【含有英文】true
+		 String regex1 = ".*[a-zA-z].*";  
+         boolean result3 = account.matches(regex1);
+         if( result3 )
+         {
+        	 return true;
+         }
+         
+         
+         //【含有数字】true
+         String regex2 = ".*[0-9].*";  
+         boolean result4 = account.matches(regex2);
+         if( result4 )
+         {
+        	 return true;
+         }
+         
+         //【含有特殊】true
+         //String regEx = "[ _`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]|\n|\r|\t";
+         String regEx = "[(@.-_)]";
+         Pattern p = Pattern.compile(regEx);
+         boolean m = p.matcher(account).find();
+         return m;
+	}
+	
+	
+	
+	/**
+	 * 方法描述：判断登录密码是否合法
+	 * @param account
+	 * @return
+	 */
+	public static boolean isMatchesLoginPassword(String password) {
+		
+		int length = password.length();
+		if(  length < 6 || length > 18 ) {
+        	return false;
+        }
+		
+		 //【含有英文】true
+		 String regex1 = ".*[a-zA-z].*";  
+         boolean result3 = password.matches(regex1);
+         
+         
+         //【含有数字】true
+         String regex2 = ".*[0-9].*";  
+         boolean result4 = password.matches(regex2);
+         
+         
+         return result3 || result4;
+         
+	}
+	
+	
 	/**
 	  * 方法描述：将数组转换成以指定分隔符隔开的字符串
 	  * @param list
@@ -1724,5 +1821,60 @@ public class StringUtil
                         replaceAll("\\.","").
                         replaceAll("]","").
                         replaceAll(" ","_");
+        }
+        
+        
+        /**
+         * 字节转kb/mb/gb
+         * @param size
+         * @return
+         */
+        public static String getPrintSize(long size) {
+            //如果字节数少于1024，则直接以B为单位，否则先除于1024，后3位因太少无意义
+            if (size < 1024) {
+                return String.valueOf(size) + "B";
+            } else {
+                size = size / 1024;
+            }
+            //如果原字节数除于1024之后，少于1024，则可以直接以KB作为单位
+            //因为还没有到达要使用另一个单位的时候
+            //接下去以此类推
+            if (size < 1024) {
+                return String.valueOf(size) + "KB";
+            } else {
+                size = size / 1024;
+            }
+            if (size < 1024) {
+                //因为如果以MB为单位的话，要保留最后1位小数，
+                //因此，把此数乘以100之后再取余
+                size = size * 100;
+                return String.valueOf((size / 100)) + "."
+                        + String.valueOf((size % 100)) + "MB";
+            } else {
+                //否则如果要以GB为单位的，先除于1024再作同样的处理
+                size = size * 100 / 1024;
+                return String.valueOf((size / 100)) + "."
+                        + String.valueOf((size % 100)) + "GB";
+            }
+        }
+        
+        
+        
+        /**
+         * 提取富文本中图片地址
+         */
+        public static List<String> getImgStr(String richText) {
+            List<String> list = new ArrayList<>();
+            Matcher pMatcher = pImage.matcher(richText);
+            while (pMatcher.find()) {
+                // 得到<img />数据
+                String img = pMatcher.group();
+                // 匹配<img>中的src数据
+                Matcher rMatcher = rImage.matcher(img);
+                while (rMatcher.find()) {
+                    list.add(rMatcher.group(1));
+                }
+            }
+            return list;
         }
 }

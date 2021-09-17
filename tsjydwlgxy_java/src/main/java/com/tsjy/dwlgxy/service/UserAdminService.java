@@ -20,11 +20,11 @@ public class UserAdminService
 {
 	
 	//
-	public static UserAdmin getRow(int id) throws SQLException {
+	public static UserAdmin getRow(long id) throws SQLException {
 		UserAdmin obj = null;
 		try (Connection conn = DbConfig.getPool().getConnection()) { 
 			try (PreparedStatement ps = conn.prepareStatement("SELECT * FROM user_admin WHERE id = ?")) {
-				ps.setInt(1, id); 
+				ps.setLong(1, id); 
 				try (ResultSet rs = ps.executeQuery()) {
 					while (rs.next()) {
 						obj = extractRow(rs);
@@ -42,7 +42,7 @@ public class UserAdminService
 	public static UserAdmin getRow(String account) throws SQLException {
 		UserAdmin obj = null;
 		try (Connection conn = DbConfig.getPool().getConnection()) { 
-			try (PreparedStatement ps = conn.prepareStatement("SELECT * FROM user_admin WHERE account = ?")) {
+			try (PreparedStatement ps = conn.prepareStatement("SELECT * FROM user_admin WHERE account = ? and is_delete = 0")) {
 				ps.setString(1, account); 
 				try (ResultSet rs = ps.executeQuery()) {
 					while (rs.next()) {
@@ -170,6 +170,8 @@ public class UserAdminService
 		}
 		
 		// TODO _del cache
+		ArticleService.updateCUName(obj.id, obj.name);
+		CourseService.updateCUName(obj.id, obj.name);
 		return n;
 	}
 	
@@ -193,18 +195,21 @@ public class UserAdminService
 	
 	
 	//
-	public static int delete(long id) throws SQLException {
+	public static int delete(long id, String account) throws SQLException {
 		int n =  0;
 		try (Connection conn = DbConfig.getPool().getConnection()) {
-			try (PreparedStatement ps = conn.prepareStatement("UPDATE user_admin SET is_delete=?, update_time=? where id=?")) {
-				ps.setInt(1, 1);
-				ps.setLong(2, new Date().getTime() / 1000);
-				ps.setLong(3, id);
+			try (PreparedStatement ps = conn.prepareStatement("UPDATE user_admin SET  account=?, is_delete=?, update_time=? where id=?")) {
+				ps.setString(1, account);
+				ps.setInt(2, 1);
+				ps.setLong(3, new Date().getTime() / 1000);
+				ps.setLong(4, id);
 				n = ps.executeUpdate();
 			}
 		}
 		
 		// TODO _del cache
+		ArticleService.updateCUISDelete(id);
+		CourseService.updateCUISDelete(id);
 		return n;
 	}
 	

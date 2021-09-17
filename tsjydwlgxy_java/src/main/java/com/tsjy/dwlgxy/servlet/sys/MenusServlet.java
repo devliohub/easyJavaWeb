@@ -30,11 +30,13 @@ public class MenusServlet extends BaseServlet
 			  
 			//#
 			int pid   = StringUtil.getInt(request.getParameter("pid"), 0)  ;
+			boolean is_article_type   = StringUtil.getBoolean(request.getParameter("is_article_type"))  ;
 			
 			
 			  
 			//#
-	        List<Menu> list = MenuService.getRows( String.format("pid=%s and is_delete=0 ", pid), "sortnum asc");
+			String whereType =  is_article_type ?  " and type=1 " : "";
+	        List<Menu> list = MenuService.getRows( String.format("pid=%s %s and is_delete=0 ", pid, whereType), "sortnum asc");
 		        
 	        
 	        //#outList for dynamic column
@@ -44,7 +46,7 @@ public class MenusServlet extends BaseServlet
 	        		pre.sub_menus = MenuService.getRows( String.format("pid=%s and is_delete=0 ", pre.id), "sortnum asc");
 	        	}
 	        	
-        		pre.is_course_menu = pre.name.equals("通识课程");
+        		pre.is_course_menu = pre.type == 3;  //pre.name.equals("通识课程");
 	        }
 	        
 		        

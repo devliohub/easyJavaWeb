@@ -38,13 +38,41 @@ public class AddServlet extends AdminBaseServlet
 	        
 	        
 	        //#
-	        if( StringUtil.invalid(name)  || (type == 1 && layout == 0) || (type == 2 && StringUtil.invalid(url)) ) 
+	        if( StringUtil.invalid(name) ) 
 	        {
 	        	// TODO  Log
 	        	return jsonReturn(
-	                ErrConfig.getErr(ErrConfig.BAD_REQUEST, "")
+	                ErrConfig.getErr(ErrConfig.WRITING_ERROR, "请输入菜单名称")
 	            );
 	        	
+	        }
+	        if( name.length() > 100 )
+	        {
+	        	// TODO  Log
+                return jsonReturn(
+                    ErrConfig.getErr(ErrConfig.INTERNAL_SERVER_ERROR, "菜单名称不能超过100字符")
+                );
+	        }
+	        if( (type == 1 && layout == 0) ) 
+	        {
+	        	// TODO  Log
+                return jsonReturn(
+                    ErrConfig.getErr(ErrConfig.INTERNAL_SERVER_ERROR, "请选择样式")
+                );
+	        }
+	        if( (type == 2 && StringUtil.invalid(url)) ) 
+	        {
+	        	// TODO  Log
+                return jsonReturn(
+                    ErrConfig.getErr(ErrConfig.INTERNAL_SERVER_ERROR, "请输入链接")
+                );
+	        }
+	        if( (type == 2 && ! StringUtil.ValidURL(url)) ) 
+	        {
+	        	// TODO  Log
+                return jsonReturn(
+                    ErrConfig.getErr(ErrConfig.INTERNAL_SERVER_ERROR, "请输入有效链接")
+                );
 	        }
 	        
 	        

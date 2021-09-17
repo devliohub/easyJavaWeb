@@ -39,10 +39,17 @@ public class AddServlet extends AdminBaseServlet
 	        {
 	        	// TODO  Log
 	        	return jsonReturn(
-	                ErrConfig.getErr(ErrConfig.BAD_REQUEST, "")
+	        			ErrConfig.getErr(ErrConfig.INTERNAL_SERVER_ERROR, "图片不能为空")
 	            );
 	        	
 	        }
+//	        if( ! StringUtil.invalid(url) && ! StringUtil.ValidURL(url) ) 
+//	        {
+//	        	// TODO  Log
+//                return jsonReturn(
+//                    ErrConfig.getErr(ErrConfig.INTERNAL_SERVER_ERROR, "请输入有效链接地址")
+//                );
+//	        }
 	        
 	        
 	        //#

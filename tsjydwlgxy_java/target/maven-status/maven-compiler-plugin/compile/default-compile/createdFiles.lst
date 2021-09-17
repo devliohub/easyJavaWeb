@@ -22,6 +22,7 @@ com\tsjy\dwlgxy\servlet\admin\menu\ListServlet.class
 com\tsjy\dwlgxy\servlet\sys\MenusServlet.class
 com\tsjy\dwlgxy\bean\ResponseData.class
 com\tsjy\dwlgxy\common\conf\ErrConfig.class
+com\tsjy\dwlgxy\service\ArticleService$1.class
 com\tsjy\dwlgxy\servlet\admin\LoginOutServlet.class
 com\tsjy\dwlgxy\servlet\admin\article\AddServlet.class
 com\tsjy\dwlgxy\servlet\admin\banner\UpdateServlet.class
@@ -39,6 +40,7 @@ com\tsjy\dwlgxy\bean\Article.class
 com\tsjy\dwlgxy\servlet\admin\course\AddServlet.class
 com\tsjy\dwlgxy\servlet\sys\CourseTypesServlet.class
 com\tsjy\dwlgxy\servlet\sys\UploadServlet.class
+com\tsjy\dwlgxy\bean\ArticleAttachmentData.class
 com\tsjy\dwlgxy\common\AdminBaseServlet.class
 com\tsjy\dwlgxy\service\CourseService.class
 com\tsjy\dwlgxy\servlet\admin\course\InfoServlet.class

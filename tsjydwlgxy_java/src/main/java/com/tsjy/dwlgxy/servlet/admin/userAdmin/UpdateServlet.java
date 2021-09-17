@@ -46,19 +46,6 @@ public class UpdateServlet extends AdminBaseServlet
 	        
 	        
 	        //#
-	        if( id == 0 || StringUtil.invalid(name) || StringUtil.invalid(account) || StringUtil.invalid(password) || StringUtil.invalid(rolemenuids) ) 
-	        {
-	        	// TODO  Log
-	        	return jsonReturn(
-	                ErrConfig.getErr(ErrConfig.BAD_REQUEST, "")
-	            );
-	        	
-	        }
-	        
-	        
-			
-			
-			//#
 	        UserAdmin obj = UserAdminService.getRow(id);
 	        if(obj == null)
 	        {
@@ -67,6 +54,85 @@ public class UpdateServlet extends AdminBaseServlet
                     ErrConfig.getErr(ErrConfig.WRITING_ERROR, "不存在")
                 );
 	        }
+	        
+	        
+	        
+	        //#
+	        if( StringUtil.invalid(name) )
+	        {
+	        	// TODO  Log
+                return jsonReturn(
+                    ErrConfig.getErr(ErrConfig.INTERNAL_SERVER_ERROR, "请输入姓名")
+                );
+	        }
+	        if( name.length() > 100 )
+	        {
+	        	// TODO  Log
+                return jsonReturn(
+                    ErrConfig.getErr(ErrConfig.INTERNAL_SERVER_ERROR, "姓名不能超过100字符")
+                );
+	        }
+	        if( StringUtil.invalid(account) )
+	        {
+	        	// TODO  Log
+                return jsonReturn(
+                    ErrConfig.getErr(ErrConfig.INTERNAL_SERVER_ERROR, "请输入账号")
+                );
+	        }
+	        if( account.length() > 100 )
+	        {
+	        	// TODO  Log
+                return jsonReturn(
+                    ErrConfig.getErr(ErrConfig.INTERNAL_SERVER_ERROR, "账号不能超过100字符")
+                );
+	        }
+	        if( ! StringUtil.checkLoginAccountInput(account) )
+	        {
+	        	// TODO  Log
+                return jsonReturn(
+                    ErrConfig.getErr(ErrConfig.INTERNAL_SERVER_ERROR, "账号不能包含特殊字符")
+                );
+	        }
+	        System.out.println(account);
+	        System.out.println(obj.account);
+	        System.out.println(! obj.account.equals(account));
+	        if( ! obj.account.equals(account) )
+	        {
+	        	UserAdmin existObj = UserAdminService.getRow(account);
+		        if( existObj != null )
+		        {
+		        	// TODO  Log
+	                return jsonReturn(
+	                    ErrConfig.getErr(ErrConfig.INTERNAL_SERVER_ERROR, "账号已存在")
+	                );
+		        }
+	        }
+	        if( StringUtil.invalid(password) )
+	        {
+	        	// TODO  Log
+                return jsonReturn(
+                    ErrConfig.getErr(ErrConfig.INTERNAL_SERVER_ERROR, "请输入密码")
+                );
+	        }
+	        if( ! StringUtil.isMatchesLoginPassword(password) )
+	        {
+	        	// TODO  Log
+                return jsonReturn(
+                    ErrConfig.getErr(ErrConfig.INTERNAL_SERVER_ERROR, "密码应为6-18位字母或数字")
+                );
+	        }
+	        if( StringUtil.invalid(rolemenuids) )
+	        {
+	        	// TODO  Log
+                return jsonReturn(
+                    ErrConfig.getErr(ErrConfig.INTERNAL_SERVER_ERROR, "至少勾选一项权限")
+                );
+	        }
+	        
+	        
+			
+			
+			
 	        
 	        
 	        

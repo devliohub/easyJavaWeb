@@ -30,31 +30,35 @@ public class HomeServlet extends BaseServlet
 		  {
 			  
 			
+			  
+			
+			//#
+			List<Banner> list0 = BannerService.getRows("is_delete=0", "sortnum desc");
 			
 			
 			//#
 	    	Menu obj11 = MenuService.getRowByName("通识新闻");
 	        List<Article>  list11  = obj11 == null ? null : ArticleService.getLimitRows(
-	        		String.format("menu_pid=%s and menu_id=%s and is_delete=0 ", obj11.pid, obj11.id), 
-	        		"is_top desc, create_time desc", 
+	        		String.format("menu_pid=%s %s and is_delete=0 ", (obj11.pid==0 ? obj11.id : obj11.pid), (obj11.pid==0 ? "" : "and menu_id=" + obj11.pid)), 
+	        		"is_top desc, publish_time desc", 
 	        		5
     		);
 	    	Menu obj12 = MenuService.getRowByName("通识活动");
 	        List<Article>  list12  = obj12 == null ? null : ArticleService.getLimitRows(
-	        		String.format("menu_pid=%s and menu_id=%s and is_delete=0 ", obj12.pid, obj12.id), 
-	        		"is_top desc, create_time desc", 
+	        		String.format("menu_pid=%s %s and is_delete=0 ", (obj12.pid==0 ? obj12.id : obj12.pid), (obj12.pid==0 ? "" : "and menu_id=" + obj12.pid)), 
+	        		"is_top desc, publish_time desc", 
 	        		5
     		);
 	        Menu obj13 = MenuService.getRowByName("通识教育大讲堂");
 	        List<Article>  list13  = obj13 == null ? null : ArticleService.getLimitRows(
-	        		String.format("menu_pid=%s and menu_id=%s and is_delete=0 ", obj13.pid, obj13.id), 
-	        		"is_top desc, create_time desc", 
+	        		String.format("menu_pid=%s %s and is_delete=0 ", (obj13.pid==0 ? obj13.id : obj13.pid), (obj13.pid==0 ? "" : "and menu_id=" + obj13.pid)), 
+	        		"is_top desc, publish_time desc", 
 	        		5
     		);
 	        Menu obj14 = MenuService.getRowByName("求是读书计划");
 	        List<Article>  list14  = obj14 == null ? null : ArticleService.getLimitRows(
-	        		String.format("menu_pid=%s and menu_id=%s and is_delete=0 ", obj14.pid, obj14.id), 
-	        		"is_top desc, create_time desc", 
+	        		String.format("menu_pid=%s %s and is_delete=0 ", (obj14.pid==0 ? obj14.id : obj14.pid), (obj14.pid==0 ? "" : "and menu_id=" + obj14.pid)), 
+	        		"is_top desc, publish_time desc", 
 	        		5
     		);
 	        HomeArticleData[] list1 = { 
@@ -89,8 +93,8 @@ public class HomeServlet extends BaseServlet
 	        //#
 	        Menu obj31 = MenuService.getRowByName("学生风采");
 	        List<Article>  list31  = obj31 == null ? null : ArticleService.getLimitRows(
-	        		String.format("menu_pid=%s and menu_id=%s and is_delete=0 ", obj31.pid, obj31.id), 
-	        		"is_top desc, create_time desc", 
+	        		String.format("menu_pid=%s %s and is_delete=0 ", (obj31.pid==0 ? obj31.id : obj31.pid), (obj31.pid==0 ? "" : "and menu_id=" + obj31.pid)), 
+	        		"is_top desc, publish_time desc", 
 	        		4
     		);
 	        HomeArticleData  list3 =  new HomeArticleData( (obj31 == null ? 0 : obj31.id), "学生风采",  list31);
@@ -102,8 +106,8 @@ public class HomeServlet extends BaseServlet
 	        //#
 	        Menu obj41 = MenuService.getRowByName("课程成果展示");
 	        List<Article>  list41  = obj41 == null ? null : ArticleService.getLimitRows(
-	        		String.format("menu_pid=%s and menu_id=%s and is_delete=0 ", obj41.pid, obj41.id), 
-	        		"is_top desc, create_time desc", 
+	        		String.format("menu_pid=%s %s and is_delete=0 ", (obj41.pid==0 ? obj41.id : obj41.pid), (obj41.pid==0 ? "" : "and menu_id=" + obj41.pid)), 
+	        		"is_top desc, publish_time desc", 
 	        		5
     		);
 	        HomeArticleData  list4 =  new HomeArticleData( (obj41 == null ? 0 : obj41.id), "课程成果展示",  list41);
@@ -114,6 +118,7 @@ public class HomeServlet extends BaseServlet
 	        
 	        //#
 			return jsonReturn(new HomeData(
+					list0,
 					list1, 
 					list2,
 					list3,

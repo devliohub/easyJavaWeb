@@ -43,7 +43,7 @@ public class UpdateServlet extends AdminBaseServlet
 	        
 	        
 	        //#
-	        if( id == 0 || StringUtil.invalid(name) || StringUtil.invalid(url) || module_id == 0 || type_id == 0 || StringUtil.invalid(cover) ) 
+	        if( id == 0 ) 
 	        {
 	        	// TODO  Log
 	        	return jsonReturn(
@@ -51,20 +51,43 @@ public class UpdateServlet extends AdminBaseServlet
 	            );
 	        	
 	        }
-	        
-	        
-	        //#
-			if ( this.userInfo == null  ) 
+	        if( StringUtil.invalid(name) )
 	        {
-				// TODO  Log
-	        	return jsonReturn(
-	                ErrConfig.getErr(ErrConfig.NOT_LOGIN, "")
-	            );
-	        	
+	        	// TODO  Log
+                return jsonReturn(
+                    ErrConfig.getErr(ErrConfig.INTERNAL_SERVER_ERROR, "请输入课程名称")
+                );
+	        }
+	        if( name.length() > 200 )
+	        {
+	        	// TODO  Log
+                return jsonReturn(
+                    ErrConfig.getErr(ErrConfig.INTERNAL_SERVER_ERROR, "课程名称不能超过200字符")
+                );
+	        }
+//	        if( StringUtil.invalid(url) )
+//	        {
+//	        	// TODO  Log
+//                return jsonReturn(
+//                    ErrConfig.getErr(ErrConfig.INTERNAL_SERVER_ERROR, "请输入链接地址")
+//                );
+//	        }
+	        if( ! StringUtil.invalid(url) &&  url.length() > 1000 )
+	        {
+	        	// TODO  Log
+                return jsonReturn(
+                    ErrConfig.getErr(ErrConfig.INTERNAL_SERVER_ERROR, "链接地址不能超过1000字符")
+                );
+	        }
+	        if( ! StringUtil.invalid(url) && ! StringUtil.ValidURL(url) ) 
+	        {
+	        	// TODO  Log
+                return jsonReturn(
+                    ErrConfig.getErr(ErrConfig.INTERNAL_SERVER_ERROR, "请输入有效链接地址")
+                );
 	        }
 	        
 	        
-			
 			
 			//#
 	        Course obj = CourseService.getRow(id);

@@ -7,6 +7,7 @@ public class Course {
 	public String url;
 	public int module_id;
 	public int type_id;
+	public String typeName;
 	public String cover;
 	public int is_delete;
 	public long create_uid;
