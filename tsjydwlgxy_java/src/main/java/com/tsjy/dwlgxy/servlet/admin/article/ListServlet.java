@@ -64,7 +64,7 @@ public class ListServlet extends AdminBaseServlet
 			
 			
 			//#
-	        List<Article> list = ArticleService.getRows(where, "id desc", pageNo, pageSize);
+	        List<Article> list = ArticleService.getRows(where, "publish_time desc", pageNo, pageSize);
 	        long total = ArticleService.getCount(where);
 	        
 	        

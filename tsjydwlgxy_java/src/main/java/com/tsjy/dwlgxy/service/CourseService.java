@@ -61,6 +61,8 @@ public class CourseService
 			}
 		}
 		
+		
+		
 		return list;
 	}
 	
@@ -174,5 +176,36 @@ public class CourseService
 		return n;
 	}
 	
+	
+	//
+	public static int updateCUName(long create_uid, String create_uname) throws SQLException {
+		int n =  0;
+		try (Connection conn = DbConfig.getPool().getConnection()) {
+			try (PreparedStatement ps = conn.prepareStatement("UPDATE course SET create_uname=? where create_uid=?")) {
+				ps.setString(1, create_uname);
+				ps.setLong(2, create_uid);
+				n = ps.executeUpdate();
+			}
+		}
+		
+		// TODO _del cache
+		return n;
+	}
+	
+	
+	//
+	public static int updateCUISDelete(long create_uid) throws SQLException {
+		int n =  0;
+		try (Connection conn = DbConfig.getPool().getConnection()) {
+			try (PreparedStatement ps = conn.prepareStatement("UPDATE course SET create_uis_delete=? where create_uid=?")) {
+				ps.setInt(1, 1);
+				ps.setLong(2, create_uid);
+				n = ps.executeUpdate();
+			}
+		}
+		
+		// TODO _del cache
+		return n;
+	}
 
 }

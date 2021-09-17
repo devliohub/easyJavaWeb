@@ -37,15 +37,23 @@ public class ListServlet extends BaseServlet
 	        int pageSize = StringUtil.getInt(request.getParameter("pageSize"), 10);
 	        
 	        
+	        
+	        
+	        
 	        //#
-//	        if( menu_pid == 0 ) 
-//	        {
-//	        	// TODO  Log
-//	        	return jsonReturn(
-//	                ErrConfig.getErr(ErrConfig.BAD_REQUEST, "")
-//	            );
-//	        	
-//	        }
+	        if( menu_pid == 0 && menu_id > 0 ) 
+        	// 一级菜单ID 转换 文章的一级菜单ID
+	        {
+	        	menu_pid  = menu_id;
+	        	menu_id   = 0;
+	        }
+	        Menu obj   = MenuService.getRow( (menu_id > 0 ? menu_id : menu_pid) );
+	        int layout = obj == null ? 0 : obj.layout;
+	        
+	        
+	        
+	        
+	        
 	        
 	        
 	        // #
@@ -65,7 +73,7 @@ public class ListServlet extends BaseServlet
 			//#
 	        List<Article>  list  = ArticleService.getRows(
 	        		where, 
-	        		"is_top desc, create_time desc", 
+	        		"is_top desc, publish_time desc", 
 	        		pageNo, 
 	        		pageSize
     		);
@@ -84,7 +92,8 @@ public class ListServlet extends BaseServlet
 	        //#
 			return jsonReturn(new PageData(
 					total, 
-					list
+					list,
+					layout
 			));
 		  }
 		  catch (UserException ex){

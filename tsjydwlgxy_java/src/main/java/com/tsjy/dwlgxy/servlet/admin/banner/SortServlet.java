@@ -65,12 +65,12 @@ public class SortServlet extends AdminBaseServlet
 	        if( sorttype.equals("prev") )
         	// prev
 	        {
-	        	List<Banner> objPrevList = BannerService.getLimitRows( String.format("is_delete=0  and sortnum <= %s and id <> %s", obj.sortnum, obj.id), "sortnum desc", 1);
+	        	List<Banner> objPrevList = BannerService.getLimitRows( String.format("is_delete=0  and sortnum >= %s and id <> %s", obj.sortnum, obj.id), "sortnum asc", 1);
 	        	if( objPrevList != null )
 	        	{
 	        		Banner objPrev = objPrevList.get(0);
 	        		//
-	    	        obj.sortnum = objPrev.sortnum - 1;
+	    	        obj.sortnum = objPrev.sortnum + 1;
 	    	        obj.update_time = new Date().getTime() / 1000;	
 	    	        int ret =  BannerService.updateSortNum(obj);
 	    	        if(ret == 0)
@@ -87,12 +87,13 @@ public class SortServlet extends AdminBaseServlet
         	// next
 	        {
 	        	
-	        	List<Banner> objNextList = BannerService.getLimitRows( String.format("is_delete=0  and sortnum > %s and id <> %s", obj.sortnum, obj.id), "sortnum asc", 1);
+	        	List<Banner> objNextList = BannerService.getLimitRows( String.format("is_delete=0  and sortnum <= %s and id <> %s", obj.sortnum, obj.id), "sortnum desc", 1);
+	        	System.out.print(objNextList);
 	        	if( objNextList != null )
 	        	{
 	        		Banner objNext = objNextList.get(0);
 	        		//
-	    	        obj.sortnum = objNext.sortnum + 1;
+	    	        obj.sortnum = objNext.sortnum - 1;
 	    	        obj.update_time = new Date().getTime() / 1000;	
 	    	        int ret =  BannerService.updateSortNum(obj);
 	    	        if(ret == 0)

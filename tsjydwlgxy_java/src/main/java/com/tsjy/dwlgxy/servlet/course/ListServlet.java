@@ -61,6 +61,26 @@ public class ListServlet extends BaseServlet
 	        long total = CourseService.getCount(where);
 	        
 	        
+	        
+	        
+	      //#outList for dynamic column
+	      for (Course pre : list) {
+	        	if(pre.type_id == 1) {
+	        		pre.typeName = "公共必修课";
+	        	}
+	        	else if(pre.type_id == 2) {
+	        		pre.typeName = "公共选修课";
+	        	}
+	        	else if(pre.type_id == 3) {
+	        		pre.typeName = "核心限选课";
+	        	} else {
+	        		pre.typeName = "";
+	        	} 
+	      }
+	        
+	        
+	        
+	        
 	        //#
 			return jsonReturn(new PageData(
 					total, 

@@ -51,7 +51,9 @@ public class ListServlet extends AdminBaseServlet
 		    StringBuilder sb = new StringBuilder();
 		    if( StringUtil.valid(name) ) 
 		    {
-		    	sb.append("name like '%").append(name).append("%'").append(" and is_delete=0");
+		    	sb.append("(name like '%").append(name).append("%'")
+		    	  .append(" or account like '%").append(name).append("%')")
+		    	 .append(" and is_delete=0");
 		    }
 		    else
 		    {

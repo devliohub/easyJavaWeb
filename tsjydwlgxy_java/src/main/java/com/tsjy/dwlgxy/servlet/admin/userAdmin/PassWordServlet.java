@@ -36,19 +36,36 @@ public class PassWordServlet extends AdminBaseServlet
 	        
 	        
 	        
+	        
+	        
 	        //#
 	        if( StringUtil.invalid(password) || StringUtil.invalid(newpassword) ) 
 	        {
 	        	// TODO  Log
 	        	return jsonReturn(
-	                ErrConfig.getErr(ErrConfig.BAD_REQUEST, "")
+	        			ErrConfig.getErr(ErrConfig.INTERNAL_SERVER_ERROR, "请输入密码")
 	            );
 	        	
 	        }
-	        
-	        
+			if( ! this.userInfo.password.equals(password) )
+	        {
+	        	// TODO  Log
+                return jsonReturn(
+                    ErrConfig.getErr(ErrConfig.WRITING_ERROR, "密码错误")
+                );
+	        }
+			if( ! StringUtil.isMatchesLoginPassword(newpassword) )
+	        {
+	        	// TODO  Log
+                return jsonReturn(
+                    ErrConfig.getErr(ErrConfig.INTERNAL_SERVER_ERROR, "密码应为6-16位字母或数字")
+                );
+	        }
 			
-		    //#
+			
+			
+			
+			//#
 			if ( this.userInfo == null  ) 
 	        {
 				// TODO  Log
@@ -57,22 +74,12 @@ public class PassWordServlet extends AdminBaseServlet
 	            );
 	        	
 	        }
-			
-			
-			//#
-			if( ! this.userInfo.password.equals(password) )
-	        {
-	        	// TODO  Log
-                return jsonReturn(
-                    ErrConfig.getErr(ErrConfig.WRITING_ERROR, "旧密码不正确")
-                );
-	        }
 	        
 	        
 	        
 	        //#
 	         
-			this.userInfo.account = newpassword;
+			this.userInfo.password = newpassword;
 			this.userInfo.update_time = new Date().getTime() / 1000;	
 	        int ret = UserAdminService.updatePassWord(this.userInfo);
 	        if(ret == 0)

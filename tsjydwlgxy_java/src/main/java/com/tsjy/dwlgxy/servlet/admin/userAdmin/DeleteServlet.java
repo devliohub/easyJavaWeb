@@ -31,7 +31,7 @@ public class DeleteServlet extends AdminBaseServlet
 		  {
 			  
 			//#
-			int id = StringUtil.getInt(request.getParameter("id"), 0);
+			long id = StringUtil.getInt(request.getParameter("id"), 0);
 	        
 	        
 	        
@@ -61,7 +61,8 @@ public class DeleteServlet extends AdminBaseServlet
 	        
 	        
 	        //#
-	        int ret = UserAdminService.delete(id);
+	        obj.account = obj.account + "_del_" + obj.id; 
+	        int ret = UserAdminService.delete(id, obj.account);
 	        if(ret == 0)
 	        {
 	        	// TODO  Log
