@@ -1,6 +1,17 @@
 <template>
   <div class="item_card_small">
-    <img :src="entity.cover" alt="" />
+    <!-- 课程/文章卡片 默认失败图 -->
+    <van-image :src="entity.cover" v-if="isKechengPage">
+      <template v-slot:error>
+        <img src="@/assets/kechengMR.jpg" alt="" />
+      </template>
+    </van-image>
+    <van-image :src="entity.cover" v-else>
+      <template v-slot:error>
+        <img src="@/assets/wenzhangMR.jpg" alt="" />
+      </template>
+    </van-image>
+
     <span
       :class="{
         _orange: entity.typeName == '公共必修课',
@@ -46,16 +57,20 @@
   position: relative;
   span {
     position: absolute;
-    left: 3px;
-    top: 45px;
+    left: 6px;
+    top: 65px;
     z-index: 1;
     padding: 5px 10px;
     border-radius: 3px;
     color: #fff;
   }
-  & > img {
+  & > .van-image {
     width: 100%;
-    height: 70px;
+    height: 93px;
+    .van-image__error img {
+      width: 100%;
+      height: 93px;
+    }
   }
   ._orange {
     background: #ffaf00;
@@ -69,15 +84,17 @@
   & > main {
     .title {
       font-size: 14px;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
       overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      padding: 10px 0;
-      font-weight: bold;
+      margin: 10px 0;
+      font-weight: 500;
+      line-height: 1.2;
       color: #444;
     }
     .time {
-      padding: 5px 0 15px 0;
+      padding: 0 0 15px 0;
       font-size: 12px;
       color: #969696;
     }

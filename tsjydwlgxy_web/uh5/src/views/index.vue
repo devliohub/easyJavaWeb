@@ -1,8 +1,5 @@
 <template>
   <div class="index">
-    <!-- 回到顶部 -->
-    <nut-backtop :duration="1000" :bottom="60"></nut-backtop>
-
     <div class="let_fixed">
       <van-icon v-if="showPop" name="cross" @click="showPop = false" />
       <van-icon v-else name="wap-nav" @click="showPop = true" />

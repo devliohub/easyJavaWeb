@@ -23,6 +23,7 @@
             v-for="(item, index) in dataList"
             :key="index"
             @click="kechengDesc(item)"
+            :class="{ margin_right_0: index % 2 == 1 }"
           >
             <item-card-small :entity="item" />
           </li>
@@ -129,9 +130,28 @@
     .ul {
       display: flex;
       flex-wrap: wrap;
+      .margin_right_0 {
+        padding-right: 0 !important;
+      }
       li {
         width: 50%;
-        padding: 10px 5px;
+        padding: 0 15px 10px 0;
+      }
+    }
+    .van-pagination {
+      margin: 14px 0 30px 0;
+      .van-pagination__page-desc {
+        margin: 0 15px;
+      }
+      .van-pagination__item {
+        border: 1px solid #c5c5c5;
+        color: #462b2b;
+        border-radius: 4px;
+        height: 40px;
+      }
+      .van-pagination__next,
+      .van-pagination__prev {
+        padding: 0;
       }
     }
   }

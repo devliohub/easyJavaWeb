@@ -9,11 +9,11 @@
       <header>
         <div class="title">{{ entity.title }}</div>
         <div class="time">
-          {{ dateFormater(entity.create_time * 1000, 'YYYY/MM/DD HH:mm') }}
+          {{ dateFormater(entity.create_time * 1000, 'YYYY/MM/DD') }}
         </div>
       </header>
       <article v-html="entity.content"></article>
-      <div class="fujianList">
+      <div class="fujianList" v-if="entity.attachmentArr.length > 0">
         <header>
           <span>附件</span>
         </header>
@@ -28,7 +28,7 @@
             <i class="el-icon-document-copy"></i>
             <div class="midder">
               <span>{{ item.fileName }}</span>
-              <span>{{ item.item.sizeFormat }}</span>
+              <span>{{ item.sizeFormat }}</span>
             </div>
           </li>
         </ul>
@@ -45,7 +45,9 @@
     data() {
       return {
         isloading: false,
-        entity: {},
+        entity: {
+          attachmentArr: [],
+        },
       }
     },
     computed: {},
@@ -95,14 +97,15 @@
       }
     }
     article {
+      overflow: auto;
       text-indent: 2em;
       font-size: 14px;
       line-height: 1.5;
-      border-bottom: 1px solid #eee;
       padding-bottom: 20px;
       overflow-wrap: break-word;
     }
     .fujianList {
+      border-top: 1px solid #eee;
       padding: 20px 0;
       & > header {
         padding: 10px 0;

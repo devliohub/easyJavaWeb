@@ -36,14 +36,18 @@
   }
   & > main {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     .title {
       font-size: 14px;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      padding: 10px 0;
+      margin: 0 0 10px 0;
       font-weight: bold;
       color: #444;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      overflow: hidden;
     }
     .time {
       padding: 5px 0;

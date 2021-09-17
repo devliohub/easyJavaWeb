@@ -16,14 +16,6 @@ import 'lib-flexible/flexible.js'
 import Vant from 'vant';
 import 'vant/lib/index.css';
 
-// nutui
-import calendar from '@nutui/nutui/dist/packages/calendar/calendar.js';  // 加载构建后的JS
-import '@nutui/nutui/dist/packages/calendar/calendar.css';  //加载构建后的CSS
-calendar.install(Vue);
-import backtop from '@nutui/nutui/dist/packages/backtop/backtop.js';  // 加载构建后的JS
-import '@nutui/nutui/dist/packages/backtop/backtop.css';  //加载构建后的CSS
-backtop.install(Vue);
-
 // 样式
 import "@/assets/iconfont/iconfont.css"
 import '@/styles/index.scss'
