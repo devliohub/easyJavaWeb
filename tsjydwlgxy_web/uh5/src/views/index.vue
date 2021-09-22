@@ -3,7 +3,7 @@
     <div class="let_fixed">
       <van-icon v-if="showPop" name="cross" @click="showPop = false" />
       <van-icon v-else name="wap-nav" @click="showPop = true" />
-      <div>东莞理工学院通识教育中心</div>
+      <img src="@/assets/logo@2x.png" alt="" />
     </div>
 
     <transition name="fade-transform" mode="out-in">

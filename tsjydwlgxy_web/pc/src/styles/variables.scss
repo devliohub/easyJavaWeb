@@ -1,4 +1,47 @@
 //sidebar
-$menuBg:#304156;
-$subMenuBg:#1f2d3d;
-$menuHover:#001528;
+$menuBg: #304156;
+$subMenuBg: #1f2d3d;
+$menuHover: #001528;
+
+@media screen and (min-width: 768px) {
+  .navbar2 main,
+  .index_items > ul,
+  .saler > main,
+  .footer > main,
+  .index_modules main,
+  .index_modules ul,
+  .index_tongshi main,
+  .index_luntan ul,
+  .index_xuesheng main,
+  .index_kecheng main {
+    width: 768px !important;
+  }
+}
+@media screen and (min-width: 980px) {
+  .navbar2 main,
+  .index_items > ul,
+  .saler > main,
+  .footer > main,
+  .index_modules main,
+  .index_modules ul,
+  .index_tongshi main,
+  .index_luntan ul,
+  .index_xuesheng main,
+  .index_kecheng main {
+    width: 980px !important;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .navbar2 main,
+  .index_items > ul,
+  .saler > main,
+  .footer > main,
+  .index_modules main,
+  .index_modules ul,
+  .index_tongshi main,
+  .index_luntan ul,
+  .index_xuesheng main,
+  .index_kecheng main {
+    width: 1200px !important;
+  }
+}

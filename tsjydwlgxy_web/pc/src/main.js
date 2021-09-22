@@ -3,6 +3,8 @@ import VueRouter from 'vue-router'
 import App from "./App.vue";
 import routes from "./router/index";
 import store from "./store";
+// 适配
+import 'lib-flexible/flexible.js'
 
 import SvgIcon from '@/components/SvgIcon'// svg组件
 Vue.component('svg-icon', SvgIcon)

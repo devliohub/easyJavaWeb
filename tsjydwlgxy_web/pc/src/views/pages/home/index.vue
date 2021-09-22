@@ -147,7 +147,7 @@
           >
             <el-image :src="homeList.list4.list[0].cover" alt="">
               <div slot="error" class="image-slot">
-                <img src="@/assets/wenzhangMR.jpg" alt="" />
+                <img src="@/assets/kechengMR.jpg" alt="" />
               </div>
             </el-image>
             <div class="title">
@@ -465,7 +465,11 @@
           .el-image {
             border: 20px solid #fff;
             width: 630px;
-            height: 336px;
+            height: 360px;
+            .image-slot img {
+              width: 590px;
+              height: 320px;
+            }
           }
           .title {
             margin: 20px 0;
@@ -501,6 +505,10 @@
               float: left;
               width: 160px;
               height: 90px;
+              .image-slot img {
+                width: 160px;
+                height: 90px;
+              }
             }
             & > div {
               float: left;

@@ -205,6 +205,7 @@
         color: #fff;
         font-weight: bold;
         z-index: 999;
+        font-size: 16px;
       }
       .innerLi {
         color: #fff;
