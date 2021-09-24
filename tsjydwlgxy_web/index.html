@@ -1,0 +1,41 @@
+<!doctype html>
+<!--[if lt IE 7 ]>
+<html class="ie6"> <![endif]-->
+<!--[if IE 7 ]>
+<html class="ie7"> <![endif]-->
+<!--[if IE 8 ]>
+<html class="ie8"> <![endif]-->
+<!--[if (gt IE 8)|!(IE)]><!-->
+<html class="no-js"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="description" content="">
+  <meta http-equiv="Cache-Control" content="no-cache">     
+  <script src="https://cdn.bootcdn.net/ajax/libs/device.js/0.2.7/device.js"></script>  
+  <script>
+	function detectmob() {
+	  var isMobile = navigator.userAgent.match(/Android/i)
+		|| navigator.userAgent.match(/webOS/i)
+		|| navigator.userAgent.match(/iPhone/i)
+		|| navigator.userAgent.match(/iPad/i)
+		|| navigator.userAgent.match(/BlackBerry/i)
+		|| navigator.userAgent.match(/Windows Phone/i);
+		
+	  var ua = navigator.userAgent.toLowerCase();
+	  var isWeixin = ua.match(/MicroMessenger/i) == "micromessenger" ? true : false;
+	  //alert( isMobile + '-' + isWeixin )
+	  return isMobile || isWeixin;
+	}
+	if ( device.mobile() || detectmob() ) {
+	  location.href = 'uh5/' + location.search + location.hash
+	} else {
+	  location.href = 'pc/' + location.search + location.hash
+	}
+  </script>
+</head>
+
+<body>
+	  <noscript><strong>We're sorry but my doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript>
+</body>
+</html>
