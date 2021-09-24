@@ -39,6 +39,13 @@
       color: #444;
       display: flex;
       align-items: center;
+
+      span {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        max-width: 240px;
+      }
       .dotter {
         margin-right: 8px;
         width: 6px;

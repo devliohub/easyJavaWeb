@@ -1,19 +1,5 @@
 <template>
   <div class="footer">
-    <div class="footer_top">
-      <ul>
-        <li>手机网站</li>
-        <li>
-          <span>二维码</span>
-        </li>
-      </ul>
-      <ul>
-        <li>微信公众号</li>
-        <li>
-          <span>微信公众号二维码</span>
-        </li>
-      </ul>
-    </div>
     <div class="footer_bottom">
       <ul>
         <li>联系我们</li>

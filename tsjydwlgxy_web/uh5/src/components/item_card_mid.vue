@@ -1,6 +1,11 @@
 <template>
   <div class="item_card_mid">
-    <img :src="entity.cover" alt />
+    <van-image :src="entity.cover">
+      <template v-slot:error>
+        <img src="@/assets/kechengMR.jpg" alt="" />
+      </template>
+    </van-image>
+
     <main>
       <div class="title">
         <span>{{ entity.title }}</span>
@@ -29,10 +34,14 @@
 .item_card_mid {
   width: 100%;
   display: flex;
-  & > img {
+  & > .van-image {
     width: 100px;
     margin-right: 20px;
     height: 60px;
+    .van-image__error img {
+      width: 100%;
+      height: 60px;
+    }
   }
   & > main {
     flex: 1;

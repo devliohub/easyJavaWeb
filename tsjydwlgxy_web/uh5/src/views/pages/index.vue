@@ -6,15 +6,14 @@
       :autoplay="2000"
       :show-indicators="false"
       ref="swiper"
-      style="height: 211px"
     >
       <van-swipe-item v-for="(item, index) in homeList.list0" :key="index">
-        <img :src="item.img" alt />
+        <img :src="item.img" alt @click="handleOpen(item)" />
       </van-swipe-item>
     </van-swipe>
 
     <!-- 7大模块 -->
-    <section>
+    <section class="mokuaibody">
       <div v-if="isloading" class="center_loading">
         <van-loading type="spinner" />
       </div>
@@ -67,6 +66,7 @@
 
     <!-- 四个banner -->
     <section
+      style="padding: 0 15px"
       v-for="item in homeList.list2.slice(0, 2)"
       :key="item.id"
       @click="goWengzhang(item)"
@@ -95,6 +95,7 @@
     </section>
 
     <section
+      style="padding: 0 15px"
       v-for="item in homeList.list2.slice(2)"
       :key="item.id"
       @click="goWengzhang(item)"
@@ -200,6 +201,9 @@
       viewMore(item) {
         this.$router.push('/list?id=' + item.menuId + '&pid=0')
       },
+      handleOpen(item) {
+        if (item.url) window.open(item.url)
+      },
       getImgUrl(img) {
         return require('@/assets/home/' + img + '@2x.png')
       },
@@ -244,7 +248,7 @@
     width: 100%;
     text-align: center;
     img {
-      height: 211px;
+      height: 18.75vw;
       width: 100%;
     }
   }
@@ -253,11 +257,10 @@
     position: relative;
     background: #fff;
     padding: 10px 15px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 
     .sy_banner {
       width: 100%;
-      // padding: 15px 0;
     }
 
     // 精选免单
@@ -341,6 +344,12 @@
         }
       }
     }
+  }
+
+  .mokuaibody {
+    background: url('../../assets/home/7大能力模块背景图@2x.png') no-repeat 100%
+      100%;
+    background-size: cover;
   }
 }
 </style>
