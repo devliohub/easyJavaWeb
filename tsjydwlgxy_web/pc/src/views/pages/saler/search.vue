@@ -12,7 +12,7 @@
       >
         <span> {{ item.title }}</span>
         <span>{{
-          dayjs(item.create_time * 1000).format('YYYY/MM/DD HH:mm')
+          dayjs(item.publish_time * 1000).format('YYYY/MM/DD HH:mm')
         }}</span>
       </li>
     </ul>

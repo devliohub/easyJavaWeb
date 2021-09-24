@@ -28,7 +28,7 @@
           <div class="title">{{ item.title }}</div>
           <div class="time">
             发布时间：{{
-              dateFormater(item.create_time * 1000, 'YYYY-MM-DD HH:mm')
+              dateFormater(item.publish_time * 1000, 'YYYY-MM-DD HH:mm')
             }}
           </div>
         </li>

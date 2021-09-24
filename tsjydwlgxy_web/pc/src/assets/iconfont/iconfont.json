@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "24589646",
+      "name": "fujianxiazai",
+      "font_class": "xiazai1",
+      "unicode": "e611",
+      "unicode_decimal": 58897
+    },
+    {
       "icon_id": "24397000",
       "name": "更多",
       "font_class": "gengduo",

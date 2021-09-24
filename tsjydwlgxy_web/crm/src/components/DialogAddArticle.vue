@@ -5,6 +5,8 @@
     width="900px"
     top="5vh"
     custom-class="wenzahngClass"
+    :show-close="false"
+    :close-on-click-modal="false"
   >
     <el-dialog
       :title="canView ? '预 览' : '下 载'"
@@ -27,6 +29,7 @@
     </el-dialog>
 
     <el-form
+      v-loading="isloading"
       :model="ruleForm"
       :rules="rules"
       ref="formRef"
@@ -166,7 +169,7 @@
       </el-row>
     </el-form>
     <template #footer>
-      <span class="dialog-footer">
+      <span class="dialog-footer" v-loading="isloading">
         <el-button @click="visible = false">取 消</el-button>
         <el-button type="primary" @click="submitForm">确 定</el-button>
       </span>

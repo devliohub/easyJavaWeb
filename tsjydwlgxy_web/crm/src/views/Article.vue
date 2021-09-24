@@ -22,7 +22,6 @@
             size="small"
             v-model="queryObj.menu_id"
             placeholder="请选择二级菜单"
-            clearable
           >
             <el-option
               v-for="item in submenuOptions"
@@ -68,8 +67,8 @@
       <el-table-column prop="module_id" label="所属栏目">
         <template #default="scope">
           <span>
-            {{ scope.row.menu_pname }}
-            {{ scope.row.menu_name ? '/' + scope.row.menu_name : '' }}
+            {{ scope.row.menu_pname
+            }}{{ scope.row.menu_name ? '/' + scope.row.menu_name : '' }}
           </span>
         </template>
       </el-table-column>
@@ -141,7 +140,7 @@
 
         queryObj: {
           menu_pid: 0,
-          menu_id: '',
+          menu_id: 0,
           title: '', // 标题
           pageNo: 1, // 当前页
           pageSize: 10, // 分页大小
@@ -157,9 +156,17 @@
           .then((res) => {
             if (num) {
               state.submenuOptions = res
+              state.submenuOptions.unshift({
+                id: 0,
+                name: '全部栏目',
+              })
             } else {
               state.menuOptions = res
               state.menuOptions.unshift({
+                id: 0,
+                name: '全部栏目',
+              })
+              state.submenuOptions.unshift({
                 id: 0,
                 name: '全部栏目',
               })
@@ -182,13 +189,13 @@
       const handleMenuchange = (val) => {
         console.log(val)
         if (val == 0) {
-          state.submenuOptions = []
-          state.queryObj.menu_id = ''
+          state.submenuOptions = [{ id: 0, name: '全部栏目' }]
+          state.queryObj.menu_id = 0
         } else if (val) {
           getOptions(val)
-          state.queryObj.menu_id = ''
+          state.queryObj.menu_id = 0
         } else {
-          state.submenuOptions = []
+          state.submenuOptions = [{ id: 0, name: '全部栏目' }]
         }
       }
       // 添加商品

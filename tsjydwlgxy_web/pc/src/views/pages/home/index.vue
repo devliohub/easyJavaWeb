@@ -163,7 +163,7 @@
           </div>
           <ul class="index_kecheng_right">
             <li
-              v-for="(_item, _index) in homeList.list4.list"
+              v-for="(_item, _index) in homeList.list4.list.slice(1)"
               :key="_index"
               @click="goDesc(_item)"
               :class="{ padding_top10: _index != 0 }"

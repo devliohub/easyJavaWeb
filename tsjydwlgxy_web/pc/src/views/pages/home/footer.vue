@@ -5,13 +5,13 @@
         <ul>
           <li>手机网站</li>
           <li>
-            <span>二维码</span>
+            <!-- <img src="@/assets/erweima.jpg" alt="" /> -->
           </li>
         </ul>
         <ul>
           <li>微信公众号</li>
           <li>
-            <span>微信公众号二维码</span>
+            <img src="@/assets/erweima.jpg" alt="" />
           </li>
         </ul>
       </div>
@@ -24,8 +24,22 @@
         </ul>
         <ul>
           <li>友情链接</li>
-          <li>东莞理工学院官网</li>
-          <li>东莞理工学院教务处</li>
+          <li>
+            <el-link
+              type="primary"
+              target="_blank"
+              href="https://www.dgut.edu.cn/"
+              >东莞理工学院官网</el-link
+            >
+          </li>
+          <li>
+            <el-link
+              type="primary"
+              target="_blank"
+              href="http://jwc.dgut.edu.cn/"
+              >东莞理工学院教务处</el-link
+            >
+          </li>
           <li>
             <el-link
               type="primary"
@@ -72,13 +86,12 @@
       li {
         &:first-child {
           font-weight: bold;
-          padding: 10px 0;
+          padding: 0 0 15px 0;
         }
-        & > span {
+        & > img {
           display: block;
-          width: 65px;
-          height: 65px;
-          background: #fff;
+          width: 70px;
+          height: 70px;
         }
       }
     }
@@ -86,7 +99,6 @@
   &_right {
     display: flex;
     & > ul {
-      flex: 1;
       padding: 0;
       margin-right: 100px;
       li {

@@ -17,7 +17,7 @@
     <header>
       <div class="title">{{ entity.title }}</div>
       <div class="time">
-        {{ dayjs(entity.create_time * 1000).format('YYYY/MM/DD HH:mm') }}
+        {{ dayjs(entity.publish_time * 1000).format('YYYY/MM/DD HH:mm') }}
       </div>
     </header>
     <article v-html="entity.content"></article>
@@ -34,9 +34,10 @@
           @click="viewFunc(item)"
         >
           <i
+            class="iconfont icon-xiazai1"
             :class="{ ishover: item.ishover }"
-            class="el-icon-document-copy"
           ></i>
+
           <div class="midder">
             <span :class="{ ishover: item.ishover }">{{ item.fileName }}</span>
             <span :class="{ ishover: item.ishover }">{{
@@ -201,10 +202,9 @@
         & > .downclass {
           cursor: pointer;
           line-height: 32px;
-          color: #888;
+          color: #c00900;
           &:hover {
             font-weight: bold;
-            color: #c00900;
           }
           &:click {
             color: #660000;

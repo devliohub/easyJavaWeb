@@ -9,7 +9,7 @@
       <header>
         <div class="title">{{ entity.title }}</div>
         <div class="time">
-          {{ dateFormater(entity.create_time * 1000, 'YYYY/MM/DD') }}
+          {{ dateFormater(entity.publish_time * 1000, 'YYYY/MM/DD') }}
         </div>
       </header>
       <article v-html="entity.content"></article>

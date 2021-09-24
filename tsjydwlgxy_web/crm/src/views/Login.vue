@@ -79,7 +79,7 @@
                 },
               })
               .then((res) => {
-                ElMessage.success('登陆成功')
+                ElMessage.success('登录成功')
                 localSet('token', res)
                 let arr = [
                   {

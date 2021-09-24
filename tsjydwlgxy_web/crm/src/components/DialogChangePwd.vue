@@ -14,14 +14,14 @@
           v-model="ruleForm.password"
         ></el-input>
       </el-form-item>
-      <el-form-item label="新密码" prop="newpassword" required>
+      <el-form-item label="新密码" prop="newpassword">
         <el-input
           type="password"
           placeholder="请输入新密码"
           v-model="ruleForm.newpassword"
         ></el-input>
       </el-form-item>
-      <el-form-item label="新密码" prop="newpassword2" required>
+      <el-form-item label="新密码" prop="newpassword2">
         <el-input
           type="password"
           placeholder="再次输入新密码"
@@ -49,7 +49,7 @@
     setup() {
       var validatePass = (rule, value, callback) => {
         if (value === '') {
-          callback(new Error('密码应为6-16位字母或数字'))
+          callback(new Error('输入新密码,密码应为6-16位字母或数字'))
         } else {
           if (state.ruleForm.newpassword2 !== '') {
             formRef.value.validateField('newpassword2')
@@ -79,8 +79,12 @@
           password: [
             { required: 'true', message: '旧密码不能为空', trigger: ['change'] },
           ],
-          newpassword: [{ validator: validatePass, trigger: ['change'] }],
-          newpassword2: [{ validator: validatePass2, trigger: ['change'] }],
+          newpassword: [
+            { required: 'true', validator: validatePass, trigger: ['change'] },
+          ],
+          newpassword2: [
+            { required: 'true', validator: validatePass2, trigger: ['change'] },
+          ],
         },
       })
       // 提交
@@ -94,7 +98,7 @@
               .then((res) => {
                 console.log(res)
                 if (res && res.errno == 200) {
-                  ElMessage.error('密码修改成功，请重新登陆')
+                  ElMessage.error('密码修改成功，请重新登录')
                   localRemove('token')
                   window.location.reload()
                 }

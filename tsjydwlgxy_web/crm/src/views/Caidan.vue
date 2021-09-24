@@ -152,7 +152,8 @@
 }
 .caidan-container .header span {
   margin-left: 20px;
-  color: red;
+  color: rgb(146, 146, 146);
+  font-size: 14px;
 }
 .el-card.is-always-shadow {
   min-height: 99% !important;
