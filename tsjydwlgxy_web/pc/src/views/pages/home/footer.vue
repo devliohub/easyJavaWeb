@@ -41,10 +41,7 @@
             >
           </li>
           <li>
-            <el-link
-              type="primary"
-              target="_blank"
-              href="http://121.36.22.149:9098/crm/"
+            <el-link type="primary" target="_blank" href="/crm"
               >管理后台入口</el-link
             >
           </li>

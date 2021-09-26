@@ -246,7 +246,6 @@
         )
       },
       goWengzhang(item) {
-        return
         this.$router.push(
           '/saler/wenzhang?id=' +
             item.id +
@@ -394,7 +393,7 @@
       display: flex;
       text-align: center;
       li {
-        // cursor: pointer;
+        cursor: pointer;
         flex: 1;
         margin: 20px 20px 0 0;
         img {
@@ -414,8 +413,8 @@
         overflow: hidden;
         li {
           float: left;
-          width: 282px;
-          margin-right: 3%;
+          width: 280px;
+          margin-right: 20px;
           cursor: pointer;
           img {
             height: 158px;
