@@ -244,6 +244,8 @@
                 z-index: 999;
                 padding: 6px;
                 color: #fff;
+                border-radius: 3px;
+                font-size: 12px;
               }
               .descBtn {
                 position: absolute;

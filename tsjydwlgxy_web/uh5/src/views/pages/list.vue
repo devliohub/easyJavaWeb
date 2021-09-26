@@ -33,6 +33,14 @@
           </div>
         </li>
       </ul>
+
+      <van-pagination
+        v-model="queryObj.pageNo"
+        :total-items="totalPage"
+        :items-per-page="queryObj.pageSize"
+        mode="simple"
+        @change="() => getData()"
+      />
     </template>
 
     <van-empty v-else description="暂无数据" />
@@ -55,6 +63,8 @@
           pageNo: 1,
           pageSize: 10,
         },
+        totalPage: 0,
+
         paList: [],
         isCard: false,
       }
@@ -78,6 +88,7 @@
         if (res) {
           this.paList = res.result.list
           this.isCard = res.result.layout == 2
+          this.totalPage = res.result.total
         }
         this.isloading = false
       },
@@ -102,6 +113,7 @@
   .signle_class {
     background: #f8f8f8;
   }
+
   & > .list_ul {
     display: flex;
     flex-direction: column;
@@ -126,7 +138,6 @@
   & > .card_ul {
     display: flex;
     flex-wrap: wrap;
-    // width: 50%;
     padding: 0 15px;
     li {
       width: calc(50% - 8px);
@@ -136,6 +147,24 @@
       margin-right: 0;
     }
   }
+
+  .van-pagination {
+    margin: 14px 15px 30px 15px;
+    .van-pagination__page-desc {
+      margin: 0 15px;
+    }
+    .van-pagination__item {
+      border: 1px solid #c5c5c5;
+      color: #462b2b;
+      border-radius: 4px;
+      height: 40px;
+    }
+    .van-pagination__next,
+    .van-pagination__prev {
+      padding: 0;
+    }
+  }
+
   .center_loading {
     display: block;
     position: absolute;

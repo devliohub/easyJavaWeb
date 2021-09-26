@@ -57,6 +57,7 @@
       -webkit-box-orient: vertical;
       -webkit-line-clamp: 2;
       overflow: hidden;
+      line-height: 1.2;
     }
     .time {
       padding: 5px 0;

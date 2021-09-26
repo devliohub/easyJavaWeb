@@ -114,7 +114,8 @@
       <div class="ul_free">
         <ul>
           <li
-            style="width: 50%"
+            style="width: calc(50% - 8px); margin-right: 15px"
+            :class="{ margin_right_0: index % 2 == 1 }"
             v-for="(item, index) in homeList.list3.list"
             :key="index"
             @click="goDesc(item)"

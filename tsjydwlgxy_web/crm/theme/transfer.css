@@ -1346,8 +1346,8 @@
 }
 .el-button--primary:hover,
 .el-button--primary:focus {
-  background: #49bebe;
-  border-color: #49bebe;
+  background: #66b1ff;
+  border-color: #66b1ff;
   color: #ffffff;
 }
 .el-button--primary:active {
@@ -1656,7 +1656,7 @@
 }
 .el-button--text:hover,
 .el-button--text:focus {
-  color: #49bebe;
+  color: #66b1ff;
   border-color: transparent;
   background-color: transparent;
 }

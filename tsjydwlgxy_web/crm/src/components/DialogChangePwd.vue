@@ -95,13 +95,10 @@
               .get('/api/a/user/password', {
                 params: state.ruleForm,
               })
-              .then((res) => {
-                console.log(res)
-                if (res && res.errno == 200) {
-                  ElMessage.error('密码修改成功，请重新登录')
-                  localRemove('token')
-                  window.location.reload()
-                }
+              .then(() => {
+                ElMessage.error('密码修改成功，请重新登录')
+                localRemove('token')
+                window.location.reload()
               })
           }
         })

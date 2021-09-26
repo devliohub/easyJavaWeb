@@ -25,7 +25,7 @@
           <van-collapse-item
             :is-link="item.sub_menus.length > 0"
             :disabled="!item.sub_menus > 0"
-            :title="item.name + (item.is_course_menu ? ' (定制)' : '')"
+            :title="item.name"
             :name="item.id"
             :title-class="{ is_active: $route.query.id == item.id }"
             @click.native="handleMenuClick(item)"

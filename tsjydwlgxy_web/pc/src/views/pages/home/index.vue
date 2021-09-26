@@ -115,6 +115,7 @@
             v-for="(_item, _index) in homeList.list3.list"
             :key="_index"
             @click="goDesc(_item)"
+            :class="{ margin_right_0: _index % 4 == 3 }"
           >
             <el-image :src="_item.cover" alt="">
               <div slot="error" class="image-slot">
@@ -409,15 +410,16 @@
       width: 1200px;
       margin: 0 auto;
       & > ul {
-        margin-top: 20px;
+        margin-top: 25px;
         overflow: hidden;
         li {
           float: left;
           width: 280px;
-          margin-right: 20px;
+          margin-right: 25px;
           cursor: pointer;
-          img {
-            height: 158px;
+          img,
+          .el-image {
+            height: 160px;
             width: 100%;
           }
           .title {
@@ -476,7 +478,7 @@
             font-weight: bold;
             color: #fff;
             width: 95%;
-
+            line-height: 1.2;
             overflow: hidden;
             text-overflow: ellipsis;
             display: -webkit-box;
@@ -524,6 +526,7 @@
                 display: -webkit-box;
                 -webkit-line-clamp: 2;
                 -webkit-box-orient: vertical;
+                line-height: 1.5;
                 color: #444;
                 font-weight: bold;
               }

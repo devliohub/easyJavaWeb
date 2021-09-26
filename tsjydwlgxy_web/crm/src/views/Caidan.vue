@@ -25,7 +25,7 @@
     >
       <el-table-column prop="name" label="名称" width="500">
         <template #default="scope">
-          {{ scope.row.name }}{{ scope.row.is_course_menu ? '（定制）' : '' }}
+          {{ scope.row.name }}
         </template>
       </el-table-column>
       <el-table-column label="操作">

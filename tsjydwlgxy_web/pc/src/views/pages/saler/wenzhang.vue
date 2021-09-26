@@ -142,7 +142,8 @@
           color: #c00900;
         }
       }
-      img {
+      img,
+      .el-image {
         width: 100%;
         height: 124px;
       }
