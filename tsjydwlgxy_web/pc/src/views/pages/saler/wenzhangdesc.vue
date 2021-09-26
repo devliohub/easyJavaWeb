@@ -7,11 +7,18 @@
       fullscreen
     >
       <iframe
+        v-if="isViewType"
         @load="handleIframeOnload"
         class="iframe_class"
         :src="viewEntity.fileUrl"
         frameborder="0"
       ></iframe>
+      <div class="iframe_class" v-else>
+        <div class="cantView_class">
+          <span>{{ viewEntity.fileName }}</span>
+          该附件不支持在线预览，请 <a :href="viewEntity.fileUrl">下载</a> 查看
+        </div>
+      </div>
     </el-dialog>
 
     <header>
@@ -63,6 +70,7 @@
       return {
         dialogVisible: false,
         viewEntity: {},
+        isViewType: true,
 
         isloading: false,
         entity: {
@@ -124,7 +132,11 @@
             fileUrl:
               `https://view.officeapps.live.com/op/view.aspx?src=` + item.fileUrl,
           }
+        } else if (['zip', 'xmind'].includes(sufix)) {
+          this.isViewType = false
+          this.viewEntity = JSON.parse(JSON.stringify(item))
         } else {
+          this.isViewType = true
           this.viewEntity = JSON.parse(JSON.stringify(item))
         }
         this.dialogVisible = true
@@ -186,7 +198,7 @@
           color: #929292;
         }
         & > .midder {
-          width: 120px;
+          width: 400px;
           display: flex;
           flex-direction: column;
           span {
@@ -216,7 +228,34 @@
 
   .iframe_class {
     width: 100%;
+    position: relative;
     min-height: 85vh;
+    .cantView_class {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-top: -260px;
+      margin-left: -400px;
+      background: #fff;
+      width: 800px;
+      height: 520px;
+      line-height: 520px;
+      text-align: center;
+      a {
+        color: #409eff;
+        &:hover {
+          color: #66b1ff;
+        }
+      }
+      & > span {
+        font-size: 18px;
+        height: 50px;
+        line-height: 50px;
+        color: #444;
+        display: block;
+        width: 100%;
+      }
+    }
   }
 }
 </style>

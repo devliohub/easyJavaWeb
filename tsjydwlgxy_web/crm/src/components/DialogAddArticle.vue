@@ -255,10 +255,10 @@
           .then((res) => {
             if (num) {
               state.submenuOptions = res
-              state.submenuOptions.unshift({
-                id: 0,
-                name: '--',
-              })
+              // state.submenuOptions.unshift({
+              //   id: 0,
+              //   name: '--',
+              // })
             } else {
               state.menuOptions = res
             }
@@ -301,6 +301,8 @@
           state.ruleForm = {
             ...res,
             publish_time: res.publish_time * 1000,
+            menu_pid: '',
+            menu_id: '',
           }
           state.ruleForm.cover.split(',').map((el) => {
             if (el) {
@@ -312,9 +314,9 @@
           })
           instance.txt.html(res.content)
 
-          if (state.ruleForm.menu_pid) {
-            getOptions(state.ruleForm.menu_pid)
-          }
+          // if (state.ruleForm.menu_pid) {
+          //   getOptions(state.ruleForm.menu_pid)
+          // }
         })
       }
       const onExceed = () => {
