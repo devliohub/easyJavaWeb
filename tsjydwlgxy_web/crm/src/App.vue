@@ -5,7 +5,7 @@
       <el-aside class="aside">
         <el-menu
           :default-openeds="state.defaultOpen"
-          background-color="#222832"
+          background-color="#304156"
           text-color="#fff"
           :router="true"
           :default-active="state.currentPath"
@@ -169,7 +169,7 @@
 }
 .aside {
   width: 200px !important;
-  background-color: #222832;
+  background-color: #304156;
   overflow: hidden;
   overflow-y: auto;
   -ms-overflow-style: none;
@@ -212,6 +212,9 @@
 }
 </style>
 <style>
+/* .el-menu-item.is-active {
+  color: #1890ff !important;
+} */
 body {
   padding: 0;
   margin: 0;

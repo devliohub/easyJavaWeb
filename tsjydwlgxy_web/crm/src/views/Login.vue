@@ -161,7 +161,7 @@
 .head .title {
   text-align: center;
   font-size: 28px;
-  color: #1baeae;
+  color: #1890ff;
   font-weight: bold;
 }
 .login-form {
