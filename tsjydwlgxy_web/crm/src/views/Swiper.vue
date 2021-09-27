@@ -186,6 +186,7 @@
   display: flex;
   display: -webkit-flex;
   margin-bottom: 50px;
+  flex-shrink: 0;
 }
 .swiper-container ul li img {
   width: 200px;
@@ -195,6 +196,7 @@
   text-align: right;
   flex: 1;
   display: flex;
+  flex-shrink: 0;
   display: -webkit-flex;
   align-items: center;
   -webkit-align-items: center;

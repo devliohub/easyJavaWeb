@@ -249,24 +249,35 @@
           instance.create()
         }
       })
-      const getOptions = (num) => {
+      const getOptions = (num, flag) => {
         axios
           .get('/api/sys/menus?is_article_type=true&pid=' + num)
           .then((res) => {
             if (num) {
               state.submenuOptions = res
-              // state.submenuOptions.unshift({
-              //   id: 0,
-              //   name: '--',
-              // })
             } else {
               state.menuOptions = res
+            }
+            if (flag) {
+              // 无匹配项清空
+              if (
+                !state.menuOptions.some((el) => state.ruleForm.menu_pid == el.id)
+              ) {
+                state.ruleForm.menu_pid = ''
+              }
+              if (
+                !state.submenuOptions.some(
+                  (el) => state.ruleForm.menu_id == el.id
+                )
+              ) {
+                state.ruleForm.menu_id = ''
+              }
             }
           })
       }
       const handleMenuchange = (val) => {
         if (val) {
-          getOptions(val)
+          getOptions(val, false)
           state.ruleForm.menu_id = ''
         } else {
           state.submenuOptions = []
@@ -301,9 +312,8 @@
           state.ruleForm = {
             ...res,
             publish_time: res.publish_time * 1000,
-            menu_pid: '',
-            menu_id: '',
           }
+
           state.ruleForm.cover.split(',').map((el) => {
             if (el) {
               state.fileListCover.push({
@@ -314,9 +324,9 @@
           })
           instance.txt.html(res.content)
 
-          // if (state.ruleForm.menu_pid) {
-          //   getOptions(state.ruleForm.menu_pid)
-          // }
+          if (state.ruleForm.menu_pid) {
+            getOptions(state.ruleForm.menu_pid, true)
+          }
         })
       }
       const onExceed = () => {
@@ -377,7 +387,7 @@
       // 开启弹窗
       const open = (id) => {
         state.visible = true
-        getOptions(0)
+        getOptions(0, false)
         state.fileListCover = []
 
         if (instance) instance.txt.html('<p><br></p>') // 清空上一次内容

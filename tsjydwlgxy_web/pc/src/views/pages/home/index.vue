@@ -8,7 +8,7 @@
         :interval="6000"
         trigger="click"
         arrow="always"
-        :height="'18.75vw'"
+        :height="'18.7vw'"
       >
         <el-carousel-item v-for="(item, index) in homeList.list0" :key="index">
           <img
@@ -257,7 +257,9 @@
         )
       },
       viewMore(item) {
-        this.$router.push('/saler/wenzhang?id=' + item.menuId + '&pid=0')
+        this.$router.push(
+          '/saler/wenzhang?id=' + item.menuId + '&pid=' + item.menuPId
+        )
       },
       goKecheng(item) {
         this.$router.push(
@@ -415,7 +417,7 @@
         li {
           float: left;
           width: 280px;
-          margin-right: 25px;
+          margin-right: 26px;
           cursor: pointer;
           img,
           .el-image {
@@ -426,13 +428,13 @@
             margin: 10px 0;
             color: #444;
             font-weight: bold;
-
             overflow: hidden;
             text-overflow: ellipsis;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             max-width: 100%;
+            line-height: 1.5;
           }
           .time {
             color: #969696;
@@ -478,7 +480,7 @@
             font-weight: bold;
             color: #fff;
             width: 95%;
-            line-height: 1.2;
+            line-height: 1.5;
             overflow: hidden;
             text-overflow: ellipsis;
             display: -webkit-box;

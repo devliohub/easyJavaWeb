@@ -96,9 +96,11 @@
                 params: state.ruleForm,
               })
               .then(() => {
-                ElMessage.error('密码修改成功，请重新登录')
+                ElMessage.success('密码修改成功，请重新登录')
                 localRemove('token')
-                window.location.reload()
+                setTimeout(() => {
+                  window.location.reload()
+                }, 1000)
               })
           }
         })

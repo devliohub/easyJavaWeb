@@ -144,7 +144,8 @@
     },
   }
 </script>
-<style lang="scss">
+
+<style lang="scss" scoped>
 .wenzhangdesc {
   position: relative;
   color: #444;
@@ -163,12 +164,6 @@
       color: #888;
       font-size: 12px;
     }
-  }
-  article {
-    // text-indent: 2em;
-    font-size: 14px;
-    line-height: 1.5;
-    padding-bottom: 20px;
   }
   .fujianList {
     border-top: 1px solid #eee;
@@ -256,6 +251,32 @@
         width: 100%;
       }
     }
+  }
+}
+</style>
+
+<style lang="scss">
+article {
+  font-size: 14px;
+  line-height: 1.6;
+  padding-bottom: 20px;
+  a {
+    color: #409eff !important;
+  }
+  ul {
+    list-style-type: disc;
+    list-style-position: inside;
+  }
+  ol {
+    list-style-type: decimal;
+    list-style-position: inside;
+  }
+  blockquote {
+    display: block;
+    border-left: 8px solid #d0e5f2;
+    padding: 5px 10px;
+    margin: 10px 0;
+    background-color: #f1f1f1;
   }
 }
 </style>

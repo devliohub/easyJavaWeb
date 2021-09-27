@@ -200,9 +200,7 @@
         this.isloading = false
       },
       viewMore(item) {
-        this.$router.push(
-          '/list?id=' + item.list[0].menu_id + '&pid=' + item.list[0].menu_pid
-        )
+        this.$router.push('/list?id=' + item.menuId + '&pid=' + item.menuPId)
       },
       handleOpen(item) {
         if (item.url) window.open(item.url)

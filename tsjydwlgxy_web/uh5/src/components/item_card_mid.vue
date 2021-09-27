@@ -50,16 +50,16 @@
     justify-content: space-between;
     .title {
       font-size: 14px;
-      margin: 0 0 10px 0;
-      font-weight: bold;
+      font-weight: 500;
       color: #444;
       display: -webkit-box;
       -webkit-box-orient: vertical;
       -webkit-line-clamp: 2;
       overflow: hidden;
-      line-height: 1.2;
+      line-height: 1.3;
     }
     .time {
+      margin-top: 10px;
       padding: 5px 0;
       font-size: 12px;
       color: #969696;
