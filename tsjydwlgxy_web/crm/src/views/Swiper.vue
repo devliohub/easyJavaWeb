@@ -187,6 +187,7 @@
   display: -webkit-flex;
   margin-bottom: 50px;
   flex-shrink: 0;
+  align-items: center;
 }
 .swiper-container ul li img {
   width: 200px;

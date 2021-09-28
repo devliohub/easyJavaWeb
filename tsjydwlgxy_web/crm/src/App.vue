@@ -170,7 +170,7 @@
   height: 100vh;
 }
 .aside {
-  width: 200px !important;
+  width: 240px !important;
   background-color: #304156;
   overflow: hidden;
   overflow-y: auto;
