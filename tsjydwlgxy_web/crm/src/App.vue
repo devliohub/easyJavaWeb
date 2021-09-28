@@ -60,12 +60,12 @@
       </el-aside>
       <el-container class="content">
         <div class="main">
-          <router-view />
+          <router-view v-if="myRoute.name != 'login'" />
         </div>
       </el-container>
     </el-container>
     <el-container v-else class="container2">
-      <router-view />
+      <router-view v-if="myRoute.name == 'login'" />
     </el-container>
   </div>
 </template>
@@ -76,7 +76,7 @@
   import { useRouter } from 'vue-router'
   import { pathMap, localGet, localSet } from '@/utils'
   import axios from '@/utils/axios'
-
+  import { useRoute } from 'vue-router'
   export default {
     name: 'App',
     components: {
@@ -85,6 +85,7 @@
     setup() {
       const noMenu = ['/login']
       const router = useRouter()
+      const myRoute = useRoute()
 
       const state = reactive({
         defaultOpen: ['1', '2', '3', '4'],
@@ -144,6 +145,7 @@
 
       return {
         state,
+        myRoute,
       }
     },
   }
