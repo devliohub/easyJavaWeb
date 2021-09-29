@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -116,7 +117,9 @@ public class UserAdminService
 		obj.name  = rs.getString("name");
 		obj.account  = rs.getString("account");
 		obj.password  = rs.getString("password");
-		obj.rolemenuids  = StringUtil.splitString(rs.getString("rolemenuids"), ",") ;
+		String[] rolemenuids = StringUtil.splitString(rs.getString("rolemenuids"), ",") ;
+		Arrays.sort(rolemenuids);
+		obj.rolemenuids  = rolemenuids;
 		obj.is_delete  = rs.getInt("is_delete");
 		obj.create_time  = rs.getLong("create_time");
 		obj.update_time  = rs.getLong("update_time");

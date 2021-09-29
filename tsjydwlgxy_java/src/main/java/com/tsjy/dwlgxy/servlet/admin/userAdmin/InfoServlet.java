@@ -25,7 +25,7 @@ public class InfoServlet extends AdminBaseServlet
 	protected String process(HttpServletRequest request, HttpServletResponse response) 
 	throws ServletException, IOException 
 	{
-		System.out.println("4");
+		
 		
 		  try
 		  {

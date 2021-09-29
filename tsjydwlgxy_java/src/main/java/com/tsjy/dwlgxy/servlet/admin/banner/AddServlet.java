@@ -23,7 +23,7 @@ public class AddServlet extends AdminBaseServlet
 	protected String process(HttpServletRequest request, HttpServletResponse response) 
 	throws ServletException, IOException 
 	{
-		System.out.println("4");
+		
 		
 		  try
 		  {
@@ -61,6 +61,22 @@ public class AddServlet extends AdminBaseServlet
 	            );
 	        	
 	        }
+			
+			
+			
+			
+			//#
+			long sortnum =  new Date().getTime() / 1000;	
+			List<Banner> objNextList = BannerService.getLimitRows( "is_delete=0", "sortnum desc", 1);
+			if( objNextList != null )
+        	{
+        		Banner objNext = objNextList.get(0);
+        		//
+        		if(objNext.sortnum - sortnum < 100)
+        		{
+        			sortnum += 100;
+        		}
+        	}
 	        
 	        
 	        
@@ -70,7 +86,7 @@ public class AddServlet extends AdminBaseServlet
 			Banner obj = new Banner();
 			obj.img = img;
 			obj.url = url ;
-	        obj.sortnum =  new Date().getTime() / 1000;	
+	        obj.sortnum =  sortnum;	
 	        obj.create_time = new Date().getTime() / 1000;	
 	        long ret = BannerService.add(obj);
 	        if(ret == 0)

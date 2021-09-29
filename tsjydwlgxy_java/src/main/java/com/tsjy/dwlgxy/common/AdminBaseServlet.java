@@ -29,7 +29,7 @@ public class AdminBaseServlet extends HttpServlet
     
 	private void initialize(HttpServletRequest request)  
 	{
-		System.out.println("1");
+		 
 	}
 	
 	
@@ -44,11 +44,11 @@ public class AdminBaseServlet extends HttpServlet
 	throws ServletException, IOException 
 	{
 		initialize(request);
-		System.out.println("2");
+		  
 		System.out.println(this.ignoreVerify);
 		
 		HttpSession session = request.getSession(true);
-		System.out.println("ID " + session.getId());
+		//System.out.println("ID " + session.getId());
 		
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");  
@@ -89,7 +89,7 @@ public class AdminBaseServlet extends HttpServlet
 	protected String process(HttpServletRequest request, HttpServletResponse response) 
 	throws ServletException, IOException 
 	{
-		System.out.println("3");
+		 
 		return "";
 	}
 	

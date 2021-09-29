@@ -25,7 +25,7 @@ public class SortServlet extends AdminBaseServlet
 	protected String process(HttpServletRequest request, HttpServletResponse response) 
 	throws ServletException, IOException 
 	{
-		System.out.println("4");
+		
 		
 		  try
 		  {
@@ -88,7 +88,6 @@ public class SortServlet extends AdminBaseServlet
 	        {
 	        	
 	        	List<Banner> objNextList = BannerService.getLimitRows( String.format("is_delete=0  and sortnum <= %s and id <> %s", obj.sortnum, obj.id), "sortnum desc", 1);
-	        	System.out.print(objNextList);
 	        	if( objNextList != null )
 	        	{
 	        		Banner objNext = objNextList.get(0);

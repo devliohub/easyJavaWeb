@@ -42,6 +42,7 @@ com\tsjy\dwlgxy\servlet\sys\CourseTypesServlet.class
 com\tsjy\dwlgxy\servlet\sys\UploadServlet.class
 com\tsjy\dwlgxy\bean\ArticleAttachmentData.class
 com\tsjy\dwlgxy\common\AdminBaseServlet.class
+com\tsjy\dwlgxy\common\utils\MD5Encrypt.class
 com\tsjy\dwlgxy\service\CourseService.class
 com\tsjy\dwlgxy\servlet\admin\course\InfoServlet.class
 com\tsjy\dwlgxy\servlet\admin\course\UpdateServlet.class

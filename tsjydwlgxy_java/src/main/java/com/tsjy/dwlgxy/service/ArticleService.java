@@ -159,10 +159,10 @@ public class ArticleService
 		obj.publish_time  = rs.getLong("publish_time");
 		
 		Menu menuObj = MenuService.getRow(obj.menu_id);
-		obj.menu_name =  menuObj != null ? menuObj.name : "";
+		obj.menu_name =  menuObj != null && menuObj.is_delete == 0 ? menuObj.name : "";
     	
     	Menu menuPObj = MenuService.getRow(obj.menu_pid);
-    	obj.menu_pname =  menuPObj != null ? menuPObj.name : "";
+    	obj.menu_pname =  menuPObj != null && menuPObj.is_delete == 0 ? menuPObj.name : "";
     	
     	if( StringUtil.valid(obj.attachment) )
     	{

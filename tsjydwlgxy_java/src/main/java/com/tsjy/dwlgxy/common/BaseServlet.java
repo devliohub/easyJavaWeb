@@ -28,7 +28,7 @@ public class BaseServlet extends HttpServlet
     
 	private void initialize(HttpServletRequest request)  
 	{
-		System.out.println("1");
+		 
 	}
 	
 	
@@ -43,7 +43,7 @@ public class BaseServlet extends HttpServlet
 	throws ServletException, IOException 
 	{
 		initialize(request);
-		System.out.println("2");
+		  
 		
 		
 		request.setCharacterEncoding("UTF-8");
@@ -71,7 +71,7 @@ public class BaseServlet extends HttpServlet
 	protected String process(HttpServletRequest request, HttpServletResponse response) 
 	throws ServletException, IOException 
 	{
-		System.out.println("3");
+		 
 		return "";
 	}
 	
