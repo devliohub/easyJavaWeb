@@ -8,7 +8,7 @@
         :interval="6000"
         trigger="click"
         arrow="always"
-        :height="'18.7vw'"
+        :height="'18.5vw'"
       >
         <el-carousel-item v-for="(item, index) in homeList.list0" :key="index">
           <img
