@@ -436,11 +436,9 @@
 
             if (state.type == 'add') {
               axios
-                .get('/api/a/article/add', {
-                  params: {
-                    ...state.ruleForm,
-                    publish_time: state.ruleForm.publish_time / 1000,
-                  },
+                .post('/api/a/article/add', {
+                  ...state.ruleForm,
+                  publish_time: state.ruleForm.publish_time / 1000,
                 })
                 .then(() => {
                   ElMessage.success('添加成功')
@@ -449,11 +447,9 @@
                 })
             } else {
               axios
-                .get('/api/a/article/update', {
-                  params: {
-                    ...state.ruleForm,
-                    publish_time: state.ruleForm.publish_time / 1000,
-                  },
+                .post('/api/a/article/update', {
+                  ...state.ruleForm,
+                  publish_time: state.ruleForm.publish_time / 1000,
                 })
                 .then(() => {
                   ElMessage.success('修改成功')
