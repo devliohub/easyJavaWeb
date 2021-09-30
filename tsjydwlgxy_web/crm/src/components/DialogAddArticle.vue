@@ -184,6 +184,7 @@
   import { ElMessage } from 'element-plus'
   import WangEditor from 'wangeditor'
   import dayjs from 'dayjs'
+  import qs from 'qs'
 
   export default {
     name: 'DialogAddArticle',
@@ -435,27 +436,37 @@
             )
 
             if (state.type == 'add') {
-              axios
-                .post('/api/a/article/add', {
+              axios({
+                url: '/api/a/article/add',
+                method: 'post',
+                data: qs.stringify({
                   ...state.ruleForm,
                   publish_time: state.ruleForm.publish_time / 1000,
-                })
-                .then(() => {
-                  ElMessage.success('添加成功')
-                  state.visible = false
-                  if (props.reload) props.reload()
-                })
+                }),
+                headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded',
+                },
+              }).then(() => {
+                ElMessage.success('添加成功')
+                state.visible = false
+                if (props.reload) props.reload()
+              })
             } else {
-              axios
-                .post('/api/a/article/update', {
+              axios({
+                url: '/api/a/article/update',
+                method: 'post',
+                data: qs.stringify({
                   ...state.ruleForm,
                   publish_time: state.ruleForm.publish_time / 1000,
-                })
-                .then(() => {
-                  ElMessage.success('修改成功')
-                  state.visible = false
-                  if (props.reload) props.reload()
-                })
+                }),
+                headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded',
+                },
+              }).then(() => {
+                ElMessage.success('修改成功')
+                state.visible = false
+                if (props.reload) props.reload()
+              })
             }
           }
         })
