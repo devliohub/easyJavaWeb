@@ -68,13 +68,13 @@ public class AddServlet extends AdminBaseServlet
                     ErrConfig.getErr(ErrConfig.INTERNAL_SERVER_ERROR, "链接地址不能超过1000字符")
                 );
 	        }
-	        if( ! StringUtil.invalid(url) && ! StringUtil.ValidURL(url) ) 
-	        {
-	        	// TODO  Log
-                return jsonReturn(
-                    ErrConfig.getErr(ErrConfig.INTERNAL_SERVER_ERROR, "请输入有效链接地址")
-                );
-	        }
+//	        if( ! StringUtil.invalid(url) && ! StringUtil.ValidURL(url) ) 
+//	        {
+//	        	// TODO  Log
+//                return jsonReturn(
+//                    ErrConfig.getErr(ErrConfig.INTERNAL_SERVER_ERROR, "请输入有效链接地址")
+//                );
+//	        }
 	        
 	        
 			

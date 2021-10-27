@@ -79,13 +79,13 @@ public class UpdateServlet extends AdminBaseServlet
                     ErrConfig.getErr(ErrConfig.INTERNAL_SERVER_ERROR, "请输入链接")
                 );
 	        }
-	        if( (type == 2 && ! StringUtil.ValidURL(url)) ) 
-	        {
-	        	// TODO  Log
-                return jsonReturn(
-                    ErrConfig.getErr(ErrConfig.INTERNAL_SERVER_ERROR, "请输入有效链接")
-                );
-	        }
+//	        if( (type == 2 && ! StringUtil.ValidURL(url)) ) 
+//	        {
+//	        	// TODO  Log
+//                return jsonReturn(
+//                    ErrConfig.getErr(ErrConfig.INTERNAL_SERVER_ERROR, "请输入有效链接")
+//                );
+//	        }
 	        
 	        
 	        //#

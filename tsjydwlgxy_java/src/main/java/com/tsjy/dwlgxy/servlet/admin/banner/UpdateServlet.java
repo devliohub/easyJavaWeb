@@ -56,13 +56,13 @@ public class UpdateServlet extends AdminBaseServlet
 	            );
 	        	
 	        }
-	        if( ! StringUtil.invalid(url) && ! StringUtil.ValidURL(url) ) 
-	        {
-	        	// TODO  Log
-                return jsonReturn(
-                    ErrConfig.getErr(ErrConfig.INTERNAL_SERVER_ERROR, "请输入有效链接地址")
-                );
-	        }
+//	        if( ! StringUtil.invalid(url) && ! StringUtil.ValidURL(url) ) 
+//	        {
+//	        	// TODO  Log
+//                return jsonReturn(
+//                    ErrConfig.getErr(ErrConfig.INTERNAL_SERVER_ERROR, "请输入有效链接地址")
+//                );
+//	        }
 	        
 	        
 	        //#

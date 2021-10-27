@@ -2,12 +2,6 @@ package com.tsjy.dwlgxy.servlet.demo;
 
 import java.io.*;
 import java.util.*;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 
 import javax.servlet.ServletConfig;
@@ -24,6 +18,8 @@ import org.apache.tomcat.util.http.fileupload.RequestContext;
 import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletRequestContext;
+
+import com.tsjy.dwlgxy.common.utils.StringUtil;
 
 @WebServlet(urlPatterns = "/demo")
 public class IndexServlet extends HttpServlet {
@@ -46,12 +42,66 @@ public class IndexServlet extends HttpServlet {
 //	    	sb.append(" and type_id=").append(type_id);
 //	    }
 //	    sb.append(" and is_delete=0");
-
+		
 		req.getRequestDispatcher("/WEB-INF/demo/upload.jsp").forward(req, resp);
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		// doGet(request, response);
+		
+		
+		//#
+        //Map map = (Map)request.getParameterMap();
+        //System.out.println("1");
+        //System.out.print(map);
+       
+//        Enumeration pNames = request.getParameterNames();
+//        while(pNames.hasMoreElements())
+//        {                          
+//            String name=(String)pNames.nextElement();          
+//            String value=request.getParameter(name);        
+//            System.out.println("1:" + name + "=" + value);
+//        }
+//       
+//        
+//        String query = request.getQueryString();
+//        System.out.println("2");
+//        System.out.println(query);
+//        
+//        
+//        
+//        // 获取post参数
+//		StringBuffer sb = new StringBuffer();
+//		InputStream is = request.getInputStream();
+//		InputStreamReader isr = new InputStreamReader(is);
+//		BufferedReader br = new BufferedReader(isr);
+//		String s = "";
+//		while ((s = br.readLine()) != null) {
+//			sb.append(s);
+//		}
+//		String str = sb.toString(); 
+//		System.out.println("3");
+//	    System.out.println(str);
+//	    
+//	    //每个键值为一组 
+//	    Map<String, String> mapRequest = new HashMap<String, String>();
+//	    String[] arrSplit =  str.split("[&]");
+//        for (String strSplit : arrSplit) {
+//            String[] arrSplitEqual = strSplit.split("[=]");
+//
+//            //解析出键值
+//            if (arrSplitEqual.length > 1) {
+//                mapRequest.put(arrSplitEqual[0], arrSplitEqual[1]);
+//            } else {
+//                //if (arrSplitEqual[0] != "") {
+//                    mapRequest.put(arrSplitEqual[0], "");
+//                //}
+//            }
+//        }
+//        for (Map.Entry<String, String> entry : mapRequest.entrySet()) {
+//            System.out.println("3.1 key = " + entry.getKey() + ", value = " + StringUtil.URLDecoderString( entry.getValue() ));
+//        }
+		
 
 		upload2(request, response);
 	}

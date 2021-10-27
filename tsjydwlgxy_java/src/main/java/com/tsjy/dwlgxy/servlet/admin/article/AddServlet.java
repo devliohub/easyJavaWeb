@@ -6,6 +6,7 @@ import javax.servlet.*;
 import javax.servlet.annotation.*;
 import javax.servlet.http.*;
 
+
 import com.tsjy.dwlgxy.bean.*;
 import com.tsjy.dwlgxy.common.utils.*;
 import com.tsjy.dwlgxy.common.conf.*;
@@ -37,9 +38,6 @@ public class AddServlet extends AdminBaseServlet
 	        boolean is_top   =   StringUtil.getBoolean(request.getParameter("is_top"));
 	        String cover   = StringUtil.getString(request.getParameter("cover"), "")  ;
 	        int publish_time   = StringUtil.getInt(request.getParameter("publish_time"), 0)  ;
-	        
-	        
-	        
 	        
 	        
 	        

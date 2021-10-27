@@ -1877,4 +1877,42 @@ public class StringUtil
             }
             return list;
         }
+        
+        
+        
+        /**
+         * URL encode
+         */
+        public static String getURLEncoderString(String str) {
+            String result = "";
+            if (null == str) {
+                return "";
+            }
+            try {
+                result = java.net.URLEncoder.encode(str, "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            return result;
+        }
+
+        
+        /**
+         * URL decode
+         */
+        public static String URLDecoderString(String str) {
+            String result = "";
+            if (null == str) {
+                return "";
+            }
+            try {
+            	str = str.replaceAll("%(?![0-9a-fA-F]{2})", "%25");
+            	str = str.replaceAll("\\+", "%2B");
+                result = java.net.URLDecoder.decode(str, "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            return result;
+        }
+        
 }
