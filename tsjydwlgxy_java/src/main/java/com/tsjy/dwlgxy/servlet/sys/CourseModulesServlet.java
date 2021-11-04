@@ -54,12 +54,12 @@ public class CourseModulesServlet extends BaseServlet
 			  
 			return jsonReturn(new DictData[] {
 					new DictData(1, "道德规范力", total1, "daodeguifanli"),
+					new DictData(7, "审美鉴赏力", total7, "shenmeijianshangli"),
 					new DictData(2, "协作领导力", total2, "xiezuolingdaoli"),
 					new DictData(3, "认识理解力", total3, "renshilijie"),
 					new DictData(4, "应用行动力", total4, "yingyonghangdongli"),
 					new DictData(5, "高阶创新力", total5, "gaojiechuangxinli"),
-					new DictData(6, "沟通表达力", total6, "goutongbiaodali"),
-					new DictData(7, "审美鉴赏力", total7, "shenmeijianshangli")
+					new DictData(6, "沟通表达力", total6, "goutongbiaodali")
 			});
 
 		  }
