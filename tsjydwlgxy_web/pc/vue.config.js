@@ -62,7 +62,8 @@ module.exports = {
         open: false,
         proxy: {
             '/': {
-                target: 'http://121.36.22.149:9098',
+                target: 'https://tsjy.dgut.edu.cn',
+                // target: 'http://121.36.22.149:9098',
                 changeOrigin: true
             }
         }
