@@ -14,7 +14,7 @@
             </div>
           </el-image>
           <div class="title">
-            <span v-if="entity.is_top"> [置顶] </span>
+            <b v-if="entity.is_top"> [置顶] </b>
             {{ entity.title }}
           </div>
           <div class="timer">
@@ -149,7 +149,7 @@
       }
       .title {
         max-width: 220px;
-        font-weight: 400;
+        font-weight: 500;
         line-height: 1.5;
         margin: 10px 0;
         font-size: 14px;
@@ -158,7 +158,7 @@
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 2;
         overflow: hidden;
-        span {
+        b {
           color: #dfa665;
         }
       }
@@ -170,7 +170,7 @@
   }
 
   .list_ul {
-    border: 1px solid #efeff7;
+    // border: 1px solid #efeff7;
     .single_class {
       background: #f5f5f5 !important;
     }
@@ -180,7 +180,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 15px 30px;
+      padding: 15px 14px;
       &:hover {
         background: #efeff7;
         span:first-child {

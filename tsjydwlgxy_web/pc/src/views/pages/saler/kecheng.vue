@@ -10,6 +10,7 @@
             style="width: 200px"
             placeholder="关键词搜索"
             @keyup.enter.native="getData()"
+            @change="getData()"
           >
             <i
               class="el-icon-search el-input__icon"
@@ -228,7 +229,7 @@
           flex-wrap: wrap;
           li {
             width: 218px;
-            padding: 6px;
+            // padding: 6px;
             margin: 0 20px 20px 0;
             &:hover {
               box-shadow: 0 0 12px #eee;
@@ -266,7 +267,7 @@
                 }
               }
               img {
-                width: 204px;
+                width: 218px;
                 height: 123px;
               }
               ._orange {

@@ -347,7 +347,7 @@
       margin: 0 auto;
       overflow: hidden;
       & > div {
-        width: 580px;
+        width: 575px;
         float: left;
         margin: 0 40px 50px 0;
         ul {
@@ -455,7 +455,7 @@
       margin: 0 auto;
       padding-bottom: 100px;
       & > div {
-        margin-top: 50px;
+        margin-top: 20px;
         display: flex;
         padding: 30px 20px;
         background: url('../../../assets/home/课程成果展示背景.png') no-repeat

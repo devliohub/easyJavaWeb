@@ -5,7 +5,7 @@
         <ul>
           <li>手机网站</li>
           <li>
-            <!-- <img src="@/assets/erweima.jpg" alt="" /> -->
+            <img src="@/assets/shoujiErweima.jpg" alt="" />
           </li>
         </ul>
         <ul>
@@ -105,6 +105,9 @@
         }
         list-style: none;
         padding: 6px 0;
+        a {
+          color: #FFFFFF
+        }
       }
     }
   }
