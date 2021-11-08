@@ -60,7 +60,7 @@ module.exports = {
         proxy: {
             '/': {
                 ws: false, // proxy websockets
-                target: 'http://121.36.22.149:9098',
+                target: 'https://tsjy.dgut.edu.cn',
                 changeOrigin: true
             }
         }
