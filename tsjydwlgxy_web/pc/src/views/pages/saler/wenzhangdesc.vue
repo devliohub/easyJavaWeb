@@ -52,7 +52,7 @@
             }}</span>
           </div>
           <span
-            v-if="item.ishover"
+            v-if="item.ishover && entity.is_attachment_down"
             class="downclass"
             @click="downloadFunc(item)"
             >下 载</span

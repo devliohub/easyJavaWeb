@@ -115,14 +115,18 @@
         this.getListData()
       },
       handleClick(item) {
-        this.$router.push(
-          '/saler/wenzhangdesc?id=' +
-            this.$route.query.id +
-            '&name=' +
-            this.$route.query.name +
-            '&descId=' +
-            item.id
-        )
+        if (!!item.title_url) {
+          window.open(item.title_url)
+        } else {
+          this.$router.push(
+            '/saler/wenzhangdesc?id=' +
+              this.$route.query.id +
+              '&name=' +
+              this.$route.query.name +
+              '&descId=' +
+              item.id
+          )
+        }
       },
     },
   }
