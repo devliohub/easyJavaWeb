@@ -2,7 +2,7 @@
   <el-dialog
     :title="type == 'add' ? '发布文章' : '修改文章'"
     v-model="visible"
-    width="900px"
+    width="1000px"
     top="5vh"
     custom-class="wenzahngClass"
     :show-close="false"
@@ -33,7 +33,7 @@
       :model="ruleForm"
       :rules="rules"
       ref="formRef"
-      label-width="120px"
+      label-width="140px"
       class="good-form"
     >
       <el-form-item label="文章标题：" prop="title">
@@ -166,7 +166,15 @@
             </el-date-picker>
           </el-form-item>
         </el-col>
+        <el-col :span="24">
+          <el-form-item label="是否允许附件下载：" prop="is_attachment_down">
+            <el-checkbox v-model="ruleForm.is_attachment_down"></el-checkbox>
+          </el-form-item>
+        </el-col>
       </el-row>
+      <el-form-item label="标题链接：" prop="title_url">
+        <el-input type="text" v-model="ruleForm.title_url"></el-input>
+      </el-form-item>
     </el-form>
     <template #footer>
       <span class="dialog-footer" v-loading="isloading">
@@ -401,6 +409,8 @@
           state.type = 'add'
           state.ruleForm = {
             is_top: false,
+            is_attachment_down: true,
+            title_url: '',
             cover: '',
             menu_id: '',
             menu_pid: '',
