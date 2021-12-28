@@ -190,7 +190,6 @@
   import axios from '@/utils/axios'
   import { hasEmoji } from '@/utils/index'
   import { ElMessage } from 'element-plus'
-  import WangEditor from 'wangeditor'
   import dayjs from 'dayjs'
   import qs from 'qs'
 
@@ -235,7 +234,7 @@
       let instance
       watch(editor, (a) => {
         if (a) {
-          instance = new WangEditor(editor.value)
+          instance = new window.wangEditor(editor.value)
 
           instance.config.fontSizes = {
             'x-small': { name: '12px', value: '1' },
@@ -246,7 +245,7 @@
             'xx-large': { name: '32px', value: '6' },
             'xxx-large': { name: '48px', value: '7' },
           }
-          instance.config.showLinkImg = false // 隐藏外链上传
+          // 本地上传图片
           instance.config.customUploadImg = function (content, insert) {
             let form = new FormData()
             form.append('img', content[0])
@@ -254,7 +253,14 @@
               insert(res)
             })
           }
-
+          // 本地上传视频
+          instance.config.customUploadVideo = function (content, insertVideoFn) {
+              let form = new FormData()
+              form.append('video', content[0])
+              axios.post('/api/sys/upload', form).then((res) => {
+                insertVideoFn(res)
+              })
+          }
           instance.create()
         }
       })
