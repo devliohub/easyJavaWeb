@@ -145,12 +145,14 @@ public class ArticleService
 		Article obj = new Article();
 		obj.id  = rs.getLong("id");
 		obj.title  = rs.getString("title");
+		obj.title_url  = rs.getString("title_url");
 		obj.content  = rs.getString("content");
 		obj.attachment  = rs.getString("attachment");
 		obj.menu_pid  = rs.getInt("menu_pid") ;
 		obj.menu_id  = rs.getInt("menu_id") ;
 		obj.is_top  = (rs.getInt("is_top") == 1 ? true : false) ;
 		obj.cover  = rs.getString("cover");
+		obj.is_attachment_down  = (rs.getInt("is_attachment_down") == 1 ? true : false) ;
 		obj.is_delete  = rs.getInt("is_delete");
 		obj.create_uid  = rs.getLong("create_uid");
 		obj.create_uname  =  (rs.getInt("create_uis_delete") == 1 ? "已删除" : rs.getString("create_uname"));
@@ -201,20 +203,22 @@ public class ArticleService
 		long id = 0;
 		try (Connection conn = DbConfig.getPool().getConnection()) {
 			try (PreparedStatement ps = conn.prepareStatement(
-					"INSERT INTO Article (title, content, attachment, menu_pid, menu_id, is_top, cover, create_uid, create_uname, create_time, publish_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+					"INSERT INTO Article (title, title_url, content, attachment, menu_pid, menu_id, is_top, cover, is_attachment_down, create_uid, create_uname, create_time, publish_time) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 					Statement.RETURN_GENERATED_KEYS 
 			)) {
 				ps.setString(1, obj.title);
-				ps.setString(2, obj.content);
-				ps.setString(3, obj.attachment);
-				ps.setInt(4, obj.menu_pid);
-				ps.setInt(5, obj.menu_id);
-				ps.setInt(6, (obj.is_top ? 1 : 0));
-				ps.setString(7, obj.cover);
-				ps.setLong(8, obj.create_uid);
-				ps.setString(9, obj.create_uname);
-				ps.setLong(10, obj.create_time);
-				ps.setLong(11, obj.publish_time);
+				ps.setString(2, obj.title_url);
+				ps.setString(3, obj.content);
+				ps.setString(4, obj.attachment);
+				ps.setInt(5, obj.menu_pid);
+				ps.setInt(6, obj.menu_id);
+				ps.setInt(7, (obj.is_top ? 1 : 0));
+				ps.setString(8, obj.cover);
+				ps.setInt(9, (obj.is_attachment_down ? 1 : 0));
+				ps.setLong(10, obj.create_uid);
+				ps.setString(11, obj.create_uname);
+				ps.setLong(12, obj.create_time);
+				ps.setLong(13, obj.publish_time);
 				int n = ps.executeUpdate();
 				try (ResultSet rs = ps.getGeneratedKeys()) {
 					if (rs.next()) {
@@ -233,17 +237,19 @@ public class ArticleService
 	public static int update(Article obj) throws SQLException {
 		int n =  0;
 		try (Connection conn = DbConfig.getPool().getConnection()) {
-			try (PreparedStatement ps = conn.prepareStatement("UPDATE article SET title=?, content=?, attachment=?, menu_pid=?, menu_id=?, is_top=?, cover=?, update_time=?, publish_time=? where id=?")) {
+			try (PreparedStatement ps = conn.prepareStatement("UPDATE article SET title=?, title_url=?, content=?, attachment=?, menu_pid=?, menu_id=?, is_top=?, cover=?, is_attachment_down=?, update_time=?, publish_time=? where id=?")) {
 				ps.setString(1, obj.title);
-				ps.setString(2, obj.content);
-				ps.setString(3, obj.attachment);
-				ps.setInt(4, obj.menu_pid);
-				ps.setInt(5, obj.menu_id);
-				ps.setInt(6, (obj.is_top ? 1 : 0));
-				ps.setString(7, obj.cover);
-				ps.setLong(8, obj.update_time);
-				ps.setLong(9, obj.publish_time);
-				ps.setLong(10, obj.id);
+				ps.setString(2, obj.title_url);
+				ps.setString(3, obj.content);
+				ps.setString(4, obj.attachment);
+				ps.setInt(5, obj.menu_pid);
+				ps.setInt(6, obj.menu_id);
+				ps.setInt(7, (obj.is_top ? 1 : 0));
+				ps.setString(8, obj.cover);
+				ps.setInt(9, (obj.is_attachment_down ? 1 : 0));
+				ps.setLong(10, obj.update_time);
+				ps.setLong(11, obj.publish_time);
+				ps.setLong(12, obj.id);
 				n = ps.executeUpdate();
 			}
 		}

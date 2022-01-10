@@ -35,12 +35,14 @@ public class UpdateServlet extends AdminBaseServlet
 			//#
 			int id = StringUtil.getInt(request.getParameter("id"), 0);
 			String title   = StringUtil.getString(request.getParameter("title"), "")  ;
+			String title_url   = StringUtil.getString(request.getParameter("title_url"), "")  ;
 	        String content   = StringUtil.getString(request.getParameter("content"), "")  ;
 	        String attachment   = StringUtil.getString(request.getParameter("attachment"), "")  ;
 	        int menu_pid   = StringUtil.getInt(request.getParameter("menu_pid"), 0)  ;
 	        int menu_id    = StringUtil.getInt(request.getParameter("menu_id"), 0)  ;
 	        boolean is_top   =   StringUtil.getBoolean(request.getParameter("is_top"));
 	        String cover   = StringUtil.getString(request.getParameter("cover"), "")  ;
+	        boolean is_attachment_down   =   StringUtil.getBoolean(request.getParameter("is_attachment_down"));
 	        int publish_time   = StringUtil.getInt(request.getParameter("publish_time"), 0)  ;
 	        
 	        
@@ -138,12 +140,14 @@ public class UpdateServlet extends AdminBaseServlet
 	        //#
 	        obj.id = id;
 	        obj.title = title;
+	        obj.title_url = title_url;
 	        obj.content = content;
 	        obj.attachment = attachment;
 	        obj.menu_pid =  menu_pid ;
 	        obj.menu_id =  menu_id ;
 	        obj.is_top =  is_top ;
 	        obj.cover =  cover ;
+	        obj.is_attachment_down =  is_attachment_down ;
 	        obj.update_time = new Date().getTime() / 1000;	
 	        obj.publish_time = (publish_time > 0 ? publish_time : new Date().getTime() / 1000);
 	        int ret =  ArticleService.update(obj);

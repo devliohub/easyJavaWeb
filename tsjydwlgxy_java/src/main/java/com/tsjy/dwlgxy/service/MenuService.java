@@ -41,7 +41,7 @@ public class MenuService
 	public static Menu getRowByName(String Name) throws SQLException {
 		Menu obj = null;
 		try (Connection conn = DbConfig.getPool().getConnection()) { 
-			try (PreparedStatement ps = conn.prepareStatement("SELECT * FROM menu WHERE name = ?")) {
+			try (PreparedStatement ps = conn.prepareStatement("SELECT * FROM menu WHERE name = ? and is_delete = 0")) {
 				ps.setString(1, Name); 
 				try (ResultSet rs = ps.executeQuery()) {
 					while (rs.next()) {

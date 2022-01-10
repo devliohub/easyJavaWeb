@@ -85,10 +85,14 @@ public class HomeServlet extends BaseServlet
         		obj23,
         		obj24
     		);*/ new ArrayList<>();
-	        list2.add(obj21);
-	        list2.add(obj22);
-	        list2.add(obj23);
-	        list2.add(obj24);
+	        if( obj21 != null && obj22 != null && obj23 != null && obj24 != null )
+	        {
+	        	list2.add(obj21);
+		        list2.add(obj22);
+		        list2.add(obj23);
+		        list2.add(obj24);
+	        }
+	        
 	        
 	        
 	        

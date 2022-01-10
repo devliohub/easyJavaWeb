@@ -108,32 +108,32 @@ public class IndexServlet extends HttpServlet {
 
 	void upload1(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
-		// 读取Request Body:
-		InputStream input = request.getInputStream();
-		ByteArrayOutputStream output = new ByteArrayOutputStream();
-		byte[] buffer = new byte[1024];
-		for (;;) {
-			int len = input.read(buffer);
-			if (len == -1) {
-				break;
-			}
-			output.write(buffer, 0, len);
-		}
-
-		// TODO: 写入文件:
-		FileOutputStream fileOutputStream = new FileOutputStream(
-				"C:\\Users\\87537\\eclipse-workspace\\z-tsjy-dwlgxy\\uploads\\11.png");
-		fileOutputStream.write(output.toByteArray());
-
-		// 显示上传结果:
-		String uploadedText = output.toString(StandardCharsets.UTF_8);
-		System.out.println("uploaded: " + uploadedText);
-		PrintWriter pw = response.getWriter();
-		pw.write("<h1>Uploaded:</h1>");
-		pw.write("<pre><code>");
-		pw.write(uploadedText);
-		pw.write("</code></pre>");
-		pw.flush();
+//		// 读取Request Body:
+//		InputStream input = request.getInputStream();
+//		ByteArrayOutputStream output = new ByteArrayOutputStream();
+//		byte[] buffer = new byte[1024];
+//		for (;;) {
+//			int len = input.read(buffer);
+//			if (len == -1) {
+//				break;
+//			}
+//			output.write(buffer, 0, len);
+//		}
+//
+//		// TODO: 写入文件:
+//		FileOutputStream fileOutputStream = new FileOutputStream(
+//				"C:\\Users\\87537\\eclipse-workspace\\z-tsjy-dwlgxy\\uploads\\11.png");
+//		fileOutputStream.write(output.toByteArray());
+//
+//		// 显示上传结果:
+//		String uploadedText = output.toString(StandardCharsets.UTF_8);
+//		System.out.println("uploaded: " + uploadedText);
+//		PrintWriter pw = response.getWriter();
+//		pw.write("<h1>Uploaded:</h1>");
+//		pw.write("<pre><code>");
+//		pw.write(uploadedText);
+//		pw.write("</code></pre>");
+//		pw.flush();
 
 	}
 

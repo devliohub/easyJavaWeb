@@ -6,6 +6,7 @@ public class Article {
 
 	public long id;
 	public String title;
+	public String title_url;
 	public String content;
 	public String attachment;
 	public List<ArticleAttachmentData> attachmentArr;
@@ -15,6 +16,7 @@ public class Article {
 	public String menu_name;
 	public boolean is_top;
 	public String cover;
+	public boolean is_attachment_down;
 	public int is_delete;
 	public long create_uid;
 	public String create_uname;
