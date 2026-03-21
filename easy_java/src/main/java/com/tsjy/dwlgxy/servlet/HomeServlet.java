@@ -28,9 +28,7 @@ public class HomeServlet extends BaseServlet
 		
 		  try
 		  {
-			  
 			
-			  
 			
 			//#
 			List<Banner> list0 = BannerService.getRows("is_delete=0", "sortnum desc");

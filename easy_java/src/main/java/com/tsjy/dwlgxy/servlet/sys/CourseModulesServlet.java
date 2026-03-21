@@ -24,8 +24,6 @@ public class CourseModulesServlet extends BaseServlet
 	protected String process(HttpServletRequest request, HttpServletResponse response) 
 	throws ServletException, IOException
 	{
-		
-		
 		  try
 		  {
 			  
